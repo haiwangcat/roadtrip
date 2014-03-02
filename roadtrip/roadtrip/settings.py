@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 Django settings for roadtrip project.
 
@@ -9,7 +11,10 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+
 import os
+gettext = lambda s: s
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 
@@ -17,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-mj_7b3g-@x^nj#kb&^di(grmem858v^%h30@ud=v2f_*$_@v='
+SECRET_KEY = 'h@%7&*rtjkan-l0##t7sf=pq3tl=7t(31za$6ym-=fvybp9rlc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -36,6 +41,12 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', 
+    'cms',
+    'mptt',
+    'menus',
+    'south',
+    'sekizai',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,6 +56,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'cms.middleware.page.CurrentPageMiddleware',
+    'cms.middleware.user.CurrentUserMiddleware',
+    'cms.middleware.toolbar.ToolbarMiddleware',
+    'cms.middleware.language.LanguageCookieMiddleware',
 )
 
 ROOT_URLCONF = 'roadtrip.urls'
@@ -59,6 +74,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ATOMIC_REQUESTS': True,
     }
 }
 
@@ -79,4 +95,35 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_PATH, "static")
+STATIC_URL = "/static/"
+
+MEDIA_ROOT = os.path.join(PROJECT_PATH, "media")
+MEDIA_URL = "/media/"
+
+TEMPLATE_DIRS = (
+    # The docs say it should be absolute path: PROJECT_PATH is precisely one.
+    # Life is wonderful!
+    os.path.join(PROJECT_PATH, "templates"),
+)
+
+CMS_TEMPLATES = (
+    ('template_1.html', 'Template One'),
+    #('template_2.html', 'Template Two'),
+)
+
+LANGUAGES = [
+    ('en', 'English'),
+]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'cms.context_processors.media',
+    'sekizai.context_processors.sekizai',
+)
+
+SITE_ID = 1
