@@ -1,12 +1,18 @@
-{% load cms_tags sekizai_tags %}
+{% load cms_tags sekizai_tags staticfiles %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
       {% render_block "css" %}
+      <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}" media="all" />
   </head>
   <body>
-      {% cms_toolbar %}
-      {% placeholder base_content %}
-      {% block base_content %}{% endblock %}
+      {#% cms_toolbar %#}
+      {% placeholder content %}
+      {% block "content" %}{% endblock %}
+
+      <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
       {% render_block "js" %}
   </body>
 </html>
