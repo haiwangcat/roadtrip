@@ -23,7 +23,7 @@
   var map;
   var markers = new Array();
   var infowindows = new Array();
-  var activeMarker;
+  var activeMarker = null;
   var directionsService = new google.maps.DirectionsService();  
   var directionsDisplay;
 
@@ -34,21 +34,22 @@
     };
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-    directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      preserveViewport: true
+    });
     var chicago = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {
       zoom:7,
       center: chicago
     }
     directionsDisplay.setMap(map);
-
-    calcRoute();
   }
   google.maps.event.addDomListener(window, 'load', initialize);
 
-  function calcRoute() {
-    var start = new google.maps.LatLng(37.716753,-119.646505);
-    var end = new google.maps.LatLng(37.755018, -119.597297);
+  function calcRoute(start, end) {
+    //var start = new google.maps.LatLng(37.716753,-119.646505);
+    //var end = new google.maps.LatLng(37.755018, -119.597297);
     var request = {
       origin:start,
       destination:end,
@@ -56,6 +57,7 @@
     };
     directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setMap(map);
         directionsDisplay.setDirections(response);
       }
     });
@@ -66,8 +68,6 @@
       var lat = parseFloat(coordinate[0]);
       var lng = parseFloat(coordinate[1]);
       var name = $(this).find("> .poi-name").html();
-
-      console.log( index + ": " + lat + lng);
 
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
@@ -91,24 +91,30 @@
           infowindow.open(map, marker);
         }); 
         $(this).mouseover(function () {
-          if (activeMarker != marker) {
+          if (activeMarker != marker && !marker.getVisible()) {
             marker.setVisible(true);
             marker.setMap(map);
             infowindow.open(map, marker);
+          }
+          if (activeMarker != null && activeMarker != marker) {
+            calcRoute(activeMarker.position, marker.position);
           }
         }); 
         $(this).mouseout(function () {
           if (activeMarker != marker) {
             marker.setVisible(false);
             infowindow.close();
+            directionsDisplay.setMap(null);
           }
         }); 
       }catch(e){}
   });
 
   function clearMap() {
+    activeMarker = null;
     for (var i = 0; i < markers.length; i++) {
       markers[i].setVisible(false);
+      infowindows[i].close();
     }
   }
 </script>
