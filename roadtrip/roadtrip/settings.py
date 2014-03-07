@@ -118,7 +118,9 @@ CMS_TEMPLATES = (
     #('template_2.html', 'Template Two'),
 )
 
+USE_I18N = True
 LANGUAGES = [
+    ('zh', 'Chinese'),
     ('en', 'English'),
 ]
 

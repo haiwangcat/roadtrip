@@ -7,7 +7,6 @@ register = template.Library()
 
 @register.assignment_tag(takes_context=True)
 def getPOI(context):
-  print "!!!"
   return getData()
 
 '''

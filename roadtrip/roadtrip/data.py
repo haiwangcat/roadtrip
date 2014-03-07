@@ -23,7 +23,6 @@ def getData():
     if num > 0:
       places.append(poi)
     num += 1
-  print places
   return places
 
 #getData()

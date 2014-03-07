@@ -21,7 +21,9 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4y5vgVMb3bcqjYsaYJzJphjJdvnJBr6U&sensor=true&language=zh"></script>
 <script type="text/javascript">
   var map;
-  var markers = [];
+  var markers = new Array();
+  var infowindows = new Array();
+  var activeMarker;
   var directionsService = new google.maps.DirectionsService();  
   var directionsDisplay;
 
@@ -59,38 +61,54 @@
     });
   }
 
-  $("#poi-list li").each(function() {
+  $("#poi-list li").each(function(index) {
+      var coordinate = $(this).find("> .coordinate").html().split(",");
+      var lat = parseFloat(coordinate[0]);
+      var lng = parseFloat(coordinate[1]);
+      var name = $(this).find("> .poi-name").html();
+
+      console.log( index + ": " + lat + lng);
+
+      var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map: map
+      });
+      markers[index] = marker;
+
+      var infowindow = new google.maps.InfoWindow({
+        content: name,
+        disableAutoPan: true
+      });
+      infowindows[index] = infowindow;
+
       try {
         $(this).click(function () {
-          var coordinate = $(this).find("> .coordinate").html().split(",");
-          var lat = parseFloat(coordinate[0]);
-          var lng = parseFloat(coordinate[1]);
           clearMap();
-          var name = $(this).find("> .poi-name").html();
-          name = " " + name + " "
-          placeMarker(name, new google.maps.LatLng(lat, lng), map);
-
+          marker.setVisible(true);
+          marker.setMap(map);
+          activeMarker = markers[index];
+          map.panTo(marker.position);
+          infowindow.open(map, marker);
+        }); 
+        $(this).mouseover(function () {
+          if (activeMarker != marker) {
+            marker.setVisible(true);
+            marker.setMap(map);
+            infowindow.open(map, marker);
+          }
+        }); 
+        $(this).mouseout(function () {
+          if (activeMarker != marker) {
+            marker.setVisible(false);
+            infowindow.close();
+          }
         }); 
       }catch(e){}
   });
 
-  function placeMarker(title, position, map) {
-    var marker = new google.maps.Marker({
-      position: position,
-      map: map
-    });
-    markers.push(marker);
-    map.panTo(position);
-
-    var infowindow = new google.maps.InfoWindow({
-      content: title
-    });
-    infowindow.open(marker.get('map'), marker);
-  }
-
   function clearMap() {
     for (var i = 0; i < markers.length; i++) {
-      markers[i].setMap(null);
+      markers[i].setVisible(false);
     }
   }
 </script>
