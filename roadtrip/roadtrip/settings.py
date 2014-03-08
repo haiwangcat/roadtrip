@@ -115,6 +115,7 @@ TEMPLATE_DIRS = (
 
 CMS_TEMPLATES = (
     ('template_1.html', 'Template One'),
+    ('trail.html', 'Trail'),
     #('template_2.html', 'Template Two'),
 )
 

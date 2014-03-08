@@ -21,95 +21,101 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4y5vgVMb3bcqjYsaYJzJphjJdvnJBr6U&sensor=true&language=zh"></script>
 <script type="text/javascript">
   var map;
-  var markers = new Array();
-  var infowindows = new Array();
+  var start = null;
+  var end = null;
+  var markers = [];
+  var directionsDisplays = [];
   var activeMarker = null;
   var directionsService = new google.maps.DirectionsService();  
-  var directionsDisplay;
 
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(37.849923, -119.567666),
+      draggableCursor: 'default',
       zoom: 10
     };
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
-    directionsDisplay = new google.maps.DirectionsRenderer({
-      suppressMarkers: true,
-      preserveViewport: true
-    });
     var chicago = new google.maps.LatLng(41.850033, -87.6500523);
     var mapOptions = {
       zoom:7,
       center: chicago
     }
-    directionsDisplay.setMap(map);
+
+    google.maps.event.addListener(map, 'click', addLatLng);
   }
   google.maps.event.addDomListener(window, 'load', initialize);
+
+
+  function addLatLng(event) {
+    if (start != null && end != null )
+    {
+      start = end;
+      end = null;
+    }
+    // Add a new marker at the new plotted point on the polyline.
+    var marker = new google.maps.Marker({
+      position: event.latLng,
+      map: map
+    });
+    markers.push(marker);
+
+    if (start == null)
+      start = event.latLng;
+    else if (end == null) {
+      end = event.latLng;
+      calcRoute(start, end);
+    }
+  }
+
+  function getRouteString(route)
+  {
+    var res = "";
+    var dist = 0.;
+    var duration = 0.;
+
+    for (var i = 0; i < route.legs.length; i++)
+    {
+      var steps = route.legs[i].steps;
+      dist += route.legs[i].distance.value;
+      duration += route.legs[i].duration.value;
+      for (var j = 0; j < steps.length; j++)
+      {
+        if (j != 0) res += ';';
+        for (var k = 0; k < steps[j].path.length; k++)
+        {
+          if (k != 0) res += ',';
+          res += steps[j].path[k];
+        }
+      }
+    }
+    return dist + '\t' + duration + '\t' + res;
+  }
 
   function calcRoute(start, end) {
     //var start = new google.maps.LatLng(37.716753,-119.646505);
     //var end = new google.maps.LatLng(37.755018, -119.597297);
+    var directionsDisplay = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      preserveViewport: true
+    });
+    directionsDisplay.setMap(map);
+    directionsDisplays.push(directionsDisplay);
+
     var request = {
       origin:start,
       destination:end,
-      travelMode: google.maps.TravelMode.DRIVING
+      travelMode: google.maps.TravelMode.WALKING
     };
     directionsService.route(request, function(response, status) {
       if (status == google.maps.DirectionsStatus.OK) {
         directionsDisplay.setMap(map);
         directionsDisplay.setDirections(response);
-        console.log(response);
+        $("#info").html(getRouteString(response.routes[0]));
+        //console.log(response.routes[0].copyrights);
       }
     });
   }
-
-  $("#poi-list li").each(function(index) {
-      var coordinate = $(this).find("> .coordinate").html().split(",");
-      var lat = parseFloat(coordinate[0]);
-      var lng = parseFloat(coordinate[1]);
-      var name = $(this).find("> .poi-name").html();
-
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map: map
-      });
-      markers[index] = marker;
-
-      var infowindow = new google.maps.InfoWindow({
-        content: name,
-        disableAutoPan: true
-      });
-      infowindows[index] = infowindow;
-
-      try {
-        $(this).click(function () {
-          clearMap();
-          marker.setVisible(true);
-          marker.setMap(map);
-          activeMarker = markers[index];
-          map.panTo(marker.position);
-          infowindow.open(map, marker);
-        }); 
-        $(this).mouseover(function () {
-          if (activeMarker != marker && !marker.getVisible()) {
-            marker.setVisible(true);
-            marker.setMap(map);
-            infowindow.open(map, marker);
-          }
-          if (activeMarker != null && activeMarker != marker) {
-            calcRoute(activeMarker.position, marker.position);
-          }
-        }); 
-        $(this).mouseout(function () {
-          if (activeMarker != marker) {
-            marker.setVisible(false);
-            infowindow.close();
-            directionsDisplay.setMap(null);
-          }
-        }); 
-      }catch(e){}
-  });
 
   function clearMap() {
     activeMarker = null;
@@ -118,19 +124,23 @@
       infowindows[i].close();
     }
   }
+
+  $("#reset").click(function() {
+    for (var i = 0; i < directionsDisplays.length; i++)
+      directionsDisplays[i].setMap(null);
+    for (var i = 0; i < markers.length; i++)
+      markers[i].setMap(null);
+    $("#info").html("");
+    start = end = null;
+  });
 </script>
 {% endaddtoblock %}
 
 <div id="sidebar">
-  <ul id="poi-list">
-    {% getPOI as pois %}
-    {% for poi in pois %}
-    <li>
-      <span class="poi-name">{{ poi.name }}</span>
-      <span class="coordinate">{{ poi.gps }}</span>
-    </li>
-    {% endfor %}
-  </ul>
+<button type="button" id="reset" style="width:50px;height:20px;margin:10px;">Reset</button>
+<br>
+<textarea id="info" rows="50">
+</textarea>
 </div>
 
 <div id="map-canvas">
