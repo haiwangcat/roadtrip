@@ -6,8 +6,8 @@ from roadtrip.data import getData
 register = template.Library()
 
 @register.assignment_tag(takes_context=True)
-def getPOI(context):
-  return getData()
+def getPOI(context, slug):
+  return getData(slug)
 
 '''
 @register.simple_tag

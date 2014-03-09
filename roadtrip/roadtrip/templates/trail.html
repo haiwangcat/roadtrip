@@ -26,6 +26,9 @@
   var markers = [];
   var directionsDisplays = [];
   var directionsService = new google.maps.DirectionsService();  
+  var trail = "";
+  var dist = 0.;
+  var duration = 0.;
 
   function initialize() {
     var mapOptions = {
@@ -69,10 +72,6 @@
 
   function getRouteString(route)
   {
-    var res = "";
-    var dist = 0.;
-    var duration = 0.;
-
     for (var i = 0; i < route.legs.length; i++)
     {
       var steps = route.legs[i].steps;
@@ -80,15 +79,15 @@
       duration += route.legs[i].duration.value;
       for (var j = 0; j < steps.length; j++)
       {
-        if (j != 0) res += ';';
+        if (j != 0 || trail != "") trail += '|';
         for (var k = 0; k < steps[j].path.length; k++)
         {
-          if (k != 0) res += ',';
-          res += steps[j].path[k];
+          if (k != 0) trail += ';';
+          trail += steps[j].path[k];
         }
       }
     }
-    return dist + '\t' + duration + '\t' + res;
+    return dist + '\t' + duration + '\t' + trail;
   }
 
   function calcRoute(start, end) {
@@ -123,6 +122,9 @@
       markers[i].setMap(null);
     $("#info").html("");
     start = end = null;
+    trail = "";
+    dist = 0.;
+    duration = 0.;
   }
 
   $("#reset").click(clearMap);

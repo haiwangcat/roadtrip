@@ -1,0 +1,20 @@
+{% load menu_tags sekizai_tags %}
+
+    
+{% addtoblock "js" %}      
+    <!--script type="text/javascript" language="javascript" src="{{ STATIC_URL }}libs/SimplejQueryDropdowns/js/jquery.dropdownPlain.js"></script-->
+{% endaddtoblock %}
+    
+    
+{% for child in children %}
+<li class="{% if child.selected %}selected{% endif %}{% if child.ancestor %}ancestor{% endif %}{% if child.sibling %}sibling{% endif %}{% if child.descendant %}descendant{% endif %} menuitem">
+	<a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}">{{ child.get_menu_title }}</a>    
+	
+    {% if child.children and child.menu_level < 1 %}
+        <ul class="submenu">
+            {% show_menu from_level 0 extra_inactive extra_active template "" "" child %}
+        </ul>
+    {% endif %}
+    
+</li>
+{% endfor %}

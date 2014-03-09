@@ -1,4 +1,4 @@
-{% load cms_tags sekizai_tags staticfiles %}
+{% load cms_tags sekizai_tags staticfiles menu_tags %}
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -8,6 +8,13 @@
       <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}" media="all" />
   </head>
   <body>
+
+      <div id="header">
+        <ul id="header-menu">
+        {#% show_menu 0 0 100 100 %#}
+        </ul>
+      </div>
+
       {#% cms_toolbar %#}
       {% placeholder content %}
       {% block "content" %}{% endblock %}

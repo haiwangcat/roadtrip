@@ -82,7 +82,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
 
 TIME_ZONE = 'UTC'
 
@@ -114,15 +114,16 @@ TEMPLATE_DIRS = (
 )
 
 CMS_TEMPLATES = (
-    ('template_1.html', 'Template One'),
+    ('park.html', 'Park'),
     ('trail.html', 'Trail'),
-    #('template_2.html', 'Template Two'),
 )
 
-USE_I18N = True
 LANGUAGES = [
-    ('zh', 'Chinese'),
-    ('en', 'English'),
+    ('zh-cn', 'Chinese'),
+]
+
+CMS_LANGUAGES = [
+    ('zh-cn', 'Chinese'),
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = (
