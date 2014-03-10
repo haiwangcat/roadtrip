@@ -256,6 +256,13 @@
 </script>
 {% endaddtoblock %}
 
+<div>
+{% getParks as parks %}
+{% for park in parks %}
+  <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a>
+{% endfor %}
+</div>
+
 <div id="sidebar">
   <div id="sidebar-panel">
     <div id="poi-list">
