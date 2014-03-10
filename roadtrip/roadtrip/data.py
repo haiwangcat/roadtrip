@@ -17,7 +17,6 @@ class POI:
     if trail.poi_type != "TRAIL":
       return
     if self.trailIDs.count(trail.poi_id) > 0:
-      print len(self.trails)
       if self.trails.count(trail) == 0:
         self.trails.append(trail)
 
@@ -29,6 +28,7 @@ class POI:
   route = ""
   trailIDs = ""
   trails = []
+  trail_bounds = []
 
 def getData(name):
   pois = []

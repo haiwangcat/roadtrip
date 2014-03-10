@@ -21,7 +21,7 @@
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(37.849923, -119.567666),
-      zoom: 5
+      zoom: 10
     };
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
@@ -60,11 +60,12 @@
       var lat = parseFloat(coordinate[0]);
       var lng = parseFloat(coordinate[1]);
       var name = $(this).find("> .poi-name").html();
-      console.log(name);
+      //console.log(name);
 
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
-        map: map
+        map: map,
+        visible: false
       });
       markers[index] = marker;
 
@@ -89,9 +90,9 @@
             marker.setMap(map);
             infowindow.open(map, marker);
           }
-          if (activeMarker != null && activeMarker != marker) {
-            calcRoute(activeMarker.position, marker.position);
-          }
+          //if (activeMarker != null && activeMarker != marker) {
+            //calcRoute(activeMarker.position, marker.position);
+          //}
         }); 
         $(this).mouseout(function () {
           if (activeMarker != marker) {
@@ -104,30 +105,38 @@
   });
 
   $(".trail-item").each(function(index) {
-      var routes = [];
+      var route_lines = [];
+      var bounds = null;
+      var node = $(this);
+
+      var getRouteLinesAndBounds = function()
+      {
+        if (route_lines.length > 0) return;
+        var routes = getRoute(node.find("> .trail-route").html());
+        route_lines = getRouteLines(routes);
+        bounds = getRouteBounds(routes);
+      };
 
       try {
+        $(this).click(function () {
+          getRouteLinesAndBounds();
+          map.fitBounds(bounds);
+        }); 
         $(this).mouseover(function () {
-          if (routes.length == 0)
-            routes = getRoute($(this).find("> .trail-route").html());
-          else
-          {
-            for (var i = 0; i < routes.length; i++)
-              routes[i].setVisible(true);
-          }
+          getRouteLinesAndBounds();
+          route_lines.forEach(function(line){ line.setVisible(true); });
         }); 
         $(this).mouseout(function () {
-          for (var i = 0; i < routes.length; i++)
-            routes[i].setVisible(false);
+          route_lines.forEach(function(line){ line.setVisible(false); });
         }); 
       }catch(e){}
   });
 
-  function getRoute(trail_route)
+  function getRoute(trail_route, bounds)
   {
     var steps = trail_route.split("|");
     var route = []; 
-    var routes = [];
+    var route_line = [];
 
     for (var i = 0; i < steps.length; ++i)
     {
@@ -141,7 +150,12 @@
       }
       route.push(leg);
     }
+    return route;
+  }
 
+  function getRouteLines(route)
+  {
+    var route_line = [];
     for (var i = 0; i < route.length; ++i)
     {
       var path = new google.maps.Polyline({
@@ -152,9 +166,28 @@
         strokeWeight: 3
       });
       path.setMap(map);
-      routes.push(path);
+      route_line.push(path);
     }
-    return routes;
+    return route_line;
+  }
+
+  function getRouteBounds(route)
+  {
+    console.log(route[0]);
+    var west = route[0][0].lng(), east = west,
+        north = route[0][0].lat(), south = north;
+    for (var i = 0; i < route.length; ++i)
+      for (var j = 0; j < route[i].length; ++j)
+      {
+        west = Math.min(west, route[i][j].lng());
+        east = Math.max(west, route[i][j].lng());
+        north = Math.max(north, route[i][j].lat());
+        south = Math.min(south, route[i][j].lat());
+      }
+    console.log(west+east);
+    return new google.maps.LatLngBounds(
+      new google.maps.LatLng(south, west),
+      new google.maps.LatLng(north, east));
   }
 
   function clearMap() {
@@ -173,24 +206,48 @@
       }catch(e){}
   });
 
-  $(".zoom-button").each(function() {
-      var zoom;
-      var center;
+  var prior_zoom;
+  var prior_center;
+  $(".zoom-button").each(function(index) {
       try {
       $(this).click(function () {
         if ($(this).html() == "+")
         {
-          center = map.getCenter();
-          zoom = map.getZoom();
-          center = map.setCenter();
+          var current_button = $(this);
+          var update_center = true;
+          $(".zoom-button").each(function(index) {
+            if ($(this) != current_button && $(this).html() == "-")
+            {
+              $(this).html("+");
+              update_center = false;
+            }
+          });
+
+          markers[index].setVisible(true);
+          markers[index].setMap(map);
+          infowindows[index].open(map, markers[index]);
+          if (update_center)
+          {
+            prior_center = map.getCenter();
+            prior_zoom = map.getZoom();
+          }
+          //center = map.setCenter();
+          map.setCenter(markers[index].getPosition());
           map.setZoom(15);
+
+
           $(this).html("-");
         }
         else
         {
-          map.setZoom(zoom);
-          map.setCenter(center);
+          map.setZoom(prior_zoom);
+          map.setCenter(prior_center);
           $(this).html("+");
+          if (markers[index] != activeMarker)
+          {
+            markers[index].setVisible(false);
+            infowindows[index].close();
+          }
         }
       }); 
       }catch(e){}
