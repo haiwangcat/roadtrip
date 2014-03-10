@@ -17,14 +17,17 @@ body a { text-decoration:none; }
 #sidebar { text-align:center; float:left; display:inline; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:0px; overflow-y:auto; z-index:10006; }
 #sidebar li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 
-.poi-item { line-height:1.7; }
-.poi-item button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#ffffff; cursor:pointer; }
-.poi-item button:hover { background-color:#1ea5ad; color:white; }
-.poi-item button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:49px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
+.poi-item { position:relative; line-height:1.7; }
+.poi-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#ffffff; cursor:pointer; text-align:left; padding-left:20px; }
+.poi-button:hover { background-color:#1ea5ad; color:white; }
+.poi-button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:49px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
 .poi-info { display:none; background-color:#eeeeee; }
 
+.zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#ffffff;}
+.zoom-button:hover { background-color:#b3cd53; }
+
 .trail-item { cursor:pointer; padding:10px; }
-.trail-item:hover { background-color:#aaaaaa; color:white; }
+.trail-item:hover { background-color:#b3cd53; color:white; }
 
 #sidebar-panel { position:absolute; top:0; left:0; width:100%; }
 #info-panel { height:200px; position:bottom; background-color:gray; }

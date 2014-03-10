@@ -4,8 +4,8 @@ class POI:
   def __init__(self, row):
     self.poi_type = row[0]
     self.poi_id = row[1]
-    self.name = row[2]
-    self.english_name = row[3]
+    self.name_cn = row[2]
+    self.name_en = row[3]
     self.gps = row[4]
     self.trails = []
     if self.poi_type == "POI":
@@ -23,8 +23,8 @@ class POI:
 
   poi_type = ""
   poi_id = ""
-  name = ""
-  english_name = ""
+  name_cn = ""
+  name_en = ""
   gps = ""
   route = ""
   trailIDs = ""

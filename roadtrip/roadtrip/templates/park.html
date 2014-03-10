@@ -21,7 +21,7 @@
   function initialize() {
     var mapOptions = {
       center: new google.maps.LatLng(37.849923, -119.567666),
-      zoom: 10
+      zoom: 5
     };
     map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
@@ -55,7 +55,7 @@
     });
   }
 
-  $(".poi-item button").each(function(index) {
+  $(".poi-button").each(function(index) {
       var coordinate = $(this).find("> .coordinate").html().split(",");
       var lat = parseFloat(coordinate[0]);
       var lng = parseFloat(coordinate[1]);
@@ -165,10 +165,33 @@
     }
   }
 
-  $(".poi-item button").each(function() {
+  $(".poi-button").each(function() {
       try {
       $(this).click(function () {
-          $(this).next().slideToggle("200", "swing");
+          $(this).next().next().slideToggle("200", "swing");
+      }); 
+      }catch(e){}
+  });
+
+  $(".zoom-button").each(function() {
+      var zoom;
+      var center;
+      try {
+      $(this).click(function () {
+        if ($(this).html() == "+")
+        {
+          center = map.getCenter();
+          zoom = map.getZoom();
+          center = map.setCenter();
+          map.setZoom(15);
+          $(this).html("-");
+        }
+        else
+        {
+          map.setZoom(zoom);
+          map.setCenter(center);
+          $(this).html("+");
+        }
       }); 
       }catch(e){}
   });
@@ -183,15 +206,16 @@
       {% for poi in pois %}
         {% if poi.poi_type == "POI" %}
         <div class="poi-item">
-          <button>
-            <span class="poi-name">{{ poi.name }}</span>
+          <button class="poi-button">
+            <span class="poi-name">{{ poi.name_cn }}</span>
             <span class="coordinate">{{ poi.gps }}</span>
           </button>
+          <button class="zoom-button">+</button>
           {% if poi.trails|length > 0 %}
             <div class="poi-info">
             {% for trail in poi.trails %}
               <div class="trail-item">
-                <div class="trail-name">{{ trail.name }}</div>
+                <div class="trail-name">{{ trail.name_cn }}</div>
                 <div class="trail-route">{{ trail.route }}</div>
               </div>
             {% endfor %}
