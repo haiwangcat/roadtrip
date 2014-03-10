@@ -263,10 +263,13 @@
 {% endfor %}
 </div>
 
+{% getParkSlug request as slug %}
+{% if slug != "" %}
+
 <div id="sidebar">
   <div id="sidebar-panel">
     <div id="poi-list">
-      {% getPOI request.current_page.get_slug as pois %}
+      {% getPOI slug as pois %}
       {% for poi in pois %}
         {% if poi.poi_type == "POI" %}
         <div class="poi-item">
@@ -309,5 +312,7 @@
   <div id="map-canvas">
   </div>
 </div>
+
+{% endif %}
 
 {% endblock %}

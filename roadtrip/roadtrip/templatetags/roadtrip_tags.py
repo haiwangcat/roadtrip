@@ -13,6 +13,10 @@ def getPOI(context, slug):
 def getParks(context):
   return getParkData().values()
 
+@register.assignment_tag(takes_context=True)
+def getParkSlug(context, request):
+  return request.GET.get('park', '')
+
 '''
 @register.simple_tag
 def getTopPos(size, index):
