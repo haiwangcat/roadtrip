@@ -60,7 +60,8 @@
       var lat = parseFloat(coordinate[0]);
       var lng = parseFloat(coordinate[1]);
       var name = $(this).find("> .poi-name").html();
-      //console.log(name);
+      names[index] = name;     
+ //console.log(name);
 
       var marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
@@ -81,6 +82,7 @@
           marker.setVisible(true);
           marker.setMap(map);
           activeMarker = markers[index];
+          activeName = names[index];
           map.panTo(marker.position);
           infowindow.open(map, marker);
         }); 
@@ -309,7 +311,7 @@
 </div>
 
 <div id='info-panel'>
-  <p>placeholder for info panel</p>
+  <p>Name:{{ activeName }}</p>
 </div>
 
 <div id="map-window">
