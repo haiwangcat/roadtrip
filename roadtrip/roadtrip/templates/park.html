@@ -263,7 +263,7 @@
   <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a>
 {% endfor %}
 </div>
-{% comment %}
+{% endcomment %}
 
 {% getParkSlug request as slug %}
 {% if slug != "" %}
@@ -308,6 +308,10 @@
     </div>
 {% endcomment %}
   </div>
+</div>
+
+<div id='info-panel'>
+  <p>placeholder for info panel</p>
 </div>
 
 <div id="map-window">
