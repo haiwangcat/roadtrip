@@ -256,10 +256,20 @@
 </script>
 {% endaddtoblock %}
 
+<div>
+{% getParks as parks %}
+{% for park in parks %}
+  <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a>
+{% endfor %}
+</div>
+
+{% getParkSlug request as slug %}
+{% if slug != "" %}
+
 <div id="sidebar">
   <div id="sidebar-panel">
     <div id="poi-list">
-      {% getPOI request.current_page.get_slug as pois %}
+      {% getPOI slug as pois %}
       {% for poi in pois %}
         {% if poi.poi_type == "POI" %}
         <div class="poi-item">
@@ -273,7 +283,7 @@
             {% for trail in poi.trails %}
               <div class="trail-item">
                 <div class="trail-name">{{ trail.name_cn }}</div>
-                <div class="trail-route">{{ trail.route }}</div>
+                <div class="trail-route">{{ trail.routes }}</div>
               </div>
             {% endfor %}
             </div>
@@ -302,5 +312,7 @@
   <div id="map-canvas">
   </div>
 </div>
+
+{% endif %}
 
 {% endblock %}

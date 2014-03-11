@@ -1,13 +1,21 @@
 # -*- coding: utf-8 -*-
 
 from django import template
-from roadtrip.data import getData
+from roadtrip.data import getParkData
 
 register = template.Library()
 
 @register.assignment_tag(takes_context=True)
 def getPOI(context, slug):
-  return getData(slug)
+  return getParkData()[slug].pois
+
+@register.assignment_tag(takes_context=True)
+def getParks(context):
+  return getParkData().values()
+
+@register.assignment_tag(takes_context=True)
+def getParkSlug(context, request):
+  return request.GET.get('park', '')
 
 '''
 @register.simple_tag
