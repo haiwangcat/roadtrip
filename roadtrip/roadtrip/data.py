@@ -16,9 +16,21 @@ class Park:
 
 
 class Trail:
+  def __init__(self, row):
+    self.trail_type = row[0]
+    self.park_id = row[4]
+    self.name_cn = row[5]
+    self.name_en = row[6]
+    self.distance = row[7]
+    self.duration = row[8]
+    self.routes = row[9]
+
+  trail_type = ""
   name_cn = ""
   name_en = ""
-  routes = []
+  routes = ""
+  distance = 0
+  duration = 0
 
 class POI:
   def __init__(self, row):
@@ -29,17 +41,6 @@ class POI:
     self.name_en = row[7]
     self.gps = row[9]
     self.trails = []
-    #if self.poi_type == "POI":
-      #self.trailIDs = row[6].split(',')
-    #if self.poi_type == "TRAIL":
-      #self.route = row[11];
-
-  def addTrail(self, trail):
-    if trail.poi_type != "TRAIL":
-      return
-    if self.trailIDs.count(trail.poi_id) > 0:
-      if self.trails.count(trail) == 0:
-        self.trails.append(trail)
 
   poi_type = ""
   poi_id = ""
@@ -69,14 +70,16 @@ def getParkData():
     pois.append(poi)
   '''
 
-  return parks
-
-def getTrailData():
-  pois = []
-  csvfile = open('roadtrip/static/park.csv', 'rb')
+  csvfile = open('roadtrip/static/trail.csv', 'rb')
   csvreader = csv.reader(csvfile)
   for row in csvreader:
     if row[0] == '' or row[0] == 'TYPE':
       continue
+    park_id = row[4]
+    trail = Trail(row)
+    parks[park_id].trails.append(trail)
+    for poi in parks[park_id].pois:
+      if poi.poi_id == row[1]:
+        poi.trails.append(trail)
 
-#getData()
+  return parks
