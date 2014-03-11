@@ -256,14 +256,12 @@
 </script>
 {% endaddtoblock %}
 
-{% comment %}
 <div>
 {% getParks as parks %}
 {% for park in parks %}
   <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a>
 {% endfor %}
 </div>
-{% endcomment %}
 
 {% getParkSlug request as slug %}
 {% if slug != "" %}
