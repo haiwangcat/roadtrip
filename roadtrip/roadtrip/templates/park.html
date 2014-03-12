@@ -261,8 +261,7 @@
 {% getParks as parks %}
 {% for park in parks %}
   <button class="park-button">
-  <span class='park-name'>{{ park.name_cn }}</span>
-  <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
+  <a class='park-name' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
   </button>
 {% endfor %}
 </div>
