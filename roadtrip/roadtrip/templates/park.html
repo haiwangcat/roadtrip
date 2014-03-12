@@ -254,10 +254,26 @@
       }catch(e){}
   });
 
- $(".park-button").each(function() {
+ $(".park-button").each(function(index) {
+      var park_name = $(this).find("a").html();
+      park_names[index] = park_name;
+ 
       try {
       $(this).click(function () {
-          $(this).find('a').css("color", "#accc39");
+           $(this).find('a').css("color", "#accc39");
+          activeParkname = park_name;
+      }); 
+
+      $(this).mouseover(function () {
+         if (activeParkname == park_name){          
+           $(this).find('a').css("color", "#accc39");
+         }
+      }); 
+
+      $(this).mouseout(function () {
+         if (activeParkname == park_name){          
+           $(this).find('a').css("color", "#accc39");
+         }
       }); 
       }catch(e){}
   });
