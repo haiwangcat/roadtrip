@@ -257,13 +257,17 @@
 </script>
 {% endaddtoblock %}
 
-<div>
+<div id='side-nav'>
 {% getParks as parks %}
 {% for park in parks %}
-  <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a>
+  <button class="park-button">
+  <span class='park-name'>{{ park.name_cn }}</span>
+  <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
+  </button>
 {% endfor %}
 </div>
 
+  
 {% getParkSlug request as slug %}
 {% if slug != "" %}
 
@@ -310,7 +314,7 @@
 </div>
 
 <div id='info-panel'>
-  <p>Do you know?</p>
+  <p>Current trail:</p>
   <p id='item-name'></p>
 </div>
 
