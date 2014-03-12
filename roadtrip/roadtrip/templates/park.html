@@ -257,7 +257,7 @@
  $(".park-button").each(function() {
       try {
       $(this).click(function () {
-          $(this).children('park-name').css("color", "#accc39");
+          $(this).find('a').css("color", "#accc39");
       }); 
       }catch(e){}
   });
