@@ -38,7 +38,7 @@ body a { text-decoration:none; }
 
 .park-button {color: #fff; font-weight: normal; font-size: 14px;border-bottom: 1px solid #060606;height: 75px; width: 100px; background-color: #383f47;border-width: 0;color: #fff;display: block;outline: 0;overflow:hidden; position: relative;text-align: center;text-decoration: none;}
 
-.park-name {color: #fff;display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
+.park-name {display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
 .coordinate { display:none; }
 .trail-route { display:none; }
