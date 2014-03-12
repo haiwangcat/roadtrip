@@ -254,6 +254,23 @@
       }catch(e){}
   });
 
+ $(".park-button").each(function() {
+      try {
+      $(this).click(function () {
+          $(this).css("color", "#accc39");
+      }); 
+
+      $(this).mouseover(function(){
+          $(this).css("color", "#accc39");	  
+      });
+
+      $(this).mouseout(function(){
+          $(this).css("color", "#fff");	  
+      });
+
+      }catch(e){}
+  });
+
 </script>
 {% endaddtoblock %}
 
