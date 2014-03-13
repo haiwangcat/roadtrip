@@ -313,17 +313,14 @@
 {% endaddtoblock %}
 
 
-{% comment %}
-<div id='side-nav'>
+<div id='top-nav'>
 {% getParks as parks %}
 {% for park in parks %}
   <button class="park-button">
   <a class='park-name' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
-  <a class='park-name selected' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
   </button>
 {% endfor %}
 </div>
-{% endcomment %}
 
   
 {% getParkSlug request as slug %}
@@ -360,7 +357,6 @@
 </div>
 
 <div id='info-panel'>
-  <p>Current trail:</p>
   <p id='item-name'></p>
 </div>
 
