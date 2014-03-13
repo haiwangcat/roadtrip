@@ -40,5 +40,6 @@ body a { text-decoration:none; }
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
+
 .coordinate { display:none; }
 .trail-route { display:none; }
