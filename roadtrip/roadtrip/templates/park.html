@@ -80,6 +80,7 @@
           clearMap();
           marker.setVisible(true);
           marker.setMap(map);
+	  document.getElementById("item-name").innerHTML = name;
           activeMarker = markers[index];
           map.panTo(marker.position);
           infowindow.open(map, marker);
@@ -253,16 +254,43 @@
       }catch(e){}
   });
 
+$(".park-button").each(function(index) {
+      var route_lines = [];
+      var bounds = null;
+      var node = $(this);
+
+      try {
+        $(this).click(function () {
+        	if (($this).hasClass('selected'){
+        		$(this).removeClass('selected');
+        	}
+        	else {
+        		$(this).addClass('selected');
+        	}
+         });
+      }catch(e){}
+  });
+
+
 </script>
 {% endaddtoblock %}
 
-<div>
+.selected {
+      border: 1px solid #0000ff;
+      font-weight: bold;
+  }
+
+<div id='side-nav'>
 {% getParks as parks %}
 {% for park in parks %}
-  <a href="./?park={{ park.park_id }}">{{ park.name_cn }}</a>
+  <button class="park-button">
+  <a class='park-name' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
+  <a class='park-name selected' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
+  </button>
 {% endfor %}
 </div>
 
+  
 {% getParkSlug request as slug %}
 {% if slug != "" %}
 
@@ -306,6 +334,11 @@
     </div>
 {% endcomment %}
   </div>
+</div>
+
+<div id='info-panel'>
+  <p>Current trail:</p>
+  <p id='item-name'></p>
 </div>
 
 <div id="map-window">

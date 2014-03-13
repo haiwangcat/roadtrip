@@ -14,7 +14,7 @@ body { margin-bottom:30px; position:relative; z-index:1; background-repeat:no-re
 
 body a { text-decoration:none; }
 
-#sidebar { text-align:center; float:left; display:inline; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:0px; overflow-y:auto; z-index:10006; }
+#sidebar { text-align:center; float:left; display:inline; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:100px; overflow-y:auto; z-index:10006; }
 #sidebar li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 
 .poi-item { position:relative; line-height:1.7; }
@@ -29,10 +29,17 @@ body a { text-decoration:none; }
 .trail-item { cursor:pointer; padding:10px; text-align:left; padding-left:20px; }
 .trail-item:hover { background-color:#b3cd53; color:white; }
 
-#sidebar-panel { position:absolute; top:0; left:0; width:100%; }
-#info-panel { height:200px; position:bottom; background-color:gray; }
+#sidebar-panel { position:absolute; top:0; left:100; width:100%; }
+#info-panel { text-aligned:left; display:inline; width:100%; height:50px; position:fixed; bottom:0px; left:0px; background-color:#d3d3d3;}
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
-#map-canvas { position:absolute; top:40px; right:0; bottom:0; left:300px; }
+#map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:300px; }
+
+#side-nav {background-color: #383f47; bottom: 50px; left: 0; position: fixed; top: 40px; width: 100px; z-index: 10007;}
+
+.park-button {font-weight: normal; font-size: 14px;border-bottom: 1px solid #060606;height: 75px; width: 100px; background-color: #383f47;border-width: 0;color: #fff;display: block;outline: 0;overflow:hidden; position: relative;text-align: center;text-decoration: none;}
+
+.park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
+
 
 .coordinate { display:none; }
 .trail-route { display:none; }
