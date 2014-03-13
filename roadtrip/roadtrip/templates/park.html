@@ -15,6 +15,7 @@
   var markers = new Array();
   var infowindows = new Array();
   var activeMarker = null;
+  var showAllMarkers = false;
   var directionsService = new google.maps.DirectionsService();  
   var directionsDisplay;
 
@@ -29,12 +30,10 @@
       suppressMarkers: true,
       preserveViewport: true
     });
-    var chicago = new google.maps.LatLng(41.850033, -87.6500523);
-    var mapOptions = {
-      zoom:7,
-      center: chicago
-    }
+
     directionsDisplay.setMap(map);
+    initMarkers();
+    initTrails();
   }
   google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -55,83 +54,108 @@
     });
   }
 
-  $(".poi-button").each(function(index) {
-      var coordinate = $(this).find("> .coordinate").html().split(",");
-      var lat = parseFloat(coordinate[0]);
-      var lng = parseFloat(coordinate[1]);
-      var name = $(this).find("> .poi-name").html();
-      //console.log(name);
+  function closeAllInfoWindows()
+  {
+    infowindows.forEach(function(info) { info.close(); });
+  }
 
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map: map,
-        visible: false
-      });
-      markers[index] = marker;
+  function initMarkers() {
+    $(".poi-button").each(function(index) {
+        var coordinate = $(this).find("> .coordinate").html().split(",");
+        var lat = parseFloat(coordinate[0]);
+        var lng = parseFloat(coordinate[1]);
+        var name = $(this).find("> .poi-name").html();
+        //console.log(name);
 
-      var infowindow = new google.maps.InfoWindow({
-        content: name,
-        disableAutoPan: true
-      });
-      infowindows[index] = infowindow;
+        var marker = new google.maps.Marker({
+          position: new google.maps.LatLng(lat, lng),
+          map: map,
+          visible: false
+        });
+        markers[index] = marker;
 
-      try {
-        $(this).click(function () {
-          clearMap();
-          marker.setVisible(true);
-          marker.setMap(map);
-	  document.getElementById("item-name").innerHTML = name;
-          activeMarker = markers[index];
-          map.panTo(marker.position);
+        var infowindow = new google.maps.InfoWindow({
+          content: name,
+          disableAutoPan: true
+        });
+        infowindows[index] = infowindow;
+
+        google.maps.event.addListener(marker, 'mouseover', function() {
+          closeAllInfoWindows();
           infowindow.open(map, marker);
-        }); 
-        $(this).mouseover(function () {
-          if (activeMarker != marker && !marker.getVisible()) {
+        });
+        google.maps.event.addListener(marker, 'mouseout', function() {
+          closeAllInfoWindows();
+        });
+        
+
+        try {
+          $(this).click(function () {
+            clearMap();
             marker.setVisible(true);
             marker.setMap(map);
+            document.getElementById("item-name").innerHTML = name;
+            activeMarker = markers[index];
+            map.panTo(marker.position);
             infowindow.open(map, marker);
-          }
-          //if (activeMarker != null && activeMarker != marker) {
-            //calcRoute(activeMarker.position, marker.position);
-          //}
-        }); 
-        $(this).mouseout(function () {
-          if (activeMarker != marker) {
-            marker.setVisible(false);
-            infowindow.close();
-            directionsDisplay.setMap(null);
-          }
-        }); 
-      }catch(e){}
-  });
+            showAllMarkers = false;
+          }); 
+          $(this).mouseover(function () {
+            if (activeMarker != marker && !marker.getVisible()) {
+              marker.setVisible(true);
+              marker.setMap(map);
+              infowindow.open(map, marker);
+            }
+            else if (showAllMarkers)
+              infowindow.open(map, marker);
 
-  $(".trail-item").each(function(index) {
-      var route_lines = [];
-      var bounds = null;
-      var node = $(this);
+            //if (activeMarker != null && activeMarker != marker) {
+              //calcRoute(activeMarker.position, marker.position);
+            //}
+          }); 
+          $(this).mouseout(function () {
+            if (showAllMarkers)
+              infowindow.close();
+            else if (activeMarker != marker) {
+              marker.setVisible(false);
+              infowindow.close();
+              directionsDisplay.setMap(null);
+            }
+          }); 
+        }catch(e){}
+    });
+  }
 
-      var getRouteLinesAndBounds = function()
-      {
-        if (route_lines.length > 0) return;
-        var routes = getRoute(node.find("> .trail-route").html());
-        route_lines = getRouteLines(routes);
-        bounds = getRouteBounds(routes);
-      };
+  function initTrails()
+  {
+    $(".trail-item").each(function(index) {
+        var routeLines = []
+        var bounds = null;
+        var node = $(this);
 
-      try {
-        $(this).click(function () {
-          getRouteLinesAndBounds();
-          map.fitBounds(bounds);
-        }); 
-        $(this).mouseover(function () {
-          getRouteLinesAndBounds();
-          route_lines.forEach(function(line){ line.setVisible(true); });
-        }); 
-        $(this).mouseout(function () {
-          route_lines.forEach(function(line){ line.setVisible(false); });
-        }); 
-      }catch(e){}
-  });
+        var getRouteLinesAndBounds = function()
+        {
+          if (routeLines.length > 0) return;
+          var routes = getRoute(node.find("> .trail-route").html());
+          routeLines = getRouteLines(routes);
+          bounds = getRouteBounds(routes);
+        };
+
+        try {
+          $(this).click(function () {
+            getRouteLinesAndBounds();
+            map.fitBounds(bounds);
+          }); 
+          $(this).mouseover(function () {
+            getRouteLinesAndBounds();
+            routeLines.forEach(function(line){ line.setVisible(true); });
+          }); 
+          $(this).mouseout(function () {
+            routeLines.forEach(function(line){ line.setVisible(false); });
+          }); 
+        }catch(e){}
+    });
+  }
 
   function getRoute(trail_route, bounds)
   {
@@ -156,7 +180,7 @@
 
   function getRouteLines(route)
   {
-    var route_line = [];
+    var routeLine = [];
     for (var i = 0; i < route.length; ++i)
     {
       var path = new google.maps.Polyline({
@@ -167,9 +191,9 @@
         strokeWeight: 3
       });
       path.setMap(map);
-      route_line.push(path);
+      routeLine.push(path);
     }
-    return route_line;
+    return routeLine;
   }
 
   function getRouteBounds(route)
@@ -205,6 +229,17 @@
           $(this).next().next().slideToggle("200", "swing");
       }); 
       }catch(e){}
+  });
+
+  $("#show-all-pois").click(function() {
+      showAllMarkers = true;
+      markers.forEach(function(marker){
+        marker.setAnimation(google.maps.Animation.DROP);
+        marker.setVisible(true);
+      });
+      closeAllInfoWindows();
+      map.setZoom(10);
+      map.panTo(new google.maps.LatLng(37.849923, -119.567666));
   });
 
   var prior_zoom;
@@ -269,6 +304,7 @@
 
 <div id="sidebar">
   <div id="sidebar-panel">
+    <button id="show-all-pois">显示所有景点</button>
     <div id="poi-list">
       {% getPOI slug as pois %}
       {% for poi in pois %}
@@ -293,19 +329,6 @@
         {% endif %}
       {% endfor %}
     </div>
-{% comment %}
-    <div id="trail-list">
-      {% getPOI request.current_page.get_slug as pois %}
-      {% for poi in pois %}
-        {% if poi.poi_type == "TRAIL" %}
-        <div class="trail-item">
-          <span class="trail-name">{{ poi.name }}</span>
-          <span class="trail-route">{{ poi.route }}</span>
-        </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-{% endcomment %}
   </div>
 </div>
 
