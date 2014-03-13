@@ -314,12 +314,14 @@
 
 
 <div id='top-nav'>
+  <ul>
 {% getParks as parks %}
 {% for park in parks %}
-  <button class="park-button">
-  <a class='park-name' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
-  </button>
+    <li class="park-button">
+      <a class='park-name' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
+    </li>
 {% endfor %}
+  </ul>
 </div>
 
   

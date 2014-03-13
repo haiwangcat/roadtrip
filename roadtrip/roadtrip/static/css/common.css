@@ -40,7 +40,7 @@ body a { text-decoration:none; }
 
 #top-nav {background-color: #383f47; top: 0px; left: 0; height: 40px; position: fixed; width: 100%; z-index: 10007;}
 
-.park-button {font-weight: normal; font-size: 14px;border-bottom: 1px solid #060606;height: 75px; width: 100px; background-color: #383f47;border-width: 0;color: #fff;display: block;outline: 0;overflow:hidden; position: relative;text-align: center;text-decoration: none;}
+.park-button {font-weight: normal; font-size: 14px;border-bottom: 1px solid #060606;height: 40px; width: 100px; background-color: #383f47;border-width: 0;color: #fff;display: block;outline: 0;overflow:hidden; position: relative;text-align: center;}
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
