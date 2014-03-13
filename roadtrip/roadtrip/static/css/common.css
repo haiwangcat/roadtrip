@@ -36,5 +36,12 @@ body a { text-decoration:none; }
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
 #map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:300px; }
 
+#side-nav {background-color: #383f47; bottom: 50px; left: 0; position: fixed; top: 40px; width: 100px; z-index: 10007;}
+
+.park-button {font-weight: normal; font-size: 14px;border-bottom: 1px solid #060606;height: 75px; width: 100px; background-color: #383f47;border-width: 0;color: #fff;display: block;outline: 0;overflow:hidden; position: relative;text-align: center;text-decoration: none;}
+
+.park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
+
+
 .coordinate { display:none; }
 .trail-route { display:none; }
