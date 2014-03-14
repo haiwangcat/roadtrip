@@ -81,11 +81,26 @@ function initMarkers() {
           clearMap();
           marker.setVisible(true);
           marker.setMap(map);
-          document.getElementById("item-name").innerHTML = name;
           activeMarker = markers[index];
           map.panTo(marker.position);
           infowindow.open(map, marker);
           showAllMarkers = false;
+
+          $(".poi-button").each(function() {
+            $(this).removeClass("selected");
+            var info = $(this).parent().children(".poi-info");
+            if (info && info.hasClass("expanded")) {
+              info.slideToggle("50", "swing");
+              info.removeClass("expanded");
+            }
+          });
+
+          $(this).addClass("selected");
+          var info = $(this).parent().children(".poi-info");
+          if (info) {
+            info.slideToggle("50", "swing");
+            info.addClass("expanded");
+          }
         }); 
         $(this).mouseover(function () {
           if (activeMarker != marker && !marker.getVisible()) {
@@ -209,14 +224,6 @@ function clearMap() {
     infowindows[i].close();
   }
 }
-
-$(".poi-button").each(function() {
-    try {
-    $(this).click(function () {
-        $(this).next().next().slideToggle("200", "swing");
-    }); 
-    }catch(e){}
-});
 
 $("#show-all-pois").click(function() {
     showAllMarkers = true;
