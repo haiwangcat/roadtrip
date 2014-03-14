@@ -86,20 +86,27 @@ function initMarkers() {
           infowindow.open(map, marker);
           showAllMarkers = false;
 
-          $(".poi-button").each(function() {
-            $(this).removeClass("selected");
-            var info = $(this).parent().children(".poi-info");
-            if (info && info.hasClass("expanded")) {
-              info.slideToggle("50", "swing");
-              info.removeClass("expanded");
-            }
-          });
-
-          $(this).addClass("selected");
           var info = $(this).parent().children(".poi-info");
-          if (info) {
+          if (info && info.hasClass("expanded")) {
             info.slideToggle("50", "swing");
-            info.addClass("expanded");
+            info.removeClass("expanded");
+            $(this).removeClass("selected");
+          }
+          else {
+            $(".poi-button").each(function() {
+              $(this).removeClass("selected");
+              var info = $(this).parent().children(".poi-info");
+              if (info && info.hasClass("expanded")) {
+                info.slideToggle("50", "swing");
+                info.removeClass("expanded");
+              }
+            });
+
+            $(this).addClass("selected");
+            if (info) {
+              info.slideToggle("50", "swing");
+              info.addClass("expanded");
+            }
           }
         }); 
         $(this).mouseover(function () {
