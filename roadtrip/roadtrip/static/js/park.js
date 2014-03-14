@@ -21,8 +21,19 @@ function initialize() {
   directionsDisplay.setMap(map);
   initMarkers();
   initTrails();
+
+  var imageBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(37.469523, -119.907182),
+      new google.maps.LatLng(38.197308, -119.004523));
+
+  historicalOverlay = new google.maps.GroundOverlay(
+      '/static/img/yose.jpg',
+      imageBounds);
+  historicalOverlay.setMap(map);
+
 }
 google.maps.event.addDomListener(window, 'load', initialize);
+
 
 function calcRoute(start, end) {
   //var start = new google.maps.LatLng(37.716753,-119.646505);
