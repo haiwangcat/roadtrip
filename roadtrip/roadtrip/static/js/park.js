@@ -25,8 +25,7 @@ function initialize() {
   initMarkers();
   initTrails();
 
-  /*
-  if (false) {
+  if (true) {
   var imageBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.469523, -119.904577),
       new google.maps.LatLng(38.197833, -119.004523));
@@ -67,7 +66,6 @@ function initialize() {
   });
 
   }
-  */
 
 }
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -112,7 +110,7 @@ function initMarkers() {
       markers[index] = marker;
 
       var infowindow = new InfoBox({
-        content: '<span class="infowindow-label"><p>' + name + '</p><p>' + nameEn + "</p></span>",
+        content: '<span class="infobox-label"><p class="infobox-title-cn">' + name + '</p><p class="infobox-title-en">' + nameEn + "</p></span>",
         disableAutoPan: true,
       });
       infowindows[index] = infowindow;
@@ -162,7 +160,7 @@ function initMarkers() {
             }
           }
         }); 
-        $(this).mouseover(function () {
+        $(this).parent().mouseover(function () {
           if (activeMarker != marker && !marker.getVisible()) {
             marker.setVisible(true);
             marker.setMap(map);
@@ -175,7 +173,7 @@ function initMarkers() {
             //calcRoute(activeMarker.position, marker.position);
           //}
         }); 
-        $(this).mouseout(function () {
+        $(this).parent().mouseout(function () {
           if (showAllMarkers)
             infowindow.close();
           else if (activeMarker != marker) {

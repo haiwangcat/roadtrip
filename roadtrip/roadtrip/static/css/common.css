@@ -15,18 +15,18 @@ button { cursor:pointer; }
 
 body a { text-decoration:none; }
 
-#sidebar { text-align:center; float:left; display:inline; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; overflow-y:auto; }
+#sidebar { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; overflow-y:auto; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); }
 #sidebar li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 #show-all-pois { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
 
 .poi-item { position:relative; line-height:1.7; }
-.poi-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#ffffff; text-align:left; padding-left:20px; }
+.poi-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:left; padding-left:20px; }
 .poi-button:hover, .poi-button.selected { background-color:#1ea5ad; color:white; }
 .poi-button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:49px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
 .poi-info { display:none; background-color:#eeeeee; position:relative; }
 .poi-name-en { font-size:10px; }
 
-.zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#ffffff; outline:0; }
+.zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#f5f3f0; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
 
 .trail-item { cursor:pointer; padding:10px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
@@ -37,37 +37,13 @@ body a { text-decoration:none; }
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
 #map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:350px; }
 
-
 #top-nav-area {background-color: #383f47; top: 0px; left: 0; height: 40px; position: fixed; width: 100%; z-index: 10007;}
 #top-nav {height: 40px; line-height: 40px; text-align: center; width: 100%; float: left; margin: 0 0 3em 0; padding: 0; list-style: none;}
 
-#side-nav {
-	background-color: #f9f9f6;
-	bottom: 50px;
-	left: 0;
-	position: fixed;
-	top: 40px;
-	width: 50px;
-	z-index: 10007;
-}
 
-.side-nav-category {
-	font-size: 8px;
-	border-bottom: 1px solid #060606;
-	position:fixed;
-	height: 50px;
-	width: 50px;
-	background-color: #f9f9f6;
-	border-width: 0;
-	color: #383f47;
-	display: block;
-	outline: 0;
-	overflow: hidden;
-	position: relative;
-	text-align: center;
-	text-decoration: none;
-	text-transform: uppercase;
-}
+#side-nav { background-color: #f9f9f6; bottom: 50px; left: 0; position: fixed; top: 40px; width: 50px; z-index: 10007; }
+
+.side-nav-category { font-size: 8px; border-bottom: 1px solid #060606; height: 50px; width: 50px; background-color: #f9f9f6; border-width: 0; color: #383f47; display: block; outline: 0; overflow: hidden; position: relative; text-align: center; text-decoration: none; text-transform: uppercase; }
 
 .side-nav-pic{
 	height: 25px;
@@ -101,7 +77,9 @@ background-color:#accc39;
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
-.infowindow-label { display:block; color:black; background-color:white; padding:5px; border:1px solid green; }
+.infobox-label { display:block; width:100px; color:black; background-color:#1ea5ad; border:1px solid white; padding:5px; border-radius:5px; box-shadow: 8px 8px 5px #888888; }
+.infobox-label p { display:block; background-color:#1ea5ad; color:white; padding:0px; }
+.infobox-title-en { font-size:10px; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
