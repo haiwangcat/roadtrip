@@ -54,7 +54,7 @@ body a { text-decoration:none; }
 	border-bottom: 1px solid #060606;
 	height: 50px;
 	width: 50px;
-	background-color: #f9f9f6;
+	background-color: #ffffff;
 	border-width: 0;
 	color: #383f47;
 	display: block;
