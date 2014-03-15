@@ -72,7 +72,9 @@ body a { text-decoration:none; }
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
-.infowindow-label { display:block; color:black; background-color:white; padding:5px; border:1px solid green; }
+.infobox-label { display:block; width:100px; color:black; background-color:#1ea5ad; border:1px solid white; padding:5px; border-radius:5px; box-shadow: 8px 8px 5px #888888; }
+.infobox-label p { display:block; background-color:#1ea5ad; color:white; padding:0px; }
+.infobox-title-en { font-size:10px; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
