@@ -20,12 +20,13 @@ body a { text-decoration:none; }
 #show-all-pois { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
 
 .poi-item { position:relative; line-height:1.7; }
-.poi-button { position:relative; display:block; outline:0; height:40px; width:100%; font-size:15px; border:none; background-color:#ffffff; text-align:left; padding-left:20px; }
+.poi-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#ffffff; text-align:left; padding-left:20px; }
 .poi-button:hover, .poi-button.selected { background-color:#1ea5ad; color:white; }
-.poi-button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:39px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
+.poi-button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:49px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
 .poi-info { display:none; background-color:#eeeeee; position:relative; }
+.poi-name-en { font-size:10px; }
 
-.zoom-button { position:absolute; top:0; right:0; width:40px; height:40px; cursor:pointer; background-color:#ffffff; outline:0; }
+.zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#ffffff; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
 
 .trail-item { cursor:pointer; padding:10px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
@@ -71,7 +72,7 @@ body a { text-decoration:none; }
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
-.infowindow-label { color:black; background-color:white; padding:5px; border:1px solid green; }
+.infowindow-label { display:block; color:black; background-color:white; padding:5px; border:1px solid green; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }

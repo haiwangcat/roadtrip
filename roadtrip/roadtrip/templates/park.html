@@ -43,7 +43,8 @@
         {% if poi.poi_type == "POI" %}
         <div class="poi-item">
           <button class="poi-button">
-            <span class="poi-name">{{ poi.name_cn }}</span>
+            <p class="poi-name">{{ poi.name_cn }}</p>
+            <p class="poi-name-en">{{ poi.name_en }}</p>
             <span class="coordinate">{{ poi.gps }}</span>
           </button>
           <button class="zoom-button">+</button>

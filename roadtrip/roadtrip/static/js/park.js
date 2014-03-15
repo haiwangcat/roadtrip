@@ -98,6 +98,7 @@ function initMarkers() {
       var lat = parseFloat(coordinate[0]);
       var lng = parseFloat(coordinate[1]);
       var name = $(this).find("> .poi-name").html();
+      var nameEn = $(this).find("> .poi-name-en").html();
       //console.log(name);
 
       var marker = new google.maps.Marker({
@@ -108,7 +109,7 @@ function initMarkers() {
       markers[index] = marker;
 
       var infowindow = new InfoBox({
-        content: '<span class="infowindow-label">' + name + "</span>",
+        content: '<span class="infowindow-label"><p>' + name + '</p><p>' + nameEn + "</p></span>",
         disableAutoPan: true,
       });
       infowindows[index] = infowindow;
