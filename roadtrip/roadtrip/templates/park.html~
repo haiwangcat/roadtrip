@@ -79,7 +79,7 @@
 </div>
 
 <div id='info-panel'>
-  <p id='item-name'>{{ activeItem }}</p>
+  <p id='item-name'>Description</p>
 </div>
 
 <div id="map-window">

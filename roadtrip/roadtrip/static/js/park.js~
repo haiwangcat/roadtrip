@@ -259,7 +259,6 @@ $("#show-all-pois").click(function() {
 		showAllMarkers = false;
 		});
 	}
-    });
     closeAllInfoWindows();
     map.setZoom(10);
     map.panTo(new google.maps.LatLng(37.849923, -119.567666));

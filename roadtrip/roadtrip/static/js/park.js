@@ -22,14 +22,47 @@ function initialize() {
   initMarkers();
   initTrails();
 
+  if (false) {
   var imageBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(37.469523, -119.907182),
-      new google.maps.LatLng(38.197308, -119.004523));
+      new google.maps.LatLng(37.469523, -119.904577),
+      new google.maps.LatLng(38.197833, -119.004523));
 
   historicalOverlay = new google.maps.GroundOverlay(
-      '/static/img/yose.jpg',
-      imageBounds);
+      '/static/img/maps/yose.jpg',
+      imageBounds,
+      { opacity: 0.8 });
   historicalOverlay.setMap(map);
+
+    var rectangle = new google.maps.Rectangle({
+    strokeColor: '#FF0000',
+    strokeOpacity: 1,
+    strokeWeight: 1,
+    fillOpacity: 0,
+    map: map,
+    bounds: imageBounds
+  });
+
+  } else {
+  var imageBounds = new google.maps.LatLngBounds(
+      new google.maps.LatLng(37.705595, -119.688373),
+      new google.maps.LatLng(37.765755, -119.509571));
+
+  historicalOverlay = new google.maps.GroundOverlay(
+      '/static/img/maps/yosevalley.jpg',
+      imageBounds,
+      { opacity: 1 });
+  historicalOverlay.setMap(map);
+
+  var rectangle = new google.maps.Rectangle({
+    strokeColor: '#FF0000',
+    strokeOpacity: 1,
+    strokeWeight: 1,
+    fillOpacity: 0,
+    map: map,
+    bounds: imageBounds
+  });
+
+  }
 
 }
 google.maps.event.addDomListener(window, 'load', initialize);
