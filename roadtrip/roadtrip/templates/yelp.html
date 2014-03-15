@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Yelp OAuth Example</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+
+<script type="text/javascript">
+var auth = {
+
+  consumerKey: "-gM1MDORZmAKdXjTuhBcdQ",
+  consumerSecret: "qZfZ3HOpBMBfG16qwWelOfkfulM",
+  accessToken: "tWNxBlQ5ceKYHa-djisC1Skp6MtRcUz3",
+
+  accessTokenSecret: "G2PifoJg3WaApjURvTSDv0snEF4",
+  serviceProvider: {
+    signatureMethod: "HMAC-SHA1"
+  }
+};
+var terms = 'chinese+food';
+var near = 'San+Francisco';
+var accessor = {
+  consumerSecret: auth.consumerSecret,
+  tokenSecret: auth.accessTokenSecret
+};
+parameters = [];
+parameters.push(['term', terms]);
+parameters.push(['location', near]);
+parameters.push(['callback', 'cb']);
+parameters.push(['oauth_consumer_key', auth.consumerKey]);
+parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
+parameters.push(['oauth_token', auth.accessToken]);
+parameters.push(['oauth_signature_method', 'HMAC-SHA1']);
+var message = {
+  'action': 'http://api.yelp.com/v2/search',
+  'method': 'GET',
+  'parameters': parameters
+};
+OAuth.setTimestampAndNonce(message);
+OAuth.SignatureMethod.sign(message, accessor);
+var parameterMap = OAuth.getParameterMap(message.parameters);
+parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
+console.log(parameterMap);
+
+
+	$.ajax({
+	  'url': message.action,
+	  'data': parameterMap,
+	  'cache': true,
+	  'dataType': 'jsonp',
+	  'jsonpCallback': 'cb',
+	  'success': function(data, text, XMLHttpRequest) {
+	    console.log(data);
+	    for (var j = 0; j < data.businesses.length; ++j){
+		    var output = data.businesses[j].name;
+	    	    $("body").append(output);
+	    }
+	  }
+	});
+
+
+
+</script>
+</head>
+  
+<body>
+<div id="myDiv"><h2>Let AJAX change this text</h2></div>
+<button id="button">Press me press me</button>
+<div id='test'></div>
+</body>
+</html>
