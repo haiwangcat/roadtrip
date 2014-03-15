@@ -12,6 +12,7 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4y5vgVMb3bcqjYsaYJzJphjJdvnJBr6U&sensor=true&language=zh"></script>
 <script type="text/javascript" src="{% static "js/park.js" %}"></script>
 <script type="text/javascript" src="{% static "js/infobox_packed.js" %}"></script>
+<script type="text/javascript" src="{% static "js/trip.js" %}"></script>
 <script type="text/javascript">
 
    
@@ -67,21 +68,25 @@
 
 <div id='side-nav'>
   <button class='side-nav-category'>
-    <img src="/static/img/pins48.svg"></img>
-    <hl>Places</hl>
+    <img class='side-nav-pic' src="/static/img/pins48.svg"></img>
   </button>
   <button class='side-nav-category'>
-    <img src="/static/img/vintage2.svg"></img>
-    <hl>Photos</hl>
+    <img class='side-nav-pic' src="/static/img/vintage2.svg"></img>
   </button>
   <button class='side-nav-category'>
-    <img src="/static/img/hotel.svg"></img>
-    <hl>Hotels</hl>
+    <img class='side-nav-pic' src="/static/img/hotel.svg"></img>
   </button>
 </div>
 
+<div id='add-to-trip'>
+	<button id='add-to-trip-button'>
+		<p'>加入行程</p>
+	</button>
+</div>
+
 <div id='info-panel'>
-  <p id='item-name'>Description</p>
+  <p>目前的地点</p>
+  <p id='item-name'>您的旅程：</p>
 </div>
 
 <div id="map-window">

@@ -5,6 +5,9 @@ var activeMarker = null;
 var showAllMarkers = false;
 var directionsService = new google.maps.DirectionsService();  
 var directionsDisplay;
+var selectedItemName;
+var selectedItem = [];
+//var selectedItemGPS;
 
 function initialize() {
   var mapOptions = {
@@ -132,7 +135,9 @@ function initMarkers() {
           map.panTo(marker.position);
           infowindow.open(map, marker);
           showAllMarkers = false;
-//	  activeItem = name;
+          selectedItemName = $(this).find("> .poi-name").html();
+          console.log('name',selectedItemName);
+    //      selectedItemGPS = $(this).find("> .coordinate").html().split(",");
 
           var info = $(this).parent().children(".poi-info");
           if (info && info.hasClass("expanded")) {
