@@ -11,7 +11,6 @@
 {% addtoblock "js" %}
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4y5vgVMb3bcqjYsaYJzJphjJdvnJBr6U&sensor=true&language=zh"></script>
 <script type="text/javascript" src="{% static "js/park.js" %}"></script>
-<script type="text/javascript" src="{% static "js/infobox_packed.js" %}"></script>
 <script type="text/javascript">
 
    
