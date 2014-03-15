@@ -22,6 +22,7 @@ function initialize() {
   initMarkers();
   initTrails();
 
+  /*
   if (false) {
   var imageBounds = new google.maps.LatLngBounds(
       new google.maps.LatLng(37.469523, -119.904577),
@@ -63,6 +64,7 @@ function initialize() {
   });
 
   }
+  */
 
 }
 google.maps.event.addDomListener(window, 'load', initialize);
@@ -105,9 +107,9 @@ function initMarkers() {
       });
       markers[index] = marker;
 
-      var infowindow = new google.maps.InfoWindow({
-        content: name,
-        disableAutoPan: true
+      var infowindow = new InfoBox({
+        content: '<span class="infowindow-label">' + name + "</span>",
+        disableAutoPan: true,
       });
       infowindows[index] = infowindow;
 

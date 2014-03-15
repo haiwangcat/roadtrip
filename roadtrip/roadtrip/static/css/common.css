@@ -43,6 +43,7 @@ body a { text-decoration:none; }
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
+.infowindow-label { color:black; background-color:white; padding:5px; border:1px solid green; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
