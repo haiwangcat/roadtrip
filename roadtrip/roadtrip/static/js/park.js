@@ -155,7 +155,7 @@ function initMarkers() {
             }
           }
         }); 
-        $(this).mouseover(function () {
+        $(this).parent().mouseover(function () {
           if (activeMarker != marker && !marker.getVisible()) {
             marker.setVisible(true);
             marker.setMap(map);
@@ -168,7 +168,7 @@ function initMarkers() {
             //calcRoute(activeMarker.position, marker.position);
           //}
         }); 
-        $(this).mouseout(function () {
+        $(this).parent().mouseout(function () {
           if (showAllMarkers)
             infowindow.close();
           else if (activeMarker != marker) {
