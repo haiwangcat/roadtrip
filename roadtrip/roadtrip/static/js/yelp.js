@@ -1,30 +1,26 @@
-<html>
-<head>
-<title>Yelp OAuth Example</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
-<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+// yelp api to extract hotel and restaurant information
 
-<script type="text/javascript">
+
+// build authorization key
 var auth = {
-
   consumerKey: "-gM1MDORZmAKdXjTuhBcdQ",
   consumerSecret: "qZfZ3HOpBMBfG16qwWelOfkfulM",
   accessToken: "tWNxBlQ5ceKYHa-djisC1Skp6MtRcUz3",
-
   accessTokenSecret: "G2PifoJg3WaApjURvTSDv0snEF4",
   serviceProvider: {
     signatureMethod: "HMAC-SHA1"
   }
 };
+
+// build parameter in the url request
 var terms = 'food';
-//var near = 'San+Francisco';
 var latitude = 37.894201;
 var longitude = -119.546449;
 var accessor = {
   consumerSecret: auth.consumerSecret,
   tokenSecret: auth.accessTokenSecret
 };
+
 parameters = [];
 parameters.push(['term', terms]);
 //parameters.push(['location', near]);
@@ -45,32 +41,27 @@ var parameterMap = OAuth.getParameterMap(message.parameters);
 parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
 console.log(parameterMap);
 
+food = [];
+var foodList = new Array();
 
-	$.ajax({
-	  'url': message.action,
-	  'data': parameterMap,
-	  'cache': true,
-	  'dataType': 'jsonp',
-	  'jsonpCallback': 'cb',
-	  'success': function(data, text, XMLHttpRequest) {
-	    console.log(data);
-		$("body").append("total number of businesses:" + data.total);
-	    for (var j = 0; j < data.businesses.length; ++j){
-		    var output = data.businesses[j].name;
-		    	$("body").append(",")
-	    	    $("body").append(output);
-	    }
-	  }
-	});
-
-
-
-</script>
-</head>
-  
-<body>
-<div id="myDiv"><h2>Let AJAX change this text</h2></div>
-<button id="button">Press me press me</button>
-<div id='test'></div>
-</body>
-</html>
+$.ajax({
+  'url': message.action,
+  'data': parameterMap,
+  'cache': true,
+  'dataType': 'jsonp',
+  'jsonpCallback': 'cb',
+  'success': function(data, text, XMLHttpRequest) {
+    console.log(data);
+	for (var j = 0; j < data.businesses.length; ++j){
+		var current_business_name = data.businesses[j].name;
+		var current_business_lat = data.businesses[j].location[0];
+		var current_business_lng = data.businesses[j].location[1];
+		console.log('food_name',current_business_name);
+		
+		$('.food-item:last').clone().appendTo('.food-list').find(".food-name-en").html(current_business_name);
+		//var test = $('.food-item:last').clone().appendTo('.food-list').children(".food-name-en").html();
+		//console.log(test);
+		$('.food-item:first').hide();
+		}
+	}
+});
