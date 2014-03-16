@@ -20,6 +20,13 @@
 {% endaddtoblock %}
 
 
+<div id="overlay-panel-wrapper">
+  <div id="overlay-panel">
+    <div id="overlay-content">
+    </div>
+  </div>
+</div>
+
 <div id='top-nav-area'>
   <ul id='top-nav'>
 {% getParks as parks %}
@@ -37,7 +44,10 @@
 
 <div id="sidebar">
   <div id="sidebar-panel">
-    <button id="show-all-pois">显示所有景点</button>
+    <div id="poi-control-panel">
+      <a href="javascript:" id="show-all-pois">显示所有景点</a>
+      <a href="javascript:" id="show-official-map">官方地图</a>
+    </div>
     <div id="poi-list">
       {% getPOI slug as pois %}
       {% for poi in pois %}

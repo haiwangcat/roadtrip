@@ -24,49 +24,7 @@ function initialize() {
   directionsDisplay.setMap(map);
   initMarkers();
   initTrails();
-
-  if (true) {
-  var imageBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(37.469523, -119.904577),
-      new google.maps.LatLng(38.197833, -119.004523));
-
-  historicalOverlay = new google.maps.GroundOverlay(
-      '/static/img/maps/yose.jpg',
-      imageBounds,
-      { opacity: 0.8 });
-  historicalOverlay.setMap(map);
-
-    var rectangle = new google.maps.Rectangle({
-    strokeColor: '#FF0000',
-    strokeOpacity: 1,
-    strokeWeight: 1,
-    fillOpacity: 0,
-    map: map,
-    bounds: imageBounds
-  });
-
-  } else {
-  var imageBounds = new google.maps.LatLngBounds(
-      new google.maps.LatLng(37.705595, -119.688373),
-      new google.maps.LatLng(37.765755, -119.509571));
-
-  historicalOverlay = new google.maps.GroundOverlay(
-      '/static/img/maps/yosevalley.jpg',
-      imageBounds,
-      { opacity: 1 });
-  historicalOverlay.setMap(map);
-
-  var rectangle = new google.maps.Rectangle({
-    strokeColor: '#FF0000',
-    strokeOpacity: 1,
-    strokeWeight: 1,
-    fillOpacity: 0,
-    map: map,
-    bounds: imageBounds
-  });
-
-  }
-
+  initOfficialMap();
 }
 google.maps.event.addDomListener(window, 'load', initialize);
 
@@ -134,7 +92,7 @@ function initMarkers() {
           infowindow.open(map, marker);
           showAllMarkers = false;
           selectedItemName = $(this).find("> .poi-name").html();
-          console.log('name',selectedItemName);
+          $("#overlay-content").html(name);
     //      selectedItemGPS = $(this).find("> .coordinate").html().split(",");
 
           var info = $(this).parent().children(".poi-info");
@@ -303,8 +261,70 @@ $("#show-all-pois").click(function() {
     map.panTo(new google.maps.LatLng(37.849923, -119.567666));
 });
 
-var prior_zoom;
-var prior_center;
+function initOfficialMap() {
+  $("#show-official-map").each(function() {
+      var mapOverlay = null;
+      var mapFrame = null;
+
+      if (true) {
+        var imageBounds = new google.maps.LatLngBounds(
+          new google.maps.LatLng(37.469523, -119.904577),
+          new google.maps.LatLng(38.197833, -119.004523));
+
+        mapOverlay = new google.maps.GroundOverlay(
+          '/static/img/maps/yose.jpg',
+          imageBounds,
+          { opacity: 0.8 }
+        );
+        //mapOverlay.setMap(map);
+
+        mapFrame = new google.maps.Rectangle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 1,
+          strokeWeight: 1,
+          fillOpacity: 0,
+          bounds: imageBounds,
+          map: map,
+          visible: false
+        });
+      }
+      else {
+        var imageBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(37.705595, -119.688373),
+            new google.maps.LatLng(37.765755, -119.509571));
+
+        mapOverlay = new google.maps.GroundOverlay(
+            '/static/img/maps/yosevalley.jpg',
+            imageBounds,
+            { opacity: 1 });
+        mapOverlay.setMap(map);
+
+        mapFrame = new google.maps.Rectangle({
+          strokeColor: '#FF0000',
+          strokeOpacity: 1,
+          strokeWeight: 1,
+          fillOpacity: 0,
+          bounds: imageBounds,
+          map: map,
+          visible: false
+        });
+      }
+
+      $(this).click(function() {
+        if (mapOverlay.getMap() != null) {
+          mapOverlay.setMap(null);
+          mapFrame.setVisible(false);
+        }
+        else {
+          mapOverlay.setMap(map);
+          mapFrame.setVisible(true);
+        }
+      });
+  });
+}
+
+var priorZoom;
+var priorCenter;
 $(".zoom-button").each(function(index) {
     try {
     $(this).click(function () {
@@ -325,8 +345,8 @@ $(".zoom-button").each(function(index) {
         infowindows[index].open(map, markers[index]);
         if (update_center)
         {
-          prior_center = map.getCenter();
-          prior_zoom = map.getZoom();
+          priorCenter = map.getCenter();
+          priorZoom = map.getZoom();
         }
         //center = map.setCenter();
         map.setCenter(markers[index].getPosition());
@@ -337,8 +357,8 @@ $(".zoom-button").each(function(index) {
       }
       else
       {
-        map.setZoom(prior_zoom);
-        map.setCenter(prior_center);
+        map.setZoom(priorZoom);
+        map.setCenter(priorCenter);
         $(this).html("+");
         if (markers[index] != activeMarker)
         {
