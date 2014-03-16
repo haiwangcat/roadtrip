@@ -18,11 +18,17 @@ body a { text-decoration:none; }
 #sidebar { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; overflow-y:auto; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); }
 #sidebar li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 
+//#sidebar-parks, #sidebar-pois { position:absolute; }
+
+.sidebar-item-list2 { display:none; position:relative; float:left; overflow:hidden; width:300px; margin:0 5px 0 0; top:0; }
+
 #poi-control-panel { position:relative; display:block; outline:0; height:30px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; }
 #poi-control-panel a { color:white; }
 #poi-control-panel a:hover { text-decoration:underline; }
 #show-all-pois { position:absolute; left:0; text-align:left; padding-left:20px; }
-#show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
+#show-official-map { position:absolute; bottom:0; right:0; text-align:right; padding-right:20px; }
+#sidebar-back { position:absolute; top:0; left:0; text-align:right; padding-left:20px; }
+#sidebar-forward { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 
 .poi-item { position:relative; line-height:1.7; }
 .poi-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:left; padding-left:20px; }
@@ -66,8 +72,8 @@ body a { text-decoration:none; }
 .infobox-title-en { font-size:10px; }
 
 //#overlay-panel-wrapper { position:absolute; left:0; top:0; width:100%; height:0; }
-#overlay-panel { display:none; overflow:auto; position:absolute; left:300px; bottom:0; height:500px; right:0; z-index:10008; padding:20px; top:0; }
-#overlay-content { position:relative; z-index:20009; background-color:white; width:500px; height:300px; margin:50px; border:solid 1px white; border-radius:5px; }
+#overlay-panel { display:none; overflow:auto; position:absolute; left:400px; bottom:0; height:500px; right:0; z-index:10008; padding-top:20px; top:0; }
+#overlay-content { position:relative; z-index:20009; background-color:#f9f9f6; width:500px; height:300px; margin-top:50px; border:solid 1px white; border-radius:5px; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }

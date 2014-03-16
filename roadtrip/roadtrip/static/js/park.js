@@ -243,17 +243,17 @@ function clearMap() {
 }
 
 $("#show-all-pois").click(function() {
-    if(showAllMarkers==false){
-    	markers.forEach(function(marker){
+  if(showAllMarkers==false){
+    markers.forEach(function(marker){
 		marker.setAnimation(google.maps.Animation.DROP);
       		marker.setVisible(true);
 		showAllMarkers = true;
 		});
 	}
-    else{
-    	markers.forEach(function(marker){
-		marker.setVisible(false);
-		showAllMarkers = false;
+  else{
+    markers.forEach(function(marker){
+      marker.setVisible(false);
+      showAllMarkers = false;
 		});
 	}
     closeAllInfoWindows();
@@ -274,12 +274,12 @@ function initOfficialMap() {
         mapOverlay = new google.maps.GroundOverlay(
           '/static/img/maps/yose.jpg',
           imageBounds,
-          { opacity: 0.8 }
+          { opacity: 0.8, clickable: false }
         );
         //mapOverlay.setMap(map);
 
         mapFrame = new google.maps.Rectangle({
-          strokeColor: '#FF0000',
+          strokeColor: 'green',
           strokeOpacity: 1,
           strokeWeight: 1,
           fillOpacity: 0,
@@ -317,6 +317,9 @@ function initOfficialMap() {
         }
         else {
           mapOverlay.setMap(map);
+          // A trick to force refreshing the map so that the mapOverlay can be shown.
+          map.setZoom(map.getZoom()+1);
+          map.setZoom(map.getZoom()-1);
           mapFrame.setVisible(true);
         }
       });
@@ -326,6 +329,21 @@ function initOfficialMap() {
 var priorZoom;
 var priorCenter;
 $(".zoom-button").each(function(index) {
+    $(this).click(function () {
+      if ($("#overlay-panel").css("display") == "none")
+      {
+        var mapCanvas = $("#map-canvas");
+        var width = parseInt(mapCanvas.css("width")) - 100;
+        var left = parseInt(mapCanvas.css("left"));
+        $("#overlay-panel").children("#overlay-content").css("width", width);
+        $("#overlay-panel").css("left", left+50);
+        $("#overlay-panel").show();
+        $("#overlay-panel").children("#overlay-content").html($(this).parent().find(".poi-name").html());
+      }
+      else
+        $("#overlay-panel").hide();
+    });
+    /*
     try {
     $(this).click(function () {
       if ($(this).html() == "+")
@@ -368,7 +386,47 @@ $(".zoom-button").each(function(index) {
       }
     }); 
     }catch(e){}
+    */
 });
 
 
+/*
+    $('#sidebar-forward').click(function() {
+        var target = $(".sidebar-item-list").first().next(),
+            other = target.siblings('.active');
+        
+        if (!target.hasClass('active')) {
+            other.each(function(index, self) {
+                $(this).removeClass('active').animate({
+                    left: -other.width()
+                }, 400);
+            });
 
+            target.addClass('active').show().css({
+                left: target.width()
+            }).animate({
+                left: 0//$this.width()
+            }, 400);
+        }
+    });
+
+    $('#sidebar-back').click(function() {
+        var $target = $(".sidebar-item-list").first(),
+            $other = $target.siblings('.active');
+        
+        if (!$target.hasClass('active')) {
+            $other.each(function(index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 400);
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 400);
+        }
+    });
+    */
