@@ -7,6 +7,9 @@ var directionsService = new google.maps.DirectionsService();
 var directionsDisplay;
 var selectedItemName;
 var selectedItem = [];
+var introPanelOn = false;
+var priorZoom;
+var priorCenter;
 //var selectedItemGPS;
 
 function initialize() {
@@ -22,10 +25,12 @@ function initialize() {
   });
 
   directionsDisplay.setMap(map);
+  initMap();
   initMarkers();
   initTrails();
   initOfficialMap();
 }
+
 google.maps.event.addDomListener(window, 'load', initialize);
 
 
@@ -46,102 +51,114 @@ function calcRoute(start, end) {
   });
 }
 
-function closeAllInfoWindows()
-{
+function closeAllInfoWindows() {
   infowindows.forEach(function(info) { info.close(); });
+}
+
+function initMap() {
+    google.maps.event.addListener(map, 'click', function() {
+      if (introPanelOn) {
+        turnOffIntroPanel();
+      }
+    });
+    google.maps.event.addListener(map, 'click', function() {
+      if (introPanelOn) {
+        turnOffIntroPanel();
+      }
+    });
 }
 
 function initMarkers() {
   $(".poi-button").each(function(index) {
-      var coordinate = $(this).find("> .coordinate").html().split(",");
-      var lat = parseFloat(coordinate[0]);
-      var lng = parseFloat(coordinate[1]);
-      var name = $(this).find("> .poi-name").html();
-      var nameEn = $(this).find("> .poi-name-en").html();
-      //console.log(name);
+    var coordinate = $(this).find("> .coordinate").html().split(",");
+    var lat = parseFloat(coordinate[0]);
+    var lng = parseFloat(coordinate[1]);
+    var name = $(this).find("> .poi-name").html();
+    var nameEn = $(this).find("> .poi-name-en").html();
+    //console.log(name);
 
-      var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map: map,
-        visible: false
-      });
-      markers[index] = marker;
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(lat, lng),
+      map: map,
+      visible: false
+    });
+    markers[index] = marker;
 
-      var infowindow = new InfoBox({
-        content: '<span class="infobox-label"><p class="infobox-title-cn">' + name + '</p><p class="infobox-title-en">' + nameEn + "</p></span>",
-        disableAutoPan: true,
-        closeBoxURL: ''
-      });
-      infowindows[index] = infowindow;
+    var infowindow = new InfoBox({
+      content: '<span class="infobox-label"><p class="infobox-title-cn">' + name + '</p><p class="infobox-title-en">' + nameEn + "</p></span>",
+      disableAutoPan: true,
+      closeBoxURL: ''
+    });
+    infowindows[index] = infowindow;
 
-      google.maps.event.addListener(marker, 'mouseover', function() {
-        closeAllInfoWindows();
+    google.maps.event.addListener(marker, 'mouseover', function() {
+      closeAllInfoWindows();
+      infowindow.open(map, marker);
+    });
+    google.maps.event.addListener(marker, 'mouseout', function() {
+      closeAllInfoWindows();
+    });
+    
+
+    try {
+      $(this).click(function () {
+        clearMap();
+        marker.setVisible(true);
+        marker.setMap(map);
+        activeMarker = markers[index];
+        map.panTo(marker.position);
         infowindow.open(map, marker);
-      });
-      google.maps.event.addListener(marker, 'mouseout', function() {
-        closeAllInfoWindows();
-      });
-      
+        showAllMarkers = false;
+        selectedItemName = $(this).find("> .poi-name").html();
+        $("#overlay-content").html(name);
+        //selectedItemGPS = $(this).find("> .coordinate").html().split(",");
 
-      try {
-        $(this).click(function () {
-          clearMap();
+        var info = $(this).parent().children(".poi-info");
+        if (info && info.hasClass("expanded")) {
+          info.slideToggle("50", "swing");
+          info.removeClass("expanded");
+          $(this).removeClass("selected");
+        }
+        else {
+          $(".poi-button").each(function() {
+            $(this).removeClass("selected");
+            var info = $(this).parent().children(".poi-info");
+            if (info && info.hasClass("expanded")) {
+              info.slideToggle("50", "swing");
+              info.removeClass("expanded");
+            }
+          });
+
+          $(this).addClass("selected");
+          if (info) {
+            info.slideToggle("50", "swing");
+            info.addClass("expanded");
+          }
+        }
+      }); 
+      $(this).parent().mouseover(function () {
+        if (activeMarker != marker && !marker.getVisible()) {
           marker.setVisible(true);
           marker.setMap(map);
-          activeMarker = markers[index];
-          map.panTo(marker.position);
           infowindow.open(map, marker);
-          showAllMarkers = false;
-          selectedItemName = $(this).find("> .poi-name").html();
-          $("#overlay-content").html(name);
-    //      selectedItemGPS = $(this).find("> .coordinate").html().split(",");
+        }
+        else if (showAllMarkers)
+          infowindow.open(map, marker);
 
-          var info = $(this).parent().children(".poi-info");
-          if (info && info.hasClass("expanded")) {
-            info.slideToggle("50", "swing");
-            info.removeClass("expanded");
-            $(this).removeClass("selected");
-          }
-          else {
-            $(".poi-button").each(function() {
-              $(this).removeClass("selected");
-              var info = $(this).parent().children(".poi-info");
-              if (info && info.hasClass("expanded")) {
-                info.slideToggle("50", "swing");
-                info.removeClass("expanded");
-              }
-            });
-
-            $(this).addClass("selected");
-            if (info) {
-              info.slideToggle("50", "swing");
-              info.addClass("expanded");
-            }
-          }
-        }); 
-        $(this).parent().mouseover(function () {
-          if (activeMarker != marker && !marker.getVisible()) {
-            marker.setVisible(true);
-            marker.setMap(map);
-            infowindow.open(map, marker);
-          }
-          else if (showAllMarkers)
-            infowindow.open(map, marker);
-
-          //if (activeMarker != null && activeMarker != marker) {
-            //calcRoute(activeMarker.position, marker.position);
-          //}
-        }); 
-        $(this).parent().mouseout(function () {
-          if (showAllMarkers)
-            infowindow.close();
-          else if (activeMarker != marker) {
-            marker.setVisible(false);
-            infowindow.close();
-            directionsDisplay.setMap(null);
-          }
-        }); 
-      }catch(e){}
+        //if (activeMarker != null && activeMarker != marker) {
+          //calcRoute(activeMarker.position, marker.position);
+        //}
+      }); 
+      $(this).parent().mouseout(function () {
+        if (showAllMarkers)
+          infowindow.close();
+        else if (activeMarker != marker) {
+          marker.setVisible(false);
+          infowindow.close();
+          directionsDisplay.setMap(null);
+        }
+      }); 
+    }catch(e){}
   });
 }
 
@@ -152,8 +169,7 @@ function initTrails()
       var bounds = null;
       var node = $(this);
 
-      var getRouteLinesAndBounds = function()
-      {
+      var getRouteLinesAndBounds = function() {
         if (routeLines.length > 0) return;
         var routes = getRoute(node.find("> .trail-route").html());
         routeLines = getRouteLines(routes);
@@ -183,12 +199,10 @@ function getRoute(trail_route, bounds)
   var route = []; 
   var route_line = [];
 
-  for (var i = 0; i < steps.length; ++i)
-  {
+  for (var i = 0; i < steps.length; ++i) {
     var coordinates = steps[i].split(";");
     var leg = [];
-    for (var j = 0; j < coordinates.length; ++j)
-    {
+    for (var j = 0; j < coordinates.length; ++j) {
       var latlng_str = coordinates[j].split(",");
       var latlng = new google.maps.LatLng(latlng_str[0].split("(")[1], latlng_str[1].split(")")[0]);
       leg.push(latlng);
@@ -201,8 +215,7 @@ function getRoute(trail_route, bounds)
 function getRouteLines(route)
 {
   var routeLine = [];
-  for (var i = 0; i < route.length; ++i)
-  {
+  for (var i = 0; i < route.length; ++i) {
     var path = new google.maps.Polyline({
       path: route[i],
       geodesic: true,
@@ -222,8 +235,7 @@ function getRouteBounds(route)
   var west = route[0][0].lng(), east = west,
       north = route[0][0].lat(), south = north;
   for (var i = 0; i < route.length; ++i)
-    for (var j = 0; j < route[i].length; ++j)
-    {
+    for (var j = 0; j < route[i].length; ++j) {
       west = Math.min(west, route[i][j].lng());
       east = Math.max(west, route[i][j].lng());
       north = Math.max(north, route[i][j].lat());
@@ -340,22 +352,26 @@ function initOfficialMap() {
   });
 }
 
-var priorZoom;
-var priorCenter;
+function turnOnIntroPanel(node) {
+  var mapCanvas = $("#map-canvas");
+  var width = parseInt(mapCanvas.css("width")) - 100;
+  var left = parseInt(mapCanvas.css("left"));
+  $("#overlay-panel").children("#overlay-content").css("width", width);
+  $("#overlay-panel").css("left", left+50);
+  $("#overlay-panel").show();
+  $("#overlay-panel").children("#overlay-content").html(node.parent().find(".poi-name").html());
+  introPanelOn = true;
+}
+
+function turnOffIntroPanel(node) {
+  $("#overlay-panel").hide();
+    introPanelOn = false;
+}
+
+
 $(".zoom-button").each(function(index) {
     $(this).click(function () {
-      if ($("#overlay-panel").css("display") == "none")
-      {
-        var mapCanvas = $("#map-canvas");
-        var width = parseInt(mapCanvas.css("width")) - 100;
-        var left = parseInt(mapCanvas.css("left"));
-        $("#overlay-panel").children("#overlay-content").css("width", width);
-        $("#overlay-panel").css("left", left+50);
-        $("#overlay-panel").show();
-        $("#overlay-panel").children("#overlay-content").html($(this).parent().find(".poi-name").html());
-      }
-      else
-        $("#overlay-panel").hide();
+      turnOnIntroPanel($(this));
     });
     /*
     try {
