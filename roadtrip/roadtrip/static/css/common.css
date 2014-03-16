@@ -57,7 +57,7 @@ body a { text-decoration:none; }
 #top-nav {height: 40px; line-height: 40px; text-align: center; width: 100%; float: left; margin: 0 0 3em 0; padding: 0; list-style: none;}
 
 
-#side-nav { background-color: #f9f9f6; bottom: 50px; left: 0; position: fixed; top: 40px; width: 50px; z-index: 10007; }
+#side-nav { background-color: #f9f9f6; bottom:0px; left: 0; position: fixed; top: 40px; width: 50px; z-index: 10007; }
 
 .side-nav-category { font-size: 8px; border-bottom: 1px solid #060606; height: 50px; width: 50px; background-color: #f9f9f6; border-width: 0; color: #383f47; display: block; outline: 0; overflow: hidden; position: relative; text-align: center; text-decoration: none; text-transform: uppercase; }
 

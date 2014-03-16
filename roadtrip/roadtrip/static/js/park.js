@@ -70,6 +70,7 @@ function initMarkers() {
       var infowindow = new InfoBox({
         content: '<span class="infobox-label"><p class="infobox-title-cn">' + name + '</p><p class="infobox-title-en">' + nameEn + "</p></span>",
         disableAutoPan: true,
+        closeBoxURL: ''
       });
       infowindows[index] = infowindow;
 
@@ -265,9 +266,10 @@ function initOfficialMap() {
   $("#show-official-map").each(function() {
       var mapOverlay = null;
       var mapFrame = null;
+      var imageBounds = null;
 
       if (true) {
-        var imageBounds = new google.maps.LatLngBounds(
+        imageBounds = new google.maps.LatLngBounds(
           new google.maps.LatLng(37.469523, -119.904577),
           new google.maps.LatLng(38.197833, -119.004523));
 
@@ -289,7 +291,7 @@ function initOfficialMap() {
         });
       }
       else {
-        var imageBounds = new google.maps.LatLngBounds(
+        imageBounds = new google.maps.LatLngBounds(
             new google.maps.LatLng(37.705595, -119.688373),
             new google.maps.LatLng(37.765755, -119.509571));
 
@@ -320,6 +322,18 @@ function initOfficialMap() {
           // A trick to force refreshing the map so that the mapOverlay can be shown.
           map.setZoom(map.getZoom()+1);
           map.setZoom(map.getZoom()-1);
+          map.setCenter(imageBounds.getCenter());
+          var bounds = map.getBounds();
+          map.setZoom(8);
+          while (true) {
+            if (map.getBounds().contains(imageBounds.getNorthEast()) &&
+                map.getBounds().contains(imageBounds.getSouthWest()))
+              map.setZoom(map.getZoom()+1);
+            else {
+              map.setZoom(map.getZoom()-1);
+              break;
+            }
+          }
           mapFrame.setVisible(true);
         }
       });
