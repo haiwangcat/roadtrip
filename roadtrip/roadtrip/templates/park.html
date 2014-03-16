@@ -53,13 +53,30 @@
 <div class="sidebar-poi">
   <div class="sidebar-panel-poi">
     <div id="poi-control-panel">
+{% comment %}
+        <a href="javascript:" id="sidebar-back">后退</a>
+        <a href="javascript:" id="sidebar-forward">前进</a><br>
+{% endcomment %}
       <a href="javascript:" id="show-all-pois">显示所有景点</a>
       <a href="javascript:" id="show-official-map">官方地图</a>
     </div>
+
+{% comment %}
+      <div class="sidebar-item-list">
+          <div class="poi-item">
+            <button class="poi-button">
+              <p class="poi-name">Yosemite</p>
+              <p class="poi-name-en">yose</p>
+              <span class="coordinate"></span>
+            </button>
+            <button class="zoom-button">+</button>
+          </div>
+      </div>
+{% endcomment %}
+
     <div class="poi-list">
       {% getPOI slug as pois %}
       {% for poi in pois %}
-        {% if poi.poi_type == "POI" %}
         <div class="poi-item">
           <button class="poi-button">
             <p class="poi-name">{{ poi.name_cn }}</p>
@@ -80,7 +97,6 @@
             </div>
           {% endif %}
         </div>
-        {% endif %}
       {% endfor %}
     </div>
   </div>
@@ -156,4 +172,3 @@
 {% endif %}
 
 {% endblock %}
-    <hl>Photos</hl>

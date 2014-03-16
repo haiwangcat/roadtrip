@@ -70,6 +70,7 @@ function initMarkers() {
       var infowindow = new InfoBox({
         content: '<span class="infobox-label"><p class="infobox-title-cn">' + name + '</p><p class="infobox-title-en">' + nameEn + "</p></span>",
         disableAutoPan: true,
+        closeBoxURL: ''
       });
       infowindows[index] = infowindow;
 
@@ -243,17 +244,17 @@ function clearMap() {
 }
 
 $("#show-all-pois").click(function() {
-    if(showAllMarkers==false){
-    	markers.forEach(function(marker){
+  if(showAllMarkers==false){
+    markers.forEach(function(marker){
 		marker.setAnimation(google.maps.Animation.DROP);
       		marker.setVisible(true);
 		showAllMarkers = true;
 		});
 	}
-    else{
-    	markers.forEach(function(marker){
-		marker.setVisible(false);
-		showAllMarkers = false;
+  else{
+    markers.forEach(function(marker){
+      marker.setVisible(false);
+      showAllMarkers = false;
 		});
 	}
     closeAllInfoWindows();
@@ -265,21 +266,22 @@ function initOfficialMap() {
   $("#show-official-map").each(function() {
       var mapOverlay = null;
       var mapFrame = null;
+      var imageBounds = null;
 
       if (true) {
-        var imageBounds = new google.maps.LatLngBounds(
+        imageBounds = new google.maps.LatLngBounds(
           new google.maps.LatLng(37.469523, -119.904577),
           new google.maps.LatLng(38.197833, -119.004523));
 
         mapOverlay = new google.maps.GroundOverlay(
           '/static/img/maps/yose.jpg',
           imageBounds,
-          { opacity: 0.8 }
+          { opacity: 0.8, clickable: false }
         );
         //mapOverlay.setMap(map);
 
         mapFrame = new google.maps.Rectangle({
-          strokeColor: '#FF0000',
+          strokeColor: 'green',
           strokeOpacity: 1,
           strokeWeight: 1,
           fillOpacity: 0,
@@ -289,7 +291,7 @@ function initOfficialMap() {
         });
       }
       else {
-        var imageBounds = new google.maps.LatLngBounds(
+        imageBounds = new google.maps.LatLngBounds(
             new google.maps.LatLng(37.705595, -119.688373),
             new google.maps.LatLng(37.765755, -119.509571));
 
@@ -317,6 +319,21 @@ function initOfficialMap() {
         }
         else {
           mapOverlay.setMap(map);
+          // A trick to force refreshing the map so that the mapOverlay can be shown.
+          map.setZoom(map.getZoom()+1);
+          map.setZoom(map.getZoom()-1);
+          map.setCenter(imageBounds.getCenter());
+          var bounds = map.getBounds();
+          map.setZoom(8);
+          while (true) {
+            if (map.getBounds().contains(imageBounds.getNorthEast()) &&
+                map.getBounds().contains(imageBounds.getSouthWest()))
+              map.setZoom(map.getZoom()+1);
+            else {
+              map.setZoom(map.getZoom()-1);
+              break;
+            }
+          }
           mapFrame.setVisible(true);
         }
       });
@@ -326,6 +343,21 @@ function initOfficialMap() {
 var priorZoom;
 var priorCenter;
 $(".zoom-button").each(function(index) {
+    $(this).click(function () {
+      if ($("#overlay-panel").css("display") == "none")
+      {
+        var mapCanvas = $("#map-canvas");
+        var width = parseInt(mapCanvas.css("width")) - 100;
+        var left = parseInt(mapCanvas.css("left"));
+        $("#overlay-panel").children("#overlay-content").css("width", width);
+        $("#overlay-panel").css("left", left+50);
+        $("#overlay-panel").show();
+        $("#overlay-panel").children("#overlay-content").html($(this).parent().find(".poi-name").html());
+      }
+      else
+        $("#overlay-panel").hide();
+    });
+    /*
     try {
     $(this).click(function () {
       if ($(this).find(".icon-pic").attr('src') == '/static/img/zoom12.svg')
@@ -368,6 +400,7 @@ $(".zoom-button").each(function(index) {
       }
     }); 
     }catch(e){}
+    */
 });
 
 $('.side-nav-category').each(function(index){
@@ -395,4 +428,43 @@ $('.side-nav-category').each(function(index){
 
 
 
+/*
+    $('#sidebar-forward').click(function() {
+        var target = $(".sidebar-item-list").first().next(),
+            other = target.siblings('.active');
+        
+        if (!target.hasClass('active')) {
+            other.each(function(index, self) {
+                $(this).removeClass('active').animate({
+                    left: -other.width()
+                }, 400);
+            });
 
+            target.addClass('active').show().css({
+                left: target.width()
+            }).animate({
+                left: 0//$this.width()
+            }, 400);
+        }
+    });
+
+    $('#sidebar-back').click(function() {
+        var $target = $(".sidebar-item-list").first(),
+            $other = $target.siblings('.active');
+        
+        if (!$target.hasClass('active')) {
+            $other.each(function(index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 400);
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 400);
+        }
+    });
+    */

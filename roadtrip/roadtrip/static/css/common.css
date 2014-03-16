@@ -22,10 +22,17 @@ body a { text-decoration:none; }
 
 
 
+//#sidebar-parks, #sidebar-pois { position:absolute; }
+
+.sidebar-item-list2 { display:none; position:relative; float:left; overflow:hidden; width:300px; margin:0 5px 0 0; top:0; }
+
 #poi-control-panel { position:relative; display:block; outline:0; height:30px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; }
 #poi-control-panel a { color:white; }
 #poi-control-panel a:hover { text-decoration:underline; }
+
 #show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
+#sidebar-back { position:absolute; top:0; left:0; text-align:right; padding-left:20px; }
+#sidebar-forward { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 #show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 
 
@@ -55,7 +62,7 @@ body a { text-decoration:none; }
 #top-nav {height: 40px; line-height: 40px; text-align: center; width: 100%; float: left; margin: 0 0 3em 0; padding: 0; list-style: none;}
 
 
-#side-nav { background-color: #f9f9f6; bottom: 50px; left: 0; position: fixed; top: 40px; width: 50px; z-index: 10007; }
+#side-nav { background-color: #f9f9f6; bottom:0px; left: 0; position: fixed; top: 40px; width: 50px; z-index: 10007; }
 
 .side-nav-category { font-size: 8px; border-bottom: 1px solid #060606; height: 50px; width: 50px; background-color: #f9f9f6; border-width: 0; color: #383f47; display: block; outline: 0; overflow: hidden; position: relative; text-align: center; text-decoration: none; text-transform: uppercase; }
 
@@ -72,8 +79,8 @@ body a { text-decoration:none; }
 .infobox-title-en { font-size:10px; }
 
 //#overlay-panel-wrapper { position:absolute; left:0; top:0; width:100%; height:0; }
-#overlay-panel { display:none; overflow:auto; position:absolute; left:300px; bottom:0; height:500px; right:0; z-index:10008; padding:20px; top:0; }
-#overlay-content { position:relative; z-index:20009; background-color:white; width:500px; height:300px; margin:50px; border:solid 1px white; border-radius:5px; }
+#overlay-panel { display:none; overflow:auto; position:absolute; left:400px; bottom:0; height:500px; right:0; z-index:10008; padding-top:20px; top:0; }
+#overlay-content { position:relative; z-index:20009; background-color:#f9f9f6; width:500px; height:300px; margin-top:50px; border:solid 1px white; border-radius:5px; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
