@@ -9,10 +9,17 @@
 {% endaddtoblock %}
 
 {% addtoblock "js" %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/oauth.js"></script>
+<script type="text/javascript" src="http://oauth.googlecode.com/svn/code/javascript/sha1.js"></script>
+
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4y5vgVMb3bcqjYsaYJzJphjJdvnJBr6U&sensor=true&language=zh"></script>
 <script type="text/javascript" src="{% static "js/park.js" %}"></script>
 <script type="text/javascript" src="{% static "js/infobox_packed.js" %}"></script>
 <script type="text/javascript" src="{% static "js/trip.js" %}"></script>
+<script type="text/javascript" src="{% static "js/yelp.js" %}"></script>
+
+
 <script type="text/javascript">
 
    
@@ -42,13 +49,13 @@
 {% getParkSlug request as slug %}
 {% if slug != "" %}
 
-<div id="sidebar">
-  <div id="sidebar-panel">
+<div class="sidebar-poi">
+  <div class="sidebar-panel-poi">
     <div id="poi-control-panel">
       <a href="javascript:" id="show-all-pois">显示所有景点</a>
       <a href="javascript:" id="show-official-map">官方地图</a>
     </div>
-    <div id="poi-list">
+    <div class="poi-list">
       {% getPOI slug as pois %}
       {% for poi in pois %}
         {% if poi.poi_type == "POI" %}
@@ -76,6 +83,24 @@
   </div>
 </div>
 
+<div class="sidebar-food">
+  <div class="sidebar-panel-food">
+    <button id="show-all-food">显示所有餐馆</button>
+    <div class="food-list">
+        <div class="food-item">
+          <button class="food-button">
+            <p class="food-name">王妈大饼</p>
+            <p class="food-name-en"></p>
+            <span class="coordinate"></span>
+          </button>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <div id='side-nav'>
   <button class='side-nav-category'>
     <img class='side-nav-pic' src="/static/img/pins48.svg"></img>
@@ -88,6 +113,10 @@
   <button class='side-nav-category'>
     <img class='side-nav-pic' src="/static/img/hotel.svg"></img>
     <br><hl>客栈</hl>
+  </button>
+  <button class='side-nav-category'>
+    <img class='side-nav-pic' src="/static/img/bon1.svg"></img>
+    <br><hl>饕餮</hl>
   </button>
 </div>
 

@@ -15,21 +15,24 @@ button { cursor:pointer; }
 
 body a { text-decoration:none; }
 
-#sidebar { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; overflow-y:auto; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); }
-#sidebar li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
+.sidebar-poi, .sidebar-food { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; overflow-y:auto; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); }
+.sidebar-poi li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
+.sidebar-food li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
+
 
 #poi-control-panel { position:relative; display:block; outline:0; height:30px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; }
 #poi-control-panel a { color:white; }
 #poi-control-panel a:hover { text-decoration:underline; }
-#show-all-pois { position:absolute; left:0; text-align:left; padding-left:20px; }
+#show-all-pois, #show-all-food { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
 #show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 
-.poi-item { position:relative; line-height:1.7; }
-.poi-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:left; padding-left:20px; }
+
+.poi-item, .food-item { position:relative; line-height:1.7;}
+.poi-button, .food-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:left; padding-left:20px; }
 .poi-button:hover, .poi-button.selected { background-color:#1ea5ad; color:white; }
 .poi-button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:49px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
 .poi-info { display:none; background-color:#eeeeee; position:relative; }
-.poi-name-en { font-size:10px; }
+.poi-name-en, .food-name-en { font-size:10px; }
 
 .zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#f5f3f0; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
@@ -37,7 +40,9 @@ body a { text-decoration:none; }
 .trail-item { cursor:pointer; padding:10px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
 .trail-item:hover { background-color:#b3cd53; color:white; }
 
-#sidebar-panel { position:absolute; top:0; left:0px; width:100%; }
+.sidebar-poi-panel { position:absolute; top:0; left:0px`; width:100%; }
+.sidebar-food-panel { position:absolute; top:0; left:0px`; width:100%; }
+
 #info-panel { text-align:left; display:inline; width:100%; height:50px; position:fixed; bottom:0px; left:350px; background-color:#d3d3d3;}
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
 #map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:350px; }

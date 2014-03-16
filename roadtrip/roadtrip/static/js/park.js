@@ -370,5 +370,27 @@ $(".zoom-button").each(function(index) {
     }catch(e){}
 });
 
+$('.side-nav-category').each(function(index){
+	$('.sidebar-food').hide();
+	$('.sidebar-panel-food').hide();
+	$(this).click(function(){
+		if ($(this).children('hl').html() == '景点') {		
+			$('.sidebar-food').hide();
+			$('.sidebar-panel-food').hide();
+
+			$('.sidebar-poi').show();
+			$('.sidebar-panel-poi').show();
+		}
+		else if ($(this).children('hl').html() == '饕餮') {
+			$('.sidebar-food').show();
+			$('.sidebar-panel-food').show();
+
+			$('.sidebar-poi').hide();
+			$('.sidebar-panel-poi').hide();
+		}
+	});
+});
+
+
 
 

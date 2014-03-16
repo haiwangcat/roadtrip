@@ -17,15 +17,18 @@ var auth = {
     signatureMethod: "HMAC-SHA1"
   }
 };
-var terms = 'chinese+food';
-var near = 'San+Francisco';
+var terms = 'food';
+//var near = 'San+Francisco';
+var latitude = 37.894201;
+var longitude = -119.546449;
 var accessor = {
   consumerSecret: auth.consumerSecret,
   tokenSecret: auth.accessTokenSecret
 };
 parameters = [];
 parameters.push(['term', terms]);
-parameters.push(['location', near]);
+//parameters.push(['location', near]);
+parameters.push(['ll',latitude + "," + longitude]);
 parameters.push(['callback', 'cb']);
 parameters.push(['oauth_consumer_key', auth.consumerKey]);
 parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
@@ -51,8 +54,10 @@ console.log(parameterMap);
 	  'jsonpCallback': 'cb',
 	  'success': function(data, text, XMLHttpRequest) {
 	    console.log(data);
+		$("body").append("total number of businesses:" + data.total);
 	    for (var j = 0; j < data.businesses.length; ++j){
 		    var output = data.businesses[j].name;
+		    	$("body").append(",")
 	    	    $("body").append(output);
 	    }
 	  }
