@@ -328,14 +328,14 @@ var priorCenter;
 $(".zoom-button").each(function(index) {
     try {
     $(this).click(function () {
-      if ($(this).html() == "+")
+      if ($(this).find(".icon-pic").attr('src') == '/static/img/zoom12.svg')
       {
         var current_button = $(this);
         var update_center = true;
         $(".zoom-button").each(function(index) {
-          if ($(this) != current_button && $(this).html() == "-")
+          if ($(this) != current_button && $(this).find(".icon-pic").attr('src') == '/static/img/zoom9.svg')
           {
-            $(this).html("+");
+            $(this).find(".icon-pic").attr('src','/static/img/zoom12.svg');
             update_center = false;
           }
         });
@@ -353,13 +353,13 @@ $(".zoom-button").each(function(index) {
         map.setZoom(15);
 
 
-        $(this).html("-");
+        $(this).find(".icon-pic").attr('src','/static/img/zoom9.svg');
       }
       else
       {
         map.setZoom(priorZoom);
         map.setCenter(priorCenter);
-        $(this).html("+");
+        $(this).find(".icon-pic").attr('src','/static/img/zoom12.svg');
         if (markers[index] != activeMarker)
         {
           markers[index].setVisible(false);
@@ -372,22 +372,24 @@ $(".zoom-button").each(function(index) {
 
 $('.side-nav-category').each(function(index){
 	$('.sidebar-food').hide();
-	$('.sidebar-panel-food').hide();
+	$('.sidebar-hotel').hide();
 	$(this).click(function(){
 		if ($(this).children('hl').html() == '景点') {		
-			$('.sidebar-food').hide();
-			$('.sidebar-panel-food').hide();
-
 			$('.sidebar-poi').show();
-			$('.sidebar-panel-poi').show();
+			$('.sidebar-hotel').hide();
+			$('.sidebar-food').hide();
 		}
 		else if ($(this).children('hl').html() == '饕餮') {
-			$('.sidebar-food').show();
-			$('.sidebar-panel-food').show();
-
 			$('.sidebar-poi').hide();
-			$('.sidebar-panel-poi').hide();
+			$('.sidebar-hotel').hide();
+			$('.sidebar-food').show();
 		}
+		else if ($(this).children('hl').html() == '客栈') {
+			$('.sidebar-poi').hide();
+			$('.sidebar-hotel').show();
+			$('.sidebar-food').hide();
+		}
+
 	});
 });
 

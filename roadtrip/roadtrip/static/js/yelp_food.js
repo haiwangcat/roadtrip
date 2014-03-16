@@ -1,4 +1,4 @@
-// yelp api to extract hotel and restaurant information
+// yelp api to extract restaurant information
 
 
 // build authorization key
@@ -41,8 +41,6 @@ var parameterMap = OAuth.getParameterMap(message.parameters);
 parameterMap.oauth_signature = OAuth.percentEncode(parameterMap.oauth_signature)
 console.log(parameterMap);
 
-food = [];
-var foodList = new Array();
 
 $.ajax({
   'url': message.action,
@@ -51,7 +49,7 @@ $.ajax({
   'dataType': 'jsonp',
   'jsonpCallback': 'cb',
   'success': function(data, text, XMLHttpRequest) {
-    console.log(data);
+    console.log('data',data);
 	for (var j = 0; j < data.businesses.length; ++j){
 		var current_business_name = data.businesses[j].name;
 		var current_business_lat = data.businesses[j].location[0];
@@ -59,8 +57,6 @@ $.ajax({
 		console.log('food_name',current_business_name);
 		
 		$('.food-item:last').clone().appendTo('.food-list').find(".food-name-en").html(current_business_name);
-		//var test = $('.food-item:last').clone().appendTo('.food-list').children(".food-name-en").html();
-		//console.log(test);
 		$('.food-item:first').hide();
 		}
 	}
