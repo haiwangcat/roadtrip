@@ -17,7 +17,8 @@
 <script type="text/javascript" src="{% static "js/park.js" %}"></script>
 <script type="text/javascript" src="{% static "js/infobox_packed.js" %}"></script>
 <script type="text/javascript" src="{% static "js/trip.js" %}"></script>
-<script type="text/javascript" src="{% static "js/yelp.js" %}"></script>
+<script type="text/javascript" src="{% static "js/yelp_hotel.js" %}"></script>
+<script type="text/javascript" src="{% static "js/yelp_food.js" %}"></script>
 
 
 <script type="text/javascript">
@@ -82,7 +83,9 @@
             <p class="poi-name-en">{{ poi.name_en }}</p>
             <span class="coordinate">{{ poi.gps }}</span>
           </button>
-          <button class="zoom-button">+</button>
+          <button class="zoom-button" >
+          	<img class="icon-pic" src="/static/img/zoom12.svg"></img>
+    	   </button>
           {% if poi.trails|length > 0 %}
             <div class="poi-info">
             {% for trail in poi.trails %}
@@ -114,24 +117,39 @@
   </div>
 </div>
 
+<div class="sidebar-hotel">
+  <div class="sidebar-panel-hotel">
+    <button id="show-all-hotel">显示所有客栈</button>
+    <div class="hotel-list">
+        <div class="hotel-item">
+          <button class="hotel-button">
+            <p class="hotel-name">孙二娘客栈</p>
+            <p class="hotel-name-en"></p>
+            <span class="coordinate"></span>
+          </button>
+        </div>
+    </div>
+  </div>
+</div>
+
 
 
 
 <div id='side-nav'>
   <button class='side-nav-category'>
-    <img class='side-nav-pic' src="/static/img/pins48.svg"></img>
+    <img class='icon-pic' src="/static/img/pins48.svg"></img>
     <br><hl>景点</hl>
   </button>
   <button class='side-nav-category'>
-    <img class='side-nav-pic' src="/static/img/vintage2.svg"></img>
+    <img class='icon-pic' src="/static/img/vintage2.svg"></img>
     <br><hl>拍照</hl>
   </button>
   <button class='side-nav-category'>
-    <img class='side-nav-pic' src="/static/img/hotel.svg"></img>
+    <img class='icon-pic' src="/static/img/hotel.svg"></img>
     <br><hl>客栈</hl>
   </button>
   <button class='side-nav-category'>
-    <img class='side-nav-pic' src="/static/img/bon1.svg"></img>
+    <img class='icon-pic' src="/static/img/bon1.svg"></img>
     <br><hl>饕餮</hl>
   </button>
 </div>
@@ -143,8 +161,7 @@
 </div>
 
 <div id='info-panel'>
-  <p>目前的地点</p>
-  <p id='item-name'>您的旅程：</p>
+  <p id='item-name'>您目前旅程：</p>
 </div>
 
 <div id="map-window">
