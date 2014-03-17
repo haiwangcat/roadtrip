@@ -2,7 +2,7 @@ var map;
 var markers = new Array();
 var infowindows = new Array();
 var activeMarker = null;
-var showAllMarkers = false;
+var allMarkersShown = false;
 var directionsService = new google.maps.DirectionsService();  
 var directionsDisplay;
 var selectedItemName;
@@ -30,14 +30,32 @@ function initialize() {
   });
 
   directionsDisplay.setMap(map);
-  initMap();
   initMarkers();
   initTrails();
   initOfficialMap();
+  initEventListeners();
+
+  showAllMarkers();
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+function initEventListeners() {
+  google.maps.event.addListener(map, 'click', function() {
+    if (introPanelOn) {
+      turnOffIntroPanel();
+    }
+  });
+  google.maps.event.addListener(map, 'click', function() {
+    if (introPanelOn) {
+      turnOffIntroPanel();
+    }
+  });
+
+  $("#show-all-pois").click(function() {
+    showAllMarkers();
+  });
+}
 
 function calcRoute(start, end) {
   //var start = new google.maps.LatLng(37.716753,-119.646505);
@@ -58,19 +76,6 @@ function calcRoute(start, end) {
 
 function closeAllInfoWindows() {
   infowindows.forEach(function(info) { info.close(); });
-}
-
-function initMap() {
-    google.maps.event.addListener(map, 'click', function() {
-      if (introPanelOn) {
-        turnOffIntroPanel();
-      }
-    });
-    google.maps.event.addListener(map, 'click', function() {
-      if (introPanelOn) {
-        turnOffIntroPanel();
-      }
-    });
 }
 
 function initMarkers() {
@@ -113,7 +118,7 @@ function initMarkers() {
         activeMarker = markers[index];
         map.panTo(marker.position);
         infowindow.open(map, marker);
-        showAllMarkers = false;
+        allMarkersShown = false;
         selectedItemName = $(this).find("> .poi-name").html();
         $("#overlay-content").html(name);
         //selectedItemGPS = $(this).find("> .coordinate").html().split(",");
@@ -147,7 +152,7 @@ function initMarkers() {
           marker.setMap(map);
           infowindow.open(map, marker);
         }
-        else if (showAllMarkers)
+        else if (allMarkersShown)
           infowindow.open(map, marker);
 
         //if (activeMarker != null && activeMarker != marker) {
@@ -155,7 +160,7 @@ function initMarkers() {
         //}
       }); 
       $(this).parent().mouseout(function () {
-        if (showAllMarkers)
+        if (allMarkersShown)
           infowindow.close();
         else if (activeMarker != marker) {
           marker.setVisible(false);
@@ -260,24 +265,33 @@ function clearMap() {
   }
 }
 
-$("#show-all-pois").click(function() {
-  if(showAllMarkers==false){
+
+function showAllMarkers() {
+  if (allMarkersShown==false){
     markers.forEach(function(marker){
-		marker.setAnimation(google.maps.Animation.DROP);
-      		marker.setVisible(true);
-		showAllMarkers = true;
+      marker.setAnimation(google.maps.Animation.DROP);
+      marker.setVisible(true);
+      allMarkersShown = true;
 		});
 	}
-  else{
+  else {
     markers.forEach(function(marker){
       marker.setVisible(false);
-      showAllMarkers = false;
+      allMarkersShown = false;
 		});
 	}
-    closeAllInfoWindows();
-    map.setZoom(10);
-    map.panTo(new google.maps.LatLng(37.849923, -119.567666));
-});
+  closeAllInfoWindows();
+  toParkView();
+}
+
+function toParkView() {
+  var coordinate = $("#park-gps-coordinate").html().split(",");
+  var lat = parseFloat(coordinate[0]);
+  var lng = parseFloat(coordinate[1]);
+  var zoom = parseInt($("#park-zoom").html()) 
+  map.panTo(new google.maps.LatLng(lat, lng));
+  map.setZoom(zoom);
+}
 
 function initOfficialMap() {
   $("#show-official-map").each(function() {
@@ -372,7 +386,6 @@ function turnOffIntroPanel(node) {
   $("#overlay-panel").hide();
     introPanelOn = false;
 }
-
 
 $(".zoom-button").each(function(index) {
     $(this).click(function () {

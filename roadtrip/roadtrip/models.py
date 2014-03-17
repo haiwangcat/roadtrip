@@ -18,6 +18,9 @@ class POI(models.Model):
   description = models.TextField(blank=True, null=True)
   zoom = models.IntegerField(default=10)
   score = models.IntegerField(default=5)
+  parking_gps_coordinate = models.CharField(max_length=50, null=True)
+  wiki_link = models.CharField(max_length=200, null=True)
+ 
  
   def __unicode__(self):
     return self.name_cn
