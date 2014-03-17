@@ -2,19 +2,20 @@
 
 from django import template
 from roadtrip.data import getParkData
+from roadtrip.models import *
 
 register = template.Library()
 
 @register.assignment_tag(takes_context=True)
-def getPOI(context, slug):
-  return getParkData()[slug].pois
+def getPOIs(context, park_id):
+  return POI.objects.all().filter(park_id=park_id)
 
 @register.assignment_tag(takes_context=True)
 def getParks(context):
-  return getParkData().values()
+  return Park.objects.all()
 
 @register.assignment_tag(takes_context=True)
-def getParkSlug(context, request):
+def getParkID(context, request):
   return request.GET.get('park', '')
 
 '''

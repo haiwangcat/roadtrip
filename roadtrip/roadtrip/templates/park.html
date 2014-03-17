@@ -40,15 +40,15 @@
 {% getParks as parks %}
 {% for park in parks %}
     <li class="park-button">
-      <a class='park-name' href="./?park={{ park.park_id }}">{{ park.name_cn }}</a> 
+      <a class='park-name' href="./?park={{ park.id }}">{{ park.name_cn }}</a> 
     </li>
 {% endfor %}
   </ul>
 </div>
 
   
-{% getParkSlug request as slug %}
-{% if slug != "" %}
+{% getParkID request as parkID %}
+{% if parkID != '' %}
 
 <div class="sidebar-poi">
   <div class="sidebar-panel-poi">
@@ -75,17 +75,18 @@
 {% endcomment %}
 
     <div class="poi-list">
-      {% getPOI slug as pois %}
+      {% getPOIs parkID as pois %}
       {% for poi in pois %}
         <div class="poi-item">
           <button class="poi-button">
             <p class="poi-name">{{ poi.name_cn }}</p>
             <p class="poi-name-en">{{ poi.name_en }}</p>
-            <span class="coordinate">{{ poi.gps }}</span>
+            <span class="coordinate">{{ poi.gps_coordinate }}</span>
           </button>
           <button class="zoom-button" >
           	<img class="icon-pic" src="/static/img/zoom12.svg"></img>
     	   </button>
+{% comment %}
           {% if poi.trails|length > 0 %}
             <div class="poi-info">
             {% for trail in poi.trails %}
@@ -96,6 +97,7 @@
             {% endfor %}
             </div>
           {% endif %}
+{% endcomment %}
         </div>
       {% endfor %}
     </div>
