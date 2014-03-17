@@ -11,6 +11,10 @@ def getPOIs(context, park_id):
   return POI.objects.all().filter(park_id=park_id)
 
 @register.assignment_tag(takes_context=True)
+def getTrails(context, poi_id):
+  return Trail.objects.all().filter(poi_id=poi_id)
+
+@register.assignment_tag(takes_context=True)
 def getParks(context):
   return Park.objects.all()
 

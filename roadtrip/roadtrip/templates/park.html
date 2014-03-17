@@ -91,10 +91,10 @@
           <button class="zoom-button" >
           	<img class="icon-pic" src="/static/img/zoom12.svg"></img>
     	   </button>
-{% comment %}
-          {% if poi.trails|length > 0 %}
+          {% getTrails poi as trails %}
+          {% if trails|length > 0 %}
             <div class="poi-info">
-            {% for trail in poi.trails %}
+            {% for trail in trails %}
               <div class="trail-item">
                 <div class="trail-name">{{ trail.name_cn }}</div>
                 <div class="trail-route">{{ trail.routes }}</div>
@@ -102,7 +102,6 @@
             {% endfor %}
             </div>
           {% endif %}
-{% endcomment %}
         </div>
       {% endfor %}
     </div>

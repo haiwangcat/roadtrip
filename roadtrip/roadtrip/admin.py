@@ -1,6 +1,5 @@
 from django.contrib import admin
-from roadtrip.models import Park
-from roadtrip.models import POI
+from roadtrip.models import *
 
 class POIInline(admin.StackedInline):
   model = POI
@@ -11,3 +10,4 @@ class ParkAdmin(admin.ModelAdmin):
 
 admin.site.register(Park, ParkAdmin)
 admin.site.register(POI)
+admin.site.register(Trail)
