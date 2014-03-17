@@ -47,8 +47,13 @@
 </div>
 
   
-{% getParkID request as parkID %}
-{% if parkID != '' %}
+{% getPark request as park %}
+{% if park %}
+
+<div id="park-info">
+  <span id="park-gps-coordinate">{{ park.center_gps_coordinate }}</span>
+  <span id="park-zoom">{{ park.zoom }}</span>
+</div>
 
 <div class="sidebar-poi">
   <div class="sidebar-panel-poi">
@@ -75,7 +80,7 @@
 {% endcomment %}
 
     <div class="poi-list">
-      {% getPOIs parkID as pois %}
+      {% getPOIs park as pois %}
       {% for poi in pois %}
         <div class="poi-item">
           <button class="poi-button">

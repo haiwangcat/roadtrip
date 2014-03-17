@@ -21,7 +21,7 @@ body a { text-decoration:none; }
 .sidebar-hotel li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 
 
-
+#park-info { display:none; }
 //#sidebar-parks, #sidebar-pois { position:absolute; }
 
 .sidebar-item-list2 { display:none; position:relative; float:left; overflow:hidden; width:300px; margin:0 5px 0 0; top:0; }

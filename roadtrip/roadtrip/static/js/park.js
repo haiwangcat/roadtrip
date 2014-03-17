@@ -13,9 +13,14 @@ var priorCenter;
 //var selectedItemGPS;
 
 function initialize() {
+  var coordinate = $("#park-gps-coordinate").html().split(",");
+  var lat = parseFloat(coordinate[0]);
+  var lng = parseFloat(coordinate[1]);
+  var zoom = parseInt($("#park-zoom").html()) 
+
   var mapOptions = {
-    center: new google.maps.LatLng(37.849923, -119.567666),
-    zoom: 10
+    center: new google.maps.LatLng(lat, lng),
+    zoom: zoom
   };
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 

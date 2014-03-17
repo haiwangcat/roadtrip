@@ -15,8 +15,12 @@ def getParks(context):
   return Park.objects.all()
 
 @register.assignment_tag(takes_context=True)
-def getParkID(context, request):
-  return request.GET.get('park', '')
+def getPark(context, request):
+  park_id = request.GET.get('park', '')
+  if park_id == '':
+    return None
+  else:
+    return Park.objects.all().filter(id=park_id)[0]
 
 '''
 @register.simple_tag
