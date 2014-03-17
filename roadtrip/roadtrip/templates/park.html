@@ -53,6 +53,10 @@
 <div id="park-info">
   <span id="park-gps-coordinate">{{ park.center_gps_coordinate }}</span>
   <span id="park-zoom">{{ park.zoom }}</span>
+  {% getParkMap park as map %}
+  <span id="park-map-filename">{% static "img/maps/" %}{{ map.filename }}</span>
+  <span id="park-map-sw-bound">{{ map.gps_southwest_bound }}</span>
+  <span id="park-map-ne-bound">{{ map.gps_northeast_bound }}</span>
 </div>
 
 <div class="sidebar-poi">
@@ -63,7 +67,9 @@
         <a href="javascript:" id="sidebar-forward">前进</a><br>
 {% endcomment %}
       <a href="javascript:" id="show-all-pois">显示所有景点</a>
-      <a href="javascript:" id="show-official-map">官方地图</a>
+      {% if map %}
+        <a href="javascript:" id="show-official-map">官方地图</a>
+      {% endif %}
     </div>
 
 {% comment %}

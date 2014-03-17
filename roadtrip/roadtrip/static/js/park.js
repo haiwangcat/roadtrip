@@ -13,14 +13,9 @@ var priorCenter;
 //var selectedItemGPS;
 
 function initialize() {
-  var coordinate = $("#park-gps-coordinate").html().split(",");
-  var lat = parseFloat(coordinate[0]);
-  var lng = parseFloat(coordinate[1]);
-  var zoom = parseInt($("#park-zoom").html()) 
-
   var mapOptions = {
-    center: new google.maps.LatLng(lat, lng),
-    zoom: zoom
+    center: getLatLng($("#park-gps-coordinate").html()),
+    zoom: parseInt($("#park-zoom").html())
   };
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
@@ -80,15 +75,12 @@ function closeAllInfoWindows() {
 
 function initMarkers() {
   $(".poi-button").each(function(index) {
-    var coordinate = $(this).find("> .coordinate").html().split(",");
-    var lat = parseFloat(coordinate[0]);
-    var lng = parseFloat(coordinate[1]);
     var name = $(this).find("> .poi-name").html();
     var nameEn = $(this).find("> .poi-name-en").html();
     //console.log(name);
 
     var marker = new google.maps.Marker({
-      position: new google.maps.LatLng(lat, lng),
+      position: getLatLng($(this).find("> .coordinate").html()),
       map: map,
       visible: false
     });
@@ -285,12 +277,16 @@ function showAllMarkers() {
 }
 
 function toParkView() {
-  var coordinate = $("#park-gps-coordinate").html().split(",");
-  var lat = parseFloat(coordinate[0]);
-  var lng = parseFloat(coordinate[1]);
   var zoom = parseInt($("#park-zoom").html()) 
-  map.panTo(new google.maps.LatLng(lat, lng));
+  map.panTo(getLatLng($("#park-gps-coordinate").html()));
   map.setZoom(zoom);
+}
+
+function getLatLng(coordinate) {
+  var latlng = coordinate.split(",");
+  var lat = parseFloat(latlng[0]);
+  var lng = parseFloat(latlng[1]);
+  return new google.maps.LatLng(lat, lng);
 }
 
 function initOfficialMap() {
@@ -299,49 +295,27 @@ function initOfficialMap() {
       var mapFrame = null;
       var imageBounds = null;
 
-      if (true) {
-        imageBounds = new google.maps.LatLngBounds(
-          new google.maps.LatLng(37.469523, -119.904577),
-          new google.maps.LatLng(38.197833, -119.004523));
+      imageBounds = new google.maps.LatLngBounds(
+        getLatLng($("#park-map-sw-bound").html()),
+        getLatLng($("#park-map-ne-bound").html()));
 
-        mapOverlay = new google.maps.GroundOverlay(
-          '/static/img/maps/yose.jpg',
-          imageBounds,
-          { opacity: 0.8, clickable: false }
-        );
-        //mapOverlay.setMap(map);
+      mapOverlay = new google.maps.GroundOverlay(
+        $("#park-map-filename").html(),
+        imageBounds,
+        { opacity: 0.8, clickable: false }
+      );
+      //mapOverlay.setMap(map);
 
-        mapFrame = new google.maps.Rectangle({
-          strokeColor: 'green',
-          strokeOpacity: 1,
-          strokeWeight: 1,
-          fillOpacity: 0,
-          bounds: imageBounds,
-          map: map,
-          visible: false
-        });
-      }
-      else {
-        imageBounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(37.705595, -119.688373),
-            new google.maps.LatLng(37.765755, -119.509571));
-
-        mapOverlay = new google.maps.GroundOverlay(
-            '/static/img/maps/yosevalley.jpg',
-            imageBounds,
-            { opacity: 1 });
-        mapOverlay.setMap(map);
-
-        mapFrame = new google.maps.Rectangle({
-          strokeColor: '#FF0000',
-          strokeOpacity: 1,
-          strokeWeight: 1,
-          fillOpacity: 0,
-          bounds: imageBounds,
-          map: map,
-          visible: false
-        });
-      }
+      mapFrame = new google.maps.Rectangle({
+        strokeColor: 'green',
+        strokeOpacity: 1,
+        strokeWeight: 1,
+        fillOpacity: 0,
+        bounds: imageBounds,
+        map: map,
+        visible: false
+      });
+  
 
       $(this).click(function() {
         if (mapOverlay.getMap() != null) {

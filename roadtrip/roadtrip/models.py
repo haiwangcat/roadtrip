@@ -38,3 +38,15 @@ class Trail(models.Model):
 
   def __unicode__(self):
     return self.name_cn
+
+class ThirdPartyMap(models.Model):
+  name_cn = models.CharField(max_length=100)
+  name_en = models.CharField(max_length=100)
+  park_id = models.ForeignKey(Park)
+  filename = models.CharField(max_length=100)
+  gps_southwest_bound = models.CharField(max_length=50) 
+  gps_northeast_bound = models.CharField(max_length=50) 
+  map_link = models.CharField(max_length=200, default='', null=True) 
+
+  def __unicode__(self):
+    return self.name_cn

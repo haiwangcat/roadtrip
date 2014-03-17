@@ -11,3 +11,4 @@ class ParkAdmin(admin.ModelAdmin):
 admin.site.register(Park, ParkAdmin)
 admin.site.register(POI)
 admin.site.register(Trail)
+admin.site.register(ThirdPartyMap)

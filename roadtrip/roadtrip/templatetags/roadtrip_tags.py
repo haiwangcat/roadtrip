@@ -15,6 +15,14 @@ def getTrails(context, poi_id):
   return Trail.objects.all().filter(poi_id=poi_id)
 
 @register.assignment_tag(takes_context=True)
+def getParkMap(context, park_id):
+  maps = ThirdPartyMap.objects.all().filter(park_id=park_id)
+  if len(maps) > 0:
+    return maps[0]
+  else:
+    return None
+
+@register.assignment_tag(takes_context=True)
 def getParks(context):
   return Park.objects.all()
 
