@@ -34,6 +34,10 @@ def getPark(context, request):
   else:
     return Park.objects.all().filter(id=park_id)[0]
 
+@register.assignment_tag(takes_context=True)
+def processDescription(context, desc):
+  return desc.split('\n')
+
 '''
 @register.simple_tag
 def getTopPos(size, index):

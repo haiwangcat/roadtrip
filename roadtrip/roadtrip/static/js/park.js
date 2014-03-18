@@ -41,14 +41,15 @@ function initEventListeners() {
       turnOffIntroPanel();
     }
   });
-  google.maps.event.addListener(map, 'click', function() {
-    if (introPanelOn) {
-      turnOffIntroPanel();
-    }
-  });
 
   $("#show-all-pois").click(function() {
     showAllMarkers();
+  });
+}
+
+function initInfoPanelEventListeners() {
+  $("#close-info-panel").click(function() {
+    turnOffIntroPanel();
   });
 }
 
@@ -352,9 +353,10 @@ function turnOnIntroPanel(node) {
   $("#overlay-content").css("width", width);
   $("#overlay-panel").css("left", left+50);
   $("#overlay-panel").show();
-  $("#overlay-content").load('/get-poi-info/?poi=' + node.parent().find(".poi-id").html());
+  $("#overlay-content").load('/get-poi-info/?poi=' + node.parent().find(".poi-id").html(), function() {
+    initInfoPanelEventListeners();
+  });
   introPanelOn = true;
-
 }
 
 function turnOffIntroPanel(node) {

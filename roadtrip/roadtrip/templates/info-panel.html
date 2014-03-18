@@ -1,3 +1,11 @@
+{% load roadtrip_tags %}
+
+<button id="close-info-panel">消失</button>
 <div id="info-panel-desc">
-  {{ poi.description }}
+  <h1>{{ poi.name_cn }}</h1>
+  <br>
+  {% processDescription poi.description as desc %}
+  {% for p in desc %}
+    <p>{{ p }}</p>
+  {% endfor %}
 </div>
