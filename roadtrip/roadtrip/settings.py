@@ -71,7 +71,7 @@ WSGI_APPLICATION = 'roadtrip.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-if True:
+if False:
   SOUTH_DATABASE_ADAPTERS = {'default':'south.db.mysql'} 
   DATABASES = {
       'default': {
