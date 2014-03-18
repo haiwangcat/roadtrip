@@ -70,8 +70,13 @@ function calcRoute(start, end) {
   });
 }
 
-function closeAllInfoWindows() {
-  infowindows.forEach(function(info) { info.close(); });
+function closeAllInfoWindows(keepOpen) {
+  infowindows.forEach(function(info) {
+    if (info != keepOpen) {
+      info.hide();
+      info.setZIndex(2000);
+    }
+  });
 }
 
 function initMarkers() {
@@ -99,16 +104,33 @@ function initMarkers() {
     var infowindow = new InfoBox({
       content: infoBox[0],
       disableAutoPan: true,
-      closeBoxURL: ''
+      closeBoxURL: '',
+      isHidden: true,
     });
     infowindows[index] = infowindow;
+    infowindow.open(map, marker);
+    infowindow.setZIndex(2000);
 
+    var showInfoBox = function() {
+      closeAllInfoWindows(infowindow);
+      infowindow.show()
+      infowindow.setZIndex(1999);
+      activeMarker = marker;
+    };
+
+
+    google.maps.event.addListener(marker, 'click', function() {
+      showInfoBox();
+    });
     google.maps.event.addListener(marker, 'mouseover', function() {
-      closeAllInfoWindows();
-      infowindow.open(map, marker);
+      if (activeMarker == null)
+        closeAllInfoWindows(null);
+      if (activeMarker != marker)
+        infowindow.show()
     });
     google.maps.event.addListener(marker, 'mouseout', function() {
-      closeAllInfoWindows();
+      if (activeMarker != marker)
+        infowindow.hide();
     });
     
 
@@ -116,10 +138,10 @@ function initMarkers() {
       $(this).click(function () {
         clearMap();
         marker.setVisible(true);
-        marker.setMap(map);
+        //marker.setMap(map);
         activeMarker = markers[index];
         map.panTo(marker.position);
-        infowindow.open(map, marker);
+        showInfoBox();
         allMarkersShown = false;
         selectedItemName = $(this).find("> .poi-name").html();
         $("#overlay-content").html(name);
@@ -152,11 +174,11 @@ function initMarkers() {
       $(this).parent().mouseover(function () {
         if (activeMarker != marker && !marker.getVisible()) {
           marker.setVisible(true);
-          marker.setMap(map);
-          infowindow.open(map, marker);
+          //marker.setMap(map);
+          infowindow.show();
         }
         else if (allMarkersShown)
-          infowindow.open(map, marker);
+          infowindow.show();
 
         //if (activeMarker != null && activeMarker != marker) {
           //calcRoute(activeMarker.position, marker.position);
@@ -165,10 +187,10 @@ function initMarkers() {
 
       $(this).parent().mouseout(function () {
         if (allMarkersShown)
-          infowindow.close();
+          infowindow.hide();
         else if (activeMarker != marker) {
           marker.setVisible(false);
-          infowindow.close();
+          infowindow.hide();
           directionsDisplay.setMap(null);
         }
       }); 
@@ -265,7 +287,7 @@ function clearMap() {
   activeMarker = null;
   for (var i = 0; i < markers.length; i++) {
     markers[i].setVisible(false);
-    infowindows[i].close();
+    infowindows[i].hide();
   }
 }
 
@@ -276,15 +298,15 @@ function showAllMarkers() {
       marker.setAnimation(google.maps.Animation.DROP);
       marker.setVisible(true);
       allMarkersShown = true;
-		});
-	}
+    });
+  }
   else {
     markers.forEach(function(marker){
       marker.setVisible(false);
       allMarkersShown = false;
-		});
-	}
-  closeAllInfoWindows();
+    });
+  }
+  closeAllInfoWindows(null);
   toParkView();
 }
 
@@ -363,11 +385,11 @@ function turnOnIntroPanel(poiID) {
   var left = parseInt(mapCanvas.css("left"));
   $("#overlay-content").css("width", width);
   $("#overlay-panel").css("left", left+50);
-  $("#overlay-panel").show();
   $("#overlay-content").load('/get-poi-info/?poi=' + poiID, function() {
+    $("#overlay-panel").show();
     initInfoPanelEventListeners();
+    introPanelOn = true;
   });
-  introPanelOn = true;
 }
 
 function turnOffIntroPanel() {
