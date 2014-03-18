@@ -71,16 +71,25 @@ WSGI_APPLICATION = 'roadtrip.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
-SOUTH_DATABASE_ADAPTERS = {'default':'south.db.mysql'} 
-DATABASES = {
-    'default': {
-        'ENGINE': 'google.appengine.ext.django.backends.rdbms',
-        'INSTANCE': 'upheld-terminus-523:ustrip',
-        'NAME': 'ustrip',
-        'USER': 'root',
-        'ATOMIC_REQUESTS': True,
-    }
-}
+if True:
+  SOUTH_DATABASE_ADAPTERS = {'default':'south.db.mysql'} 
+  DATABASES = {
+      'default': {
+          'ENGINE': 'google.appengine.ext.django.backends.rdbms',
+          'INSTANCE': 'upheld-terminus-523:ustrip',
+          'NAME': 'ustrip',
+          'USER': 'root',
+          'ATOMIC_REQUESTS': True,
+      }
+  }
+else:
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.sqlite3',
+          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+          'ATOMIC_REQUESTS': True,
+      }
+  }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
