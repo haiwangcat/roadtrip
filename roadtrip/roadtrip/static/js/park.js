@@ -76,6 +76,7 @@ function closeAllInfoWindows() {
 
 function initMarkers() {
   $(".poi-button").each(function(index) {
+    var poiID = $(this).parent().find("> .poi-id").html();
     var name = $(this).find("> .poi-name").html();
     var nameEn = $(this).find("> .poi-name-en").html();
     //console.log(name);
@@ -87,8 +88,16 @@ function initMarkers() {
     });
     markers[index] = marker;
 
+    var infoBox = $(".infobox-label").first().clone();
+    infoBox.removeClass("hidden");
+    infoBox.find(".infobox-title-cn").html(name);
+    infoBox.find(".infobox-title-en").html(nameEn);
+    infoBox.click(function() {
+      turnOnIntroPanel(poiID);
+    });
+
     var infowindow = new InfoBox({
-      content: '<span class="infobox-label"><p class="infobox-title-cn">' + name + '</p><p class="infobox-title-en">' + nameEn + "</p></span>",
+      content: infoBox[0],
       disableAutoPan: true,
       closeBoxURL: ''
     });
@@ -139,6 +148,7 @@ function initMarkers() {
           }
         }
       }); 
+
       $(this).parent().mouseover(function () {
         if (activeMarker != marker && !marker.getVisible()) {
           marker.setVisible(true);
@@ -152,6 +162,7 @@ function initMarkers() {
           //calcRoute(activeMarker.position, marker.position);
         //}
       }); 
+
       $(this).parent().mouseout(function () {
         if (allMarkersShown)
           infowindow.close();
@@ -346,27 +357,27 @@ function initOfficialMap() {
   });
 }
 
-function turnOnIntroPanel(node) {
+function turnOnIntroPanel(poiID) {
   var mapCanvas = $("#map-canvas");
   var width = parseInt(mapCanvas.css("width")) - 100;
   var left = parseInt(mapCanvas.css("left"));
   $("#overlay-content").css("width", width);
   $("#overlay-panel").css("left", left+50);
   $("#overlay-panel").show();
-  $("#overlay-content").load('/get-poi-info/?poi=' + node.parent().find(".poi-id").html(), function() {
+  $("#overlay-content").load('/get-poi-info/?poi=' + poiID, function() {
     initInfoPanelEventListeners();
   });
   introPanelOn = true;
 }
 
-function turnOffIntroPanel(node) {
+function turnOffIntroPanel() {
   $("#overlay-panel").hide();
     introPanelOn = false;
 }
 
 $(".zoom-button").each(function(index) {
     $(this).click(function () {
-      turnOnIntroPanel($(this));
+      turnOnIntroPanel($(this).parent(".poi-item").find(".poi-id").html());
     });
     /*
     try {

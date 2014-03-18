@@ -35,6 +35,13 @@
   </div>
 </div>
 
+<div>
+  <div class="infobox-label hidden">
+    <p class="infobox-title-cn"></p>
+    <p class="infobox-title-en"></p>
+  </div>
+</div>
+
 <div id='top-nav-area'>
   <ul id='top-nav'>
 {% getParks as parks %}
@@ -97,7 +104,7 @@
           </button>
           <button class="zoom-button" >
           	<img class="icon-pic" src="/static/img/zoom12.svg"></img>
-    	   </button>
+          </button>
           {% getTrails poi as trails %}
           {% if trails|length > 0 %}
             <div class="poi-info">
