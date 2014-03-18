@@ -1,7 +1,7 @@
 var map;
 var markers = new Array();
 var infowindows = new Array();
-var activeMarker = null;
+var activeMarker = -1;
 var allMarkersShown = false;
 var directionsService = new google.maps.DirectionsService();  
 var directionsDisplay;
@@ -37,8 +37,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 function initEventListeners() {
   google.maps.event.addListener(map, 'click', function() {
-    if (introPanelOn) {
+    if (introPanelOn)
       turnOffIntroPanel();
+    if (activeMarker >= 0) {
+      infowindows[activeMarker].setVisible(false);
+      activeMarker = -1;
     }
   });
 
@@ -107,29 +110,43 @@ function initMarkers() {
       closeBoxURL: '',
       isHidden: true,
     });
+    /*var oldDraw = infowindow.draw;
+    infowindow.draw = function() {
+       oldDraw.apply(this);
+       infoBox.hide();
+       infoBox.fadeIn(300); 
+    }*/
     infowindows[index] = infowindow;
     infowindow.open(map, marker);
     infowindow.setZIndex(2000);
 
+
     var showInfoBox = function() {
-      closeAllInfoWindows(infowindow);
       infowindow.show()
+      infoBox.hide();
+      infoBox.fadeIn(500); 
+    };
+
+    var showInfoBoxOnClick = function() {
+      closeAllInfoWindows(infowindow);
+      showInfoBox();
       infowindow.setZIndex(1999);
-      activeMarker = marker;
+      activeMarker = index;
     };
 
 
     google.maps.event.addListener(marker, 'click', function() {
-      showInfoBox();
+      showInfoBoxOnClick();
     });
     google.maps.event.addListener(marker, 'mouseover', function() {
-      if (activeMarker == null)
+      if (activeMarker < 0)
         closeAllInfoWindows(null);
-      if (activeMarker != marker)
-        infowindow.show()
+      if (activeMarker != index) {
+        showInfoBox();
+      }
     });
     google.maps.event.addListener(marker, 'mouseout', function() {
-      if (activeMarker != marker)
+      if (activeMarker != index)
         infowindow.hide();
     });
     
@@ -139,9 +156,9 @@ function initMarkers() {
         clearMap();
         marker.setVisible(true);
         //marker.setMap(map);
-        activeMarker = markers[index];
+        activeMarker = index;
         map.panTo(marker.position);
-        showInfoBox();
+        showInfoBoxOnClick();
         allMarkersShown = false;
         selectedItemName = $(this).find("> .poi-name").html();
         $("#overlay-content").html(name);
@@ -171,24 +188,25 @@ function initMarkers() {
         }
       }); 
 
-      $(this).parent().mouseover(function () {
-        if (activeMarker != marker && !marker.getVisible()) {
+      $(this).parent().mouseenter(function () {
+        if (activeMarker != index && !marker.getVisible()) {
           marker.setVisible(true);
           //marker.setMap(map);
-          infowindow.show();
+          showInfoBox();
         }
-        else if (allMarkersShown)
-          infowindow.show();
+        else if (allMarkersShown) {
+          showInfoBox();
+        }
 
         //if (activeMarker != null && activeMarker != marker) {
           //calcRoute(activeMarker.position, marker.position);
         //}
       }); 
 
-      $(this).parent().mouseout(function () {
+      $(this).parent().mouseleave(function () {
         if (allMarkersShown)
           infowindow.hide();
-        else if (activeMarker != marker) {
+        else if (activeMarker != index) {
           marker.setVisible(false);
           infowindow.hide();
           directionsDisplay.setMap(null);
@@ -218,11 +236,11 @@ function initTrails()
           map.fitBounds(bounds);
 //	  activeItem = name;
         }); 
-        $(this).mouseover(function () {
+        $(this).mouseenter(function () {
           getRouteLinesAndBounds();
           routeLines.forEach(function(line){ line.setVisible(true); });
         }); 
-        $(this).mouseout(function () {
+        $(this).mouseleave(function () {
           routeLines.forEach(function(line){ line.setVisible(false); });
         }); 
       }catch(e){}
@@ -284,7 +302,7 @@ function getRouteBounds(route)
 }
 
 function clearMap() {
-  activeMarker = null;
+  activeMarker = -1;
   for (var i = 0; i < markers.length; i++) {
     markers[i].setVisible(false);
     infowindows[i].hide();
