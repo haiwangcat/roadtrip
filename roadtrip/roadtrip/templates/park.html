@@ -89,6 +89,7 @@
       {% getPOIs park as pois %}
       {% for poi in pois %}
         <div class="poi-item">
+          <span class="poi-id">{{ poi.id }}</span>
           <button class="poi-button">
             <p class="poi-name">{{ poi.name_cn }}</p>
             <p class="poi-name-en">{{ poi.name_en }}</p>

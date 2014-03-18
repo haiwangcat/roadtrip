@@ -349,11 +349,12 @@ function turnOnIntroPanel(node) {
   var mapCanvas = $("#map-canvas");
   var width = parseInt(mapCanvas.css("width")) - 100;
   var left = parseInt(mapCanvas.css("left"));
-  $("#overlay-panel").children("#overlay-content").css("width", width);
+  $("#overlay-content").css("width", width);
   $("#overlay-panel").css("left", left+50);
   $("#overlay-panel").show();
-  $("#overlay-panel").children("#overlay-content").html(node.parent().find(".poi-name").html());
+  $("#overlay-content").load('/get-poi-info/?poi=' + node.parent().find(".poi-id").html());
   introPanelOn = true;
+
 }
 
 function turnOffIntroPanel(node) {
