@@ -71,10 +71,13 @@ WSGI_APPLICATION = 'roadtrip.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+SOUTH_DATABASE_ADAPTERS = {'default':'south.db.mysql'} 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'google.appengine.ext.django.backends.rdbms',
+        'INSTANCE': 'upheld-terminus-523:ustrip',
+        'NAME': 'ustrip',
+        'USER': 'root',
         'ATOMIC_REQUESTS': True,
     }
 }
