@@ -15,10 +15,11 @@ button { cursor:pointer; outline:0; }
 
 body a { text-decoration:none; }
 
-.sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; overflow-x:hidden; overflow-y:auto; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); }
+.sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:50px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); overflow-x:hidden; overflow-y:auto; }
 .sidebar-poi li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 .sidebar-food li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 .sidebar-hotel li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
+//.poi-list { position:absolute; top:0; bottom:0; overflow-x:hidden; overflow-y:auto; height:100%; }
 
 
 #park-info { display:none; }
@@ -43,6 +44,7 @@ body a { text-decoration:none; }
 .poi-button:before { content:""; display:block; height:1px; width:100%; position:absolute; top:49px; z-index:7; left:0; right:0; background:rgba(0,0,0,0.06); }
 .poi-info { display:none; background-color:#eeeeee; position:relative; }
 .poi-name-en, .food-name-en, .hotel-name-en { font-size:10px; }
+.poi-empty-item { height:80px; }
 
 .zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#f5f3f0; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
