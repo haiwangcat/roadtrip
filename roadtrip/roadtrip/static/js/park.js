@@ -128,8 +128,40 @@ function initMarkers() {
       activeMarker = index;
     };
 
+    var node = $(this);
+    var selectPOIItem = function() {
+      var info = node.parent().children(".poi-info");
+      if (info && info.hasClass("expanded")) {
+        info.slideToggle("50", "swing");
+        info.removeClass("expanded");
+        node.removeClass("selected");
+      }
+      else {
+        $(".poi-button").each(function() {
+          $(this).removeClass("selected");
+          var info = $(this).parent().children(".poi-info");
+          if (info && info.hasClass("expanded")) {
+            info.slideToggle("50", "swing");
+            info.removeClass("expanded");
+          }
+        });
+
+        node.addClass("selected");
+        if (info) {
+          info.slideToggle("50", "swing");
+          info.addClass("expanded");
+        }
+        var position = $(".poi-button").index(node) * parseInt(node.css("height"))
+          + parseInt($("#poi-control-panel").css("height"));
+        $(".sidebar-poi").animate({
+          scrollTop: position,
+        }, 300);
+      }
+    };
+
     google.maps.event.addListener(marker, 'click', function() {
       showInfoBoxOnClick();
+      selectPOIItem();
     });
 
     google.maps.event.addListener(marker, 'mouseover', function() {
@@ -157,28 +189,7 @@ function initMarkers() {
         selectedItemName = $(this).find("> .poi-name").html();
         //selectedItemGPS = $(this).find("> .coordinate").html().split(",");
 
-        var info = $(this).parent().children(".poi-info");
-        if (info && info.hasClass("expanded")) {
-          info.slideToggle("50", "swing");
-          info.removeClass("expanded");
-          $(this).removeClass("selected");
-        }
-        else {
-          $(".poi-button").each(function() {
-            $(this).removeClass("selected");
-            var info = $(this).parent().children(".poi-info");
-            if (info && info.hasClass("expanded")) {
-              info.slideToggle("50", "swing");
-              info.removeClass("expanded");
-            }
-          });
-
-          $(this).addClass("selected");
-          if (info) {
-            info.slideToggle("50", "swing");
-            info.addClass("expanded");
-          }
-        }
+        selectPOIItem();
       }); 
 
       $(this).parent().mouseenter(function () {
