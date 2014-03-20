@@ -108,16 +108,9 @@ function initMarkers() {
       closeBoxURL: '',
       isHidden: true,
     });
-    /*var oldDraw = infowindow.draw;
-    infowindow.draw = function() {
-       oldDraw.apply(this);
-       infoBox.hide();
-       infoBox.fadeIn(300); 
-    }*/
     infowindows[index] = infowindow;
     infowindow.open(map, marker);
     infowindow.setZIndex(2000);
-
 
     var showInfoBox = function() {
       infowindow.show()
@@ -127,15 +120,48 @@ function initMarkers() {
 
     var showInfoBoxOnClick = function() {
       closeAllInfoWindows(infowindow);
-      showInfoBox();
+      //showInfoBox();
+      infowindow.show()
       infowindow.setZIndex(1999);
       activeMarker = index;
     };
 
+    var node = $(this);
+    var selectPOIItem = function() {
+      var info = node.parent().children(".poi-info");
+      if (info && info.hasClass("expanded")) {
+        info.slideToggle("50", "swing");
+        info.removeClass("expanded");
+        node.removeClass("selected");
+      }
+      else {
+        $(".poi-button").each(function() {
+          $(this).removeClass("selected");
+          var info = $(this).parent().children(".poi-info");
+          if (info && info.hasClass("expanded")) {
+            info.slideToggle("50", "swing");
+            info.removeClass("expanded");
+          }
+        });
+
+        node.addClass("selected");
+        if (info) {
+          info.slideToggle("50", "swing");
+          info.addClass("expanded");
+        }
+        var position = $(".poi-button").index(node) * parseInt(node.css("height"))
+          + parseInt($("#poi-control-panel").css("height"));
+        $(".sidebar-poi").animate({
+          scrollTop: position,
+        }, 300);
+      }
+    };
 
     google.maps.event.addListener(marker, 'click', function() {
       showInfoBoxOnClick();
+      selectPOIItem();
     });
+
     google.maps.event.addListener(marker, 'mouseover', function() {
       if (activeMarker < 0)
         closeAllInfoWindows(null);
@@ -143,12 +169,12 @@ function initMarkers() {
         showInfoBox();
       }
     });
+
     google.maps.event.addListener(marker, 'mouseout', function() {
       if (activeMarker != index)
         infowindow.hide();
     });
     
-
     try {
       $(this).click(function () {
         clearMap();
@@ -158,6 +184,7 @@ function initMarkers() {
         map.panTo(marker.position);
         showInfoBoxOnClick();
         allMarkersShown = false;
+
         selectedItem.name = $(this).find("> .poi-name").html();
         $("#overlay-content").html(name);
         var selectedItemGPS = $(this).find("> .coordinate").html().split(",");
@@ -188,6 +215,12 @@ function initMarkers() {
             info.addClass("expanded");
           }
         }
+/*
+        selectedItemName = $(this).find("> .poi-name").html();
+        //selectedItemGPS = $(this).find("> .coordinate").html().split(",");
+
+        selectPOIItem();
+*/
       }); 
 
       $(this).parent().mouseenter(function () {
