@@ -1,7 +1,7 @@
 var map;
 var markers = new Array();
 var infowindows = new Array();
-var activeMarker = -1;
+var activeMarkerIndex = -1;
 var allMarkersShown = false;
 var directionsService = new google.maps.DirectionsService();  
 var directionsDisplay;
@@ -37,9 +37,9 @@ function initEventListeners() {
   google.maps.event.addListener(map, 'click', function() {
     if (introPanelOn)
       turnOffIntroPanel();
-    if (activeMarker >= 0) {
-      infowindows[activeMarker].setVisible(false);
-      activeMarker = -1;
+    if (activeMarkerIndex >= 0) {
+      infowindows[activeMarkerIndex].setVisible(false);
+      activeMarkerIndex = -1;
     }
   });
 
@@ -90,9 +90,39 @@ function initMarkers() {
     var marker = new google.maps.Marker({
       position: getLatLng($(this).find("> .coordinate").html()),
       map: map,
-      visible: false
+      visible: false,
+      icon: {
+        url: "/static/icon/marker.png",
+        origin: new google.maps.Point(34, 320),
+        size: new google.maps.Size(34, 40)
+      },
     });
+
     markers[index] = marker;
+
+    var activateMarker = function(m) {
+      m.setIcon({
+        url: "/static/icon/marker.png",
+        origin: new google.maps.Point(34, 320),
+        size: new google.maps.Size(34, 40)
+      });
+    };
+
+    var inactivateMarker = function(m) {
+      m.setIcon({
+        url: "/static/icon/marker.png",
+        origin: new google.maps.Point(0, 320),
+        size: new google.maps.Size(34, 40)
+      });
+    };
+
+    var inactivateAllMarkers = function() {
+      activeMarkerIndex = -1;
+      for (var i = 0; i < markers.length; i++) {
+        inactivateMarker(markers[i]);
+        infowindows[i].hide();
+      }
+    };
 
     var infoBox = $(".infobox-label").first().clone();
     infoBox.removeClass("hidden");
@@ -123,7 +153,7 @@ function initMarkers() {
       //showInfoBox();
       infowindow.show()
       infowindow.setZIndex(1999);
-      activeMarker = index;
+      activeMarkerIndex = index;
     };
 
     var node = $(this);
@@ -158,29 +188,34 @@ function initMarkers() {
     };
 
     google.maps.event.addListener(marker, 'click', function() {
+      inactivateAllMarkers();
+      activateMarker(marker);
       showInfoBoxOnClick();
       selectPOIItem();
     });
 
     google.maps.event.addListener(marker, 'mouseover', function() {
-      if (activeMarker < 0)
+      if (activeMarkerIndex < 0)
         closeAllInfoWindows(null);
-      if (activeMarker != index) {
+      if (activeMarkerIndex != index) {
         showInfoBox();
       }
     });
 
     google.maps.event.addListener(marker, 'mouseout', function() {
-      if (activeMarker != index)
+      if (activeMarkerIndex != index)
         infowindow.hide();
     });
     
     try {
       $(this).click(function () {
-        clearMap();
-        marker.setVisible(true);
+        //clearMap();
+        //marker.setVisible(true);
         //marker.setMap(map);
-        activeMarker = index;
+
+        inactivateAllMarkers();
+        activateMarker(marker);
+        activeMarkerIndex = index;
         map.panTo(marker.position);
         showInfoBoxOnClick();
         allMarkersShown = false;
@@ -224,7 +259,7 @@ function initMarkers() {
       }); 
 
       $(this).parent().mouseenter(function () {
-        if (activeMarker != index && !marker.getVisible()) {
+        if (activeMarkerIndex != index && !marker.getVisible()) {
           marker.setVisible(true);
           //marker.setMap(map);
           showInfoBox();
@@ -233,15 +268,15 @@ function initMarkers() {
           showInfoBox();
         }
 
-        //if (activeMarker != null && activeMarker != marker) {
-          //calcRoute(activeMarker.position, marker.position);
+        //if (activeMarkerIndex != null && activeMarkerIndex != marker) {
+          //calcRoute(activeMarkerIndex.position, marker.position);
         //}
       }); 
 
       $(this).parent().mouseleave(function () {
         if (allMarkersShown)
           infowindow.hide();
-        else if (activeMarker != index) {
+        else if (activeMarkerIndex != index) {
           marker.setVisible(false);
           infowindow.hide();
           directionsDisplay.setMap(null);
@@ -269,7 +304,7 @@ function initTrails()
         $(this).click(function () {
           getRouteLinesAndBounds();
           map.fitBounds(bounds);
-//	  activeItem = name;
+//    activeItem = name;
         }); 
         $(this).mouseenter(function () {
           getRouteLinesAndBounds();
@@ -337,7 +372,7 @@ function getRouteBounds(route)
 }
 
 function clearMap() {
-  activeMarker = -1;
+  activeMarkerIndex = -1;
   for (var i = 0; i < markers.length; i++) {
     markers[i].setVisible(false);
     infowindows[i].hide();
@@ -378,57 +413,56 @@ function getLatLng(coordinate) {
 
 function initOfficialMap() {
   $("#show-official-map").each(function() {
-      var mapOverlay = null;
-      var mapFrame = null;
-      var imageBounds = null;
+    var mapOverlay = null;
+    var mapFrame = null;
+    var imageBounds = null;
 
-      imageBounds = new google.maps.LatLngBounds(
-        getLatLng($("#park-map-sw-bound").html()),
-        getLatLng($("#park-map-ne-bound").html()));
+    imageBounds = new google.maps.LatLngBounds(
+      getLatLng($("#park-map-sw-bound").html()),
+      getLatLng($("#park-map-ne-bound").html()));
 
-      mapOverlay = new google.maps.GroundOverlay(
-        $("#park-map-filename").html(),
-        imageBounds,
-        { opacity: 0.8, clickable: false }
-      );
-      //mapOverlay.setMap(map);
+    mapOverlay = new google.maps.GroundOverlay(
+      $("#park-map-filename").html(),
+      imageBounds,
+      { opacity: 0.8, clickable: false }
+    );
+    //mapOverlay.setMap(map);
 
-      mapFrame = new google.maps.Rectangle({
-        strokeColor: 'green',
-        strokeOpacity: 1,
-        strokeWeight: 1,
-        fillOpacity: 0,
-        bounds: imageBounds,
-        map: map,
-        visible: false
-      });
-  
+    mapFrame = new google.maps.Rectangle({
+      strokeColor: 'green',
+      strokeOpacity: 1,
+      strokeWeight: 1,
+      fillOpacity: 0,
+      bounds: imageBounds,
+      map: map,
+      visible: false
+    });
 
-      $(this).click(function() {
-        if (mapOverlay.getMap() != null) {
-          mapOverlay.setMap(null);
-          mapFrame.setVisible(false);
-        }
-        else {
-          mapOverlay.setMap(map);
-          // A trick to force refreshing the map so that the mapOverlay can be shown.
-          map.setZoom(map.getZoom()+1);
-          map.setZoom(map.getZoom()-1);
-          map.setCenter(imageBounds.getCenter());
-          var bounds = map.getBounds();
-          map.setZoom(8);
-          while (true) {
-            if (map.getBounds().contains(imageBounds.getNorthEast()) &&
-                map.getBounds().contains(imageBounds.getSouthWest()))
-              map.setZoom(map.getZoom()+1);
-            else {
-              map.setZoom(map.getZoom()-1);
-              break;
-            }
+    $(this).click(function() {
+      if (mapOverlay.getMap() != null) {
+        mapOverlay.setMap(null);
+        mapFrame.setVisible(false);
+      }
+      else {
+        mapOverlay.setMap(map);
+        // A trick to force refreshing the map so that the mapOverlay can be shown.
+        map.setZoom(map.getZoom()+1);
+        map.setZoom(map.getZoom()-1);
+        map.setCenter(imageBounds.getCenter());
+        var bounds = map.getBounds();
+        map.setZoom(8);
+        while (true) {
+          if (map.getBounds().contains(imageBounds.getNorthEast()) &&
+              map.getBounds().contains(imageBounds.getSouthWest()))
+            map.setZoom(map.getZoom()+1);
+          else {
+            map.setZoom(map.getZoom()-1);
+            break;
           }
-          mapFrame.setVisible(true);
         }
-      });
+        mapFrame.setVisible(true);
+      }
+    });
   });
 }
 
@@ -451,76 +485,76 @@ function turnOffIntroPanel() {
 }
 
 $(".zoom-button").each(function(index) {
-    $(this).click(function () {
-      turnOnIntroPanel($(this).parent(".poi-item").find(".poi-id").html());
-    });
-    /*
-    try {
-    $(this).click(function () {
-      if ($(this).find(".icon-pic").attr('src') == '/static/img/zoom12.svg')
-      {
-        var current_button = $(this);
-        var update_center = true;
-        $(".zoom-button").each(function(index) {
-          if ($(this) != current_button && $(this).find(".icon-pic").attr('src') == '/static/img/zoom9.svg')
-          {
-            $(this).find(".icon-pic").attr('src','/static/img/zoom12.svg');
-            update_center = false;
-          }
-        });
-
-        markers[index].setVisible(true);
-        markers[index].setMap(map);
-        infowindows[index].open(map, markers[index]);
-        if (update_center)
+  $(this).click(function () {
+    turnOnIntroPanel($(this).parent(".poi-item").find(".poi-id").html());
+  });
+  /*
+  try {
+  $(this).click(function () {
+    if ($(this).find(".icon-pic").attr('src') == '/static/img/zoom12.svg')
+    {
+      var current_button = $(this);
+      var update_center = true;
+      $(".zoom-button").each(function(index) {
+        if ($(this) != current_button && $(this).find(".icon-pic").attr('src') == '/static/img/zoom9.svg')
         {
-          priorCenter = map.getCenter();
-          priorZoom = map.getZoom();
+          $(this).find(".icon-pic").attr('src','/static/img/zoom12.svg');
+          update_center = false;
         }
-        //center = map.setCenter();
-        map.setCenter(markers[index].getPosition());
-        map.setZoom(15);
+      });
 
-
-        $(this).find(".icon-pic").attr('src','/static/img/zoom9.svg');
-      }
-      else
+      markers[index].setVisible(true);
+      markers[index].setMap(map);
+      infowindows[index].open(map, markers[index]);
+      if (update_center)
       {
-        map.setZoom(priorZoom);
-        map.setCenter(priorCenter);
-        $(this).find(".icon-pic").attr('src','/static/img/zoom12.svg');
-        if (markers[index] != activeMarker)
-        {
-          markers[index].setVisible(false);
-          infowindows[index].close();
-        }
+        priorCenter = map.getCenter();
+        priorZoom = map.getZoom();
       }
-    }); 
-    }catch(e){}
-    */
+      //center = map.setCenter();
+      map.setCenter(markers[index].getPosition());
+      map.setZoom(15);
+
+
+      $(this).find(".icon-pic").attr('src','/static/img/zoom9.svg');
+    }
+    else
+    {
+      map.setZoom(priorZoom);
+      map.setCenter(priorCenter);
+      $(this).find(".icon-pic").attr('src','/static/img/zoom12.svg');
+      if (markers[index] != activeMarkerIndex)
+      {
+        markers[index].setVisible(false);
+        infowindows[index].close();
+      }
+    }
+  }); 
+  }catch(e){}
+  */
 });
 
 $('.side-nav-category').each(function(index){
-	$('.sidebar-food').hide();
-	$('.sidebar-hotel').hide();
-	$(this).click(function(){
-		if ($(this).children('hl').html() == '景点') {		
-			$('.sidebar-poi').show();
-			$('.sidebar-hotel').hide();
-			$('.sidebar-food').hide();
-		}
-		else if ($(this).children('hl').html() == '饕餮') {
-			$('.sidebar-poi').hide();
-			$('.sidebar-hotel').hide();
-			$('.sidebar-food').show();
-		}
-		else if ($(this).children('hl').html() == '客栈') {
-			$('.sidebar-poi').hide();
-			$('.sidebar-hotel').show();
-			$('.sidebar-food').hide();
-		}
+  $('.sidebar-food').hide();
+  $('.sidebar-hotel').hide();
+  $(this).click(function(){
+    if ($(this).children('hl').html() == '景点') {    
+      $('.sidebar-poi').show();
+      $('.sidebar-hotel').hide();
+      $('.sidebar-food').hide();
+    }
+    else if ($(this).children('hl').html() == '饕餮') {
+      $('.sidebar-poi').hide();
+      $('.sidebar-hotel').hide();
+      $('.sidebar-food').show();
+    }
+    else if ($(this).children('hl').html() == '客栈') {
+      $('.sidebar-poi').hide();
+      $('.sidebar-hotel').show();
+      $('.sidebar-food').hide();
+    }
 
-	});
+  });
 });
 
 
