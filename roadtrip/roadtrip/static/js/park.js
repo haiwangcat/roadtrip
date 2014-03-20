@@ -5,12 +5,10 @@ var activeMarker = -1;
 var allMarkersShown = false;
 var directionsService = new google.maps.DirectionsService();  
 var directionsDisplay;
-var selectedItemName;
-var selectedItem = [];
+
 var introPanelOn = false;
 var priorZoom;
 var priorCenter;
-//var selectedItemGPS;
 
 function initialize() {
   var mapOptions = {
@@ -20,7 +18,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
 
   directionsDisplay = new google.maps.DirectionsRenderer({
-    suppressMarkers: true,
+    suppressMarkers: false,
     preserveViewport: true
   });
 
@@ -160,10 +158,14 @@ function initMarkers() {
         map.panTo(marker.position);
         showInfoBoxOnClick();
         allMarkersShown = false;
-        selectedItemName = $(this).find("> .poi-name").html();
+        selectedItem.name = $(this).find("> .poi-name").html();
         $("#overlay-content").html(name);
-        //selectedItemGPS = $(this).find("> .coordinate").html().split(",");
-
+        var selectedItemGPS = $(this).find("> .coordinate").html().split(",");
+        selectedItem.lat = selectedItemGPS[0];
+        selectedItem.lng = selectedItemGPS[1];
+        
+        
+        
         var info = $(this).parent().children(".poi-info");
         if (info && info.hasClass("expanded")) {
           info.slideToggle("50", "swing");
@@ -285,7 +287,7 @@ function getRouteLines(route)
 
 function getRouteBounds(route)
 {
-  console.log(route[0]);
+ // console.log(route[0]);
   var west = route[0][0].lng(), east = west,
       north = route[0][0].lat(), south = north;
   for (var i = 0; i < route.length; ++i)
@@ -295,7 +297,7 @@ function getRouteBounds(route)
       north = Math.max(north, route[i][j].lat());
       south = Math.min(south, route[i][j].lat());
     }
-  console.log(west+east);
+  //console.log(west+east);
   return new google.maps.LatLngBounds(
     new google.maps.LatLng(south, west),
     new google.maps.LatLng(north, east));
