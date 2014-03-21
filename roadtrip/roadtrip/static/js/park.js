@@ -221,7 +221,6 @@ function initMarkers() {
         allMarkersShown = false;
 
         selectedItem.name = $(this).find("> .poi-name").html();
-        $("#overlay-content").html(name);
         var selectedItemGPS = $(this).find("> .coordinate").html().split(",");
         selectedItem.lat = selectedItemGPS[0];
         selectedItem.lng = selectedItemGPS[1];

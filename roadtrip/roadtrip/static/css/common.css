@@ -49,7 +49,7 @@ body a { text-decoration:none; }
 .zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#f5f3f0; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
 
-.trail-item { cursor:pointer; padding:10px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
+.trail-item { cursor:pointer; padding:5px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
 .trail-item:hover { background-color:#b3cd53; color:white; }
 
 .sidebar-poi-panel { position:absolute; top:0; left:0px; width:100%; }
@@ -57,7 +57,7 @@ body a { text-decoration:none; }
 .sidebar-food-panel { position:absolute; top:0; left:0px; width:100%; }
 
 
-#info-panel { text-align:left; display:inline; width:100%; height:50px; position:fixed; bottom:0px; left:350px; background-color:#d3d3d3;}
+#info-panel { text-align:left; display:inline; width:100%; height:50px; position:fixed; bottom:0px; left:350px; background-color:#d3d3d3; }
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
 #map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:350px; }
 
@@ -78,17 +78,17 @@ body a { text-decoration:none; }
 
 .park-name {color: #fff; display: block;outline: 0;overflow: hidden;position: relative;text-align: center;text-decoration: none;}
 
-.infobox-label { display:block; width:100px; color:black; background-color:#b61f25; border:1px solid white; padding:5px; border-radius:5px; box-shadow: 8px 8px 5px #888888; cursor:pointer; }
+.infobox-label { display:block; width:100px; color:black; background-color:#349946; border:1px solid white; padding:5px; border-radius:5px; box-shadow: 8px 8px 5px #888888; cursor:pointer; }
 .infobox-label.hidden { display:none; }
 .infobox-label p { display:block; color:white; padding:0px; }
 .infobox-title-en { font-size:10px; }
 
 //#overlay-panel-wrapper { position:absolute; left:0; top:0; width:100%; height:0; }
-#overlay-panel { display:none; overflow:auto; position:absolute; left:400px; bottom:0; height:500px; right:0; z-index:10008; top:80px; }
+#overlay-panel { display:none; overflow:auto; overflow-x:hidden; position:absolute; left:400px; bottom:0; height:500px; z-index:10008; top:80px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); border-radius:10px; }
 #overlay-content { position:relative; z-index:20009; background-color:#f9f9f6; width:500px; height:500px; border:solid 1px white; border-radius:5px; }
 #info-panel-desc { padding:20px; }
 #info-panel-desc p { padding-bottom:10px; }
-#close-info-panel { padding:10px; background-color:#4caddc; color:white; }
+#close-info-panel { padding:10px; background-color:#4caddc; color:white; border-radius:10px; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
