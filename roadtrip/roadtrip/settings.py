@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'menus',
     'south',
     'sekizai',
+    'photologue',
     'roadtrip',
 )
 

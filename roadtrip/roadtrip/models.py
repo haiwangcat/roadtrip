@@ -1,4 +1,5 @@
 from django.db import models
+import photologue
 
 class Park(models.Model):
   name_cn = models.CharField(max_length=100)
@@ -20,9 +21,15 @@ class POI(models.Model):
   score = models.IntegerField(default=5)
   parking_gps_coordinate = models.CharField(max_length=50, null=True)
   wiki_link = models.CharField(max_length=200, null=True)
- 
+
   def __unicode__(self):
     return self.name_cn
+
+class POIPhoto(photologue.models.Photo):
+  poi_id = models.ForeignKey(POI)
+
+  def __unicode__(self):
+    return self.title
 
 class Trail(models.Model):
   name_cn = models.CharField(max_length=100)
