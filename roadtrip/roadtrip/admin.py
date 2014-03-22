@@ -6,15 +6,15 @@ class POIInline(admin.StackedInline):
   model = POI
   extra = 0
 
-class PhotoInline(admin.StackedInline):
-  model = Photo
+class POIPhotoInline(admin.StackedInline):
+  model = POIPhoto
   extra = 0
 
 class ParkAdmin(admin.ModelAdmin):
   inlines = [POIInline]
 
 class POIAdmin(admin.ModelAdmin):
-  inlines = [PhotoInline]
+  inlines = [POIPhotoInline]
 
 admin.site.register(Park, ParkAdmin)
 admin.site.register(POI, POIAdmin)

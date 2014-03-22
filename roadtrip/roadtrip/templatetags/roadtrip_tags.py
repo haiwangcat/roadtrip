@@ -15,6 +15,15 @@ def getTrails(context, poi_id):
   return Trail.objects.all().filter(poi_id=poi_id)
 
 @register.assignment_tag(takes_context=True)
+def getPOIPhotoURL(context, poi_id):
+  photos = POIPhoto.objects.all().filter(poi_id=poi_id)
+  if len(photos) == 0:
+    return ""
+  print photos[0].get_absolute_url()
+  print photos[0].image
+  return photos[0].image
+
+@register.assignment_tag(takes_context=True)
 def getParkMap(context, park_id):
   maps = ThirdPartyMap.objects.all().filter(park_id=park_id)
   if len(maps) > 0:
