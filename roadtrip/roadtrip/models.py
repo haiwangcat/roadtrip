@@ -1,5 +1,5 @@
 from django.db import models
-import photologue
+from photologue.models import Photo
 
 class Park(models.Model):
   name_cn = models.CharField(max_length=100)
@@ -25,7 +25,7 @@ class POI(models.Model):
   def __unicode__(self):
     return self.name_cn
 
-class POIPhoto(photologue.models.Photo):
+class POIPhoto(Photo):
   poi_id = models.ForeignKey(POI)
 
   def __unicode__(self):
