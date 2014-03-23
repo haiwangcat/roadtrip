@@ -86,6 +86,8 @@ function initMarkers() {
     var name = $(this).find("> .poi-name").html();
     var nameEn = $(this).find("> .poi-name-en").html();
     //console.log(name);
+    var inactiveMarkerZIndex = 1998;
+    var activeMarkerZIndex = inactiveMarkerZIndex + 1;
 
     var marker = new google.maps.Marker({
       position: getLatLng($(this).find("> .coordinate").html()),
@@ -106,6 +108,7 @@ function initMarkers() {
         origin: new google.maps.Point(34, 320),
         size: new google.maps.Size(34, 40)
       });
+      m.setZIndex(activeMarkerZIndex);
     };
 
     var inactivateMarker = function(m) {
@@ -114,6 +117,7 @@ function initMarkers() {
         origin: new google.maps.Point(0, 320),
         size: new google.maps.Size(34, 40)
       });
+      m.setZIndex(inactiveMarkerZIndex);
     };
 
     var inactivateAllMarkers = function() {
