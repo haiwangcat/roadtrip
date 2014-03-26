@@ -471,10 +471,9 @@ function initOfficialMap() {
 
 function turnOnIntroPanel(poiID) {
   var mapCanvas = $("#map-canvas");
-  var width = parseInt(mapCanvas.css("width")) - 100;
-  var left = parseInt(mapCanvas.css("left"));
-  $("#overlay-content").css("width", width);
-  $("#overlay-panel").css("left", left+50);
+  var width = parseInt(mapCanvas.css("width"));
+  var left = (width - parseInt($("#overlay-panel").css("width"))) / 2 + parseInt(mapCanvas.css("left"));
+  $("#overlay-panel").css("left", left);
   $("#overlay-content").load('/get-poi-info/?poi=' + poiID, function() {
     $("#overlay-panel").show();
     initInfoPanelEventListeners();

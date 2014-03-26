@@ -27,7 +27,7 @@ class POI(models.Model):
   street_address = models.CharField(max_length=200, null=True)
   category = models.CharField(max_length=200, null=True)
   phone_number = models.CharField(max_length=200, null=True)
-  
+ 
   def __unicode__(self):
     return self.name_cn
 
