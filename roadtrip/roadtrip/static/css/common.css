@@ -27,7 +27,7 @@ body a { text-decoration:none; }
 #poi-control-panel { position:absolute; left:0; top:0; display:block; outline:0; height:30px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; z-index:10001; }
 #poi-control-panel a { color:white; }
 #poi-control-panel a:hover { text-decoration:underline; }
-#poi-list-container { position:absolute; top:0; bottom:0; padding-top:30px; }
+#poi-list-container { position:absolute; top:0; bottom:0; top:0; bottom:0; padding-top:30px; }
 .poi-list { width:300px; overflow-x:hidden; overflow-y:auto; height:100%; }
 
 #show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
@@ -68,7 +68,7 @@ body a { text-decoration:none; }
 .side-nav-category { font-size: 10px; border-bottom: 1px solid #060606; height: 60px; width: 60px; margin:10px auto 10px auto; background-color: #383f47; border-width: 0; color:white; display: block; outline: 0; overflow: hidden; position: relative; text-align: center; text-decoration: none; text-transform: uppercase; }
 .side-nav-category hl { position:relative; top:5px; }
 
-.icon-pic {height: 35px;width: 35px;}
+.icon-pic { height: 35px; width: 35px; }
 
 #add-to-trip-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:70px; bottom:0px; width: 100px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
 #show-direction-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:150px; bottom:0px; width: 100px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }

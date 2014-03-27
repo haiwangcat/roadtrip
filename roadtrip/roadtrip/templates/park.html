@@ -106,7 +106,7 @@
               <span class="coordinate">{{ poi.gps_coordinate }}</span>
             </button>
             <button class="zoom-button" >
-              <img class="icon-pic" src="/static/img/zoom12.svg"></img>
+              <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
             </button>
             {% getTrails poi as trails %}
             {% if trails|length > 0 %}
