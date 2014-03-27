@@ -94,33 +94,35 @@
       </div>
 {% endcomment %}
 
-    <div class="poi-list">
-      {% getPOIs park as pois %}
-      {% for poi in pois %}
-        <div class="poi-item">
-          <span class="poi-id">{{ poi.id }}</span>
-          <button class="poi-button">
-            <p class="poi-name">{{ poi.name_cn }}</p>
-            <p class="poi-name-en">{{ poi.name_en }}</p>
-            <span class="coordinate">{{ poi.gps_coordinate }}</span>
-          </button>
-          <button class="zoom-button" >
-          	<img class="icon-pic" src="/static/img/zoom12.svg"></img>
-          </button>
-          {% getTrails poi as trails %}
-          {% if trails|length > 0 %}
-            <div class="poi-info">
-            {% for trail in trails %}
-              <div class="trail-item">
-                <div class="trail-name">{{ trail.name_cn }}</div>
-                <div class="trail-route">{{ trail.routes }}</div>
+    <div id="poi-list-container">
+      <div class="poi-list">
+        {% getPOIs park as pois %}
+        {% for poi in pois %}
+          <div class="poi-item">
+            <span class="poi-id">{{ poi.id }}</span>
+            <button class="poi-button">
+              <p class="poi-name">{{ poi.name_cn }}</p>
+              <p class="poi-name-en">{{ poi.name_en }}</p>
+              <span class="coordinate">{{ poi.gps_coordinate }}</span>
+            </button>
+            <button class="zoom-button" >
+              <img class="icon-pic" src="/static/img/zoom12.svg"></img>
+            </button>
+            {% getTrails poi as trails %}
+            {% if trails|length > 0 %}
+              <div class="poi-info">
+              {% for trail in trails %}
+                <div class="trail-item">
+                  <div class="trail-name">{{ trail.name_cn }}</div>
+                  <div class="trail-route">{{ trail.routes }}</div>
+                </div>
+              {% endfor %}
               </div>
-            {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-      {% endfor %}
-      <div class="poi-empty-item"></div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <div class="poi-empty-item"></div>
+      </div>
     </div>
   </div>
 </div>
