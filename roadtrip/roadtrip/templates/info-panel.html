@@ -7,8 +7,8 @@
   <p class="title">{{ poi.name_cn }}  {{ poi.name_en }}</p>
 </div>
 <div id="info-panel-image">
-  {% getPOIPhotoURL poi.id as image %}
-  <img src="{% get_media_prefix %}{{ image }}">
+  {% getPOIPhoto poi.id as photo %}
+  <img src="{{ photo.image.url }}">
 </div>
 <div id="info-panel-body">
   <div id="info-panel-desc">
@@ -17,4 +17,6 @@
     <p>{{ p }}</p>
   {% endfor %}
   </div>
+  {% getPOIPhoto poi.id as photo %}
+  <img src="{{ photo.get_thumbnail_url }}">
 </div>
