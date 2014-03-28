@@ -128,10 +128,12 @@ function initMarkers() {
       }
     };
 
-    var infoBox = $(".infobox-label").first().clone();
+    var infoBox = null;
+    $(".infobox-label").each(function() {
+      if ($(this).find(".poi-id").first().html() == poiID)
+        infoBox = $(this);
+    });
     infoBox.removeClass("hidden");
-    infoBox.find(".infobox-title-cn").html(name);
-    infoBox.find(".infobox-title-en").html(nameEn);
     infoBox.click(function() {
       turnOnIntroPanel(poiID);
     });

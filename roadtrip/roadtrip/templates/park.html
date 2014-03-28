@@ -37,13 +37,6 @@
   </div>
 </div>
 
-<div>
-  <div class="infobox-label hidden">
-    <p class="infobox-title-cn"></p>
-    <p class="infobox-title-en"></p>
-  </div>
-</div>
-
 <div id='top-nav-area'>
   <div id='top-nav'>
     <ul>
@@ -66,6 +59,23 @@
   
 {% getPark request as park %}
 {% if park %}
+
+<div>
+  {% getPOIs park as pois %}
+  {% for poi in pois %}
+  <div class="infobox-label hidden">
+    {% getPOIPhoto poi.id as photo %}
+    <span class="poi-id hidden">{{ poi.id }}</span>
+    <div class="infobox-label-img">
+      <img src="{{ photo.get_thumbnail_url }}">
+    </div>
+    <div class="infobox-label-name">
+      <p class="infobox-title-cn">{{ poi.name_cn }}</p>
+      <p class="infobox-title-en">{{ poi.name_en }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
 <div id="park-info">
   <span id="park-gps-coordinate">{{ park.center_gps_coordinate }}</span>
