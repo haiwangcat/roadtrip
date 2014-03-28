@@ -45,14 +45,22 @@
 </div>
 
 <div id='top-nav-area'>
-  <ul id='top-nav'>
-{% getParks as parks %}
-{% for park in parks %}
-    <li class="park-button">
-      <a class='park-name' href="./?park={{ park.id }}">{{ park.name_cn }}</a> 
-    </li>
-{% endfor %}
-  </ul>
+  <div id='top-nav'>
+    <ul>
+      {% getParks as parks %}
+      {% for park in parks %}
+      <li class="park-button">
+        <a class='park-name' href="./?park={{ park.id }}">{{ park.name_cn }}</a> 
+      </li>
+      {% endfor %}
+    </ul>
+    <div id="credentials">
+      <ul class="logged-out">
+        <li><a class="register" href="/register">注册</a></li>
+        <li><a class="login" href="/login">登录</a></li>
+      </ul>
+    <div>
+  </div>
 </div>
 
   
