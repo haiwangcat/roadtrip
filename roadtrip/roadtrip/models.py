@@ -20,13 +20,14 @@ class POI(models.Model):
   zoom = models.IntegerField(default=12)
   score = models.IntegerField(default=5)
   parking_gps_coordinate = models.CharField(max_length=50, null=True)
-  wiki_link = models.CharField(max_length=200, null=True)
-  website = models.CharField(max_length=200, null=True)
-  avg_ratings = models.FloatField(null=True)
-  tot_ratings = models.IntegerField(default = 5)
-  street_address = models.CharField(max_length=200, null=True)
-  category = models.CharField(max_length=200, null=True)
-  phone_number = models.CharField(max_length=200, null=True)
+  wiki_link = models.CharField(max_length=200, null=True, blank=True)
+  website = models.CharField(max_length=200, null=True, blank=True)
+  category = models.CharField(max_length=100, null=True)
+  address = models.CharField(max_length=1000, blank=True, null=True)
+  ratings = models.FloatField(blank=True, null=True)
+  phone_number = models.CharField(max_length=100, blank=True, null=True)
+  tags = models.CharField(max_length=1000, blank=True, null=True)
+  
   
   def __unicode__(self):
     return self.name_cn
