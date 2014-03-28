@@ -222,7 +222,7 @@ function initMarkers() {
         activeMarkerIndex = index;
         map.panTo(marker.position);
         showInfoBoxOnClick();
-        allMarkersShown = false;
+        //allMarkersShown = false;
 
         selectedItem.name = $(this).find("> .poi-name").html();
         var selectedItemGPS = $(this).find("> .coordinate").html().split(",");
@@ -280,7 +280,7 @@ function initMarkers() {
         if (allMarkersShown)
           infowindow.hide();
         else if (activeMarkerIndex != index) {
-          marker.setVisible(false);
+          //marker.setVisible(false);
           infowindow.hide();
           directionsDisplay.setMap(null);
         }
