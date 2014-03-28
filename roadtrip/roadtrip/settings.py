@@ -124,6 +124,7 @@ TEMPLATE_DIRS = (
     # The docs say it should be absolute path: PROJECT_PATH is precisely one.
     # Life is wonderful!
     os.path.join(PROJECT_PATH, "templates"),
+    os.path.join(PROJECT_PATH, "../photologue/templates"),
 )
 
 CMS_TEMPLATES = (

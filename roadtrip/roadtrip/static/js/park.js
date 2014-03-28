@@ -128,10 +128,12 @@ function initMarkers() {
       }
     };
 
-    var infoBox = $(".infobox-label").first().clone();
+    var infoBox = null;
+    $(".infobox-label").each(function() {
+      if ($(this).find(".poi-id").first().html() == poiID)
+        infoBox = $(this);
+    });
     infoBox.removeClass("hidden");
-    infoBox.find(".infobox-title-cn").html(name);
-    infoBox.find(".infobox-title-en").html(nameEn);
     infoBox.click(function() {
       turnOnIntroPanel(poiID);
     });
@@ -222,7 +224,7 @@ function initMarkers() {
         activeMarkerIndex = index;
         map.panTo(marker.position);
         showInfoBoxOnClick();
-        allMarkersShown = false;
+        //allMarkersShown = false;
 
         selectedItem.name = $(this).find("> .poi-name").html();
         var selectedItemGPS = $(this).find("> .coordinate").html().split(",");
@@ -280,7 +282,7 @@ function initMarkers() {
         if (allMarkersShown)
           infowindow.hide();
         else if (activeMarkerIndex != index) {
-          marker.setVisible(false);
+          //marker.setVisible(false);
           infowindow.hide();
           directionsDisplay.setMap(null);
         }
@@ -471,10 +473,9 @@ function initOfficialMap() {
 
 function turnOnIntroPanel(poiID) {
   var mapCanvas = $("#map-canvas");
-  var width = parseInt(mapCanvas.css("width")) - 100;
-  var left = parseInt(mapCanvas.css("left"));
-  $("#overlay-content").css("width", width);
-  $("#overlay-panel").css("left", left+50);
+  var width = parseInt(mapCanvas.css("width"));
+  var left = (width - parseInt($("#overlay-panel").css("width"))) / 2 + parseInt(mapCanvas.css("left"));
+  $("#overlay-panel").css("left", left);
   $("#overlay-content").load('/get-poi-info/?poi=' + poiID, function() {
     $("#overlay-panel").show();
     initInfoPanelEventListeners();

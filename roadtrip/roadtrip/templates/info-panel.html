@@ -1,13 +1,22 @@
 {% load roadtrip_tags static %}
 
-<button id="close-info-panel">消失</button>
-<div id="info-panel-desc">
-  <h1>{{ poi.name_cn }}</h1>
-  {% getPOIPhotoURL poi.id as image %}
-  <img src="{% get_media_prefix %}{{ image }}">
-  <br>
+<div id="info-panel-top-bar">
+  <button id="close-info-panel"><span>消失</span></button>
+</div>
+<div id="info-panel-title">
+  <p class="title">{{ poi.name_cn }}  {{ poi.name_en }}</p>
+</div>
+<div id="info-panel-image">
+  {% getPOIPhoto poi.id as photo %}
+  <img src="{{ photo.image.url }}">
+</div>
+<div id="info-panel-body">
+  <div id="info-panel-desc">
   {% processDescription poi.description as desc %}
   {% for p in desc %}
     <p>{{ p }}</p>
   {% endfor %}
+  </div>
+  {% getPOIPhoto poi.id as photo %}
+  <img src="{{ photo.get_thumbnail_url }}">
 </div>

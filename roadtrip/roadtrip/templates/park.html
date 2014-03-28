@@ -37,27 +37,45 @@
   </div>
 </div>
 
-<div>
-  <div class="infobox-label hidden">
-    <p class="infobox-title-cn"></p>
-    <p class="infobox-title-en"></p>
-  </div>
-</div>
-
 <div id='top-nav-area'>
-  <ul id='top-nav'>
-{% getParks as parks %}
-{% for park in parks %}
-    <li class="park-button">
-      <a class='park-name' href="./?park={{ park.id }}">{{ park.name_cn }}</a> 
-    </li>
-{% endfor %}
-  </ul>
+  <div id='top-nav'>
+    <ul>
+      {% getParks as parks %}
+      {% for park in parks %}
+      <li class="park-button">
+        <a class='park-name' href="./?park={{ park.id }}">{{ park.name_cn }}</a> 
+      </li>
+      {% endfor %}
+    </ul>
+    <div id="credentials">
+      <ul class="logged-out">
+        <li><a class="register" href="/register">注册</a></li>
+        <li><a class="login" href="/login">登录</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
 
   
 {% getPark request as park %}
 {% if park %}
+
+<div>
+  {% getPOIs park as pois %}
+  {% for poi in pois %}
+  <div class="infobox-label hidden">
+    {% getPOIPhoto poi.id as photo %}
+    <span class="poi-id hidden">{{ poi.id }}</span>
+    <div class="infobox-label-img">
+      <img src="{{ photo.get_thumbnail_url }}">
+    </div>
+    <div class="infobox-label-name">
+      <p class="infobox-title-cn">{{ poi.name_cn }}</p>
+      <p class="infobox-title-en">{{ poi.name_en }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
 
 <div id="park-info">
   <span id="park-gps-coordinate">{{ park.center_gps_coordinate }}</span>
@@ -94,33 +112,35 @@
       </div>
 {% endcomment %}
 
-    <div class="poi-list">
-      {% getPOIs park as pois %}
-      {% for poi in pois %}
-        <div class="poi-item">
-          <span class="poi-id">{{ poi.id }}</span>
-          <button class="poi-button">
-            <p class="poi-name">{{ poi.name_cn }}</p>
-            <p class="poi-name-en">{{ poi.name_en }}</p>
-            <span class="coordinate">{{ poi.gps_coordinate }}</span>
-          </button>
-          <button class="zoom-button" >
-          	<img class="icon-pic" src="/static/img/zoom12.svg"></img>
-          </button>
-          {% getTrails poi as trails %}
-          {% if trails|length > 0 %}
-            <div class="poi-info">
-            {% for trail in trails %}
-              <div class="trail-item">
-                <div class="trail-name">{{ trail.name_cn }}</div>
-                <div class="trail-route">{{ trail.routes }}</div>
+    <div id="poi-list-container">
+      <div class="poi-list">
+        {% getPOIs park as pois %}
+        {% for poi in pois %}
+          <div class="poi-item">
+            <span class="poi-id">{{ poi.id }}</span>
+            <button class="poi-button">
+              <p class="poi-name">{{ poi.name_cn }}</p>
+              <p class="poi-name-en">{{ poi.name_en }}</p>
+              <span class="coordinate">{{ poi.gps_coordinate }}</span>
+            </button>
+            <button class="zoom-button" >
+              <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
+            </button>
+            {% getTrails poi as trails %}
+            {% if trails|length > 0 %}
+              <div class="poi-info">
+              {% for trail in trails %}
+                <div class="trail-item">
+                  <div class="trail-name">{{ trail.name_cn }}</div>
+                  <div class="trail-route">{{ trail.routes }}</div>
+                </div>
+              {% endfor %}
               </div>
-            {% endfor %}
-            </div>
-          {% endif %}
-        </div>
-      {% endfor %}
-      <div class="poi-empty-item"></div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <div class="poi-empty-item"></div>
+      </div>
     </div>
   </div>
 </div>
