@@ -197,7 +197,7 @@ function initMarkers() {
 
     var node = $(this);
     var selectPOIItem = function() {
-      var info = node.parent().children(".poi-info");
+      var info = node.parent().find(".poi-info");
       if (info && info.hasClass("expanded")) {
         info.slideToggle("50", "swing");
         info.removeClass("expanded");
@@ -218,9 +218,9 @@ function initMarkers() {
           info.slideToggle("50", "swing");
           info.addClass("expanded");
         }
-        var position = $(".poi-button").index(node) * parseInt(node.css("height"))
-          + parseInt($("#poi-control-panel").css("height"));
-        $(".sidebar-poi").animate({
+        var position = $(".poi-button").filter(":visible").index(node) * parseInt(node.css("height"));
+
+        $(".poi-list").animate({
           scrollTop: position,
         }, 300);
       }

@@ -12,7 +12,7 @@ body { margin-bottom:30px; position:relative; z-index:1; background-repeat:no-re
 button { cursor:pointer; outline:0; }
 
 
-.sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:70px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); overflow-x:hidden; overflow-y:auto; }
+.sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:70px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); }
 .sidebar-poi li,.sidebar-food li,.sidebar-hotel li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 
 
@@ -25,9 +25,9 @@ button { cursor:pointer; outline:0; }
 #poi-control-panel a { color:white; }
 #poi-control-panel a:hover { text-decoration:underline; }
 #poi-list-container { position:absolute; top:0; bottom:0; top:0; bottom:0; padding-top:30px; }
-.poi-list { width:300px; overflow-x:hidden; overflow-y:auto; height:100%; }
+.poi-list { width:300px; overflow-x:hidden; overflow-y:auto; height:100%; overflow-x:hidden; overflow-y:auto; }
 
-#show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
+#show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; color:white; }
 #sidebar-back { position:absolute; top:0; left:0; text-align:right; padding-left:20px; }
 #sidebar-forward { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 //#show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
