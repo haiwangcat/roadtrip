@@ -1,5 +1,6 @@
 var map;
 var markers = new Array();
+var markerStatus = new Array();
 var infowindows = new Array();
 var activeMarkerIndex = -1;
 var allMarkersShown = false;
@@ -44,6 +45,7 @@ function initEventListeners() {
   });
 
   $("#show-all-pois").click(function() {
+    //initMarkers();
     showAllMarkers();
   });
 }
@@ -80,16 +82,25 @@ function closeAllInfoWindows(keepOpen) {
   });
 }
 
+function setMarkerStatus(){
+  $(".poi-button").each(function(index) {
+    var status = 1;
+    if ($(this).is(':hidden')){
+      status = 0;
+    }
+  markerStatus[index] = status;
+  });
+}
+
 function initMarkers() {
   $(".poi-button").each(function(index) {
     var poiID = $(this).parent().find("> .poi-id").html();
     var name = $(this).find("> .poi-name").html();
     var nameEn = $(this).find("> .poi-name-en").html();
-    //console.log(name);
     var inactiveMarkerZIndex = 1998;
     var activeMarkerZIndex = inactiveMarkerZIndex + 1;
-
-    var marker = new google.maps.Marker({
+  
+ var marker = new google.maps.Marker({
       position: getLatLng($(this).find("> .coordinate").html()),
       map: map,
       visible: false,
@@ -99,9 +110,8 @@ function initMarkers() {
         size: new google.maps.Size(34, 40)
       },
     });
-
     markers[index] = marker;
-
+  console.log('markers',markers)
     var activateMarker = function(m) {
       m.setIcon({
         url: "/static/icon/marker.png",
@@ -388,8 +398,15 @@ function clearMap() {
 function showAllMarkers() {
   if (allMarkersShown==false){
     markers.forEach(function(marker){
-      marker.setAnimation(google.maps.Animation.DROP);
-      marker.setVisible(true);
+      var position = markers.indexOf(marker);
+      var status = markerStatus[position];
+      if (status == 1){
+        marker.setAnimation(google.maps.Animation.DROP);
+        marker.setVisible(true);
+      }
+      if (status == 0){
+        marker.setVisible(false);
+      }
       allMarkersShown = true;
     });
   }
@@ -539,25 +556,38 @@ $(".zoom-button").each(function(index) {
 });
 
 $('.side-nav-category').each(function(index){
-  $('.sidebar-food').hide();
-  $('.sidebar-hotel').hide();
+  $('.food-item').hide();
+  $('.hotel-item').hide();
+  $('.road-item').hide();
+  $('.attraction-item').show();
+                             
   $(this).click(function(){
     if ($(this).children('hl').html() == '景点') {    
-      $('.sidebar-poi').show();
-      $('.sidebar-hotel').hide();
-      $('.sidebar-food').hide();
+      $('.attraction-item').show();
+      $('.food-item').hide();
+      $('.hotel-item').hide();
+      $('.road-item').hide();
     }
     else if ($(this).children('hl').html() == '饕餮') {
-      $('.sidebar-poi').hide();
-      $('.sidebar-hotel').hide();
-      $('.sidebar-food').show();
+      $('.attraction-item').hide();
+      $('.food-item').show();
+      $('.hotel-item').hide();
+      $('.road-item').hide();
     }
     else if ($(this).children('hl').html() == '客栈') {
-      $('.sidebar-poi').hide();
-      $('.sidebar-hotel').show();
-      $('.sidebar-food').hide();
+      $('.attraction-item').hide();
+      $('.food-item').hide();
+      $('.hotel-item').show();
+      $('.road-item').hide();
     }
-
+    else if ($(this).children('hl').html() == '赶路') {
+      $('.attraction-item').hide();
+      $('.food-item').hide();
+      $('.hotel-item').hide();
+      $('.road-item').show();
+    }
+  setMarkerStatus();
+  console.log('status',markerStatus);
   });
 });
 
