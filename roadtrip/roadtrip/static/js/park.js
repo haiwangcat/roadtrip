@@ -99,8 +99,10 @@ function initMarkers() {
     var nameEn = $(this).find("> .poi-name-en").html();
     var inactiveMarkerZIndex = 1998;
     var activeMarkerZIndex = inactiveMarkerZIndex + 1;
-  
- var marker = new google.maps.Marker({
+
+    var selected = false;
+
+    var marker = new google.maps.Marker({
       position: getLatLng($(this).find("> .coordinate").html()),
       map: map,
       visible: false,
@@ -167,9 +169,10 @@ function initMarkers() {
     var showInfoBoxOnClick = function() {
       closeAllInfoWindows(infowindow);
       //showInfoBox();
-      infowindow.show()
+      infowindow.show();
       infowindow.setZIndex(1999);
       activeMarkerIndex = index;
+      selected = true;
     };
 
     var node = $(this);
@@ -242,7 +245,6 @@ function initMarkers() {
         selectedItem.lng = selectedItemGPS[1];
         
         
-        
         var info = $(this).parent().children(".poi-info");
         if (info && info.hasClass("expanded")) {
           info.slideToggle("50", "swing");
@@ -274,25 +276,18 @@ function initMarkers() {
       }); 
 
       $(this).parent().mouseenter(function () {
-        if (activeMarkerIndex != index && !marker.getVisible()) {
+        if (activeMarkerIndex != index) {
           marker.setVisible(true);
           //marker.setMap(map);
           showInfoBox();
         }
-        else if (allMarkersShown) {
-          showInfoBox();
-        }
-
         //if (activeMarkerIndex != null && activeMarkerIndex != marker) {
           //calcRoute(activeMarkerIndex.position, marker.position);
         //}
       }); 
 
       $(this).parent().mouseleave(function () {
-        if (allMarkersShown)
-          infowindow.hide();
-        else if (activeMarkerIndex != index) {
-          //marker.setVisible(false);
+        if (activeMarkerIndex != index) {
           infowindow.hide();
           directionsDisplay.setMap(null);
         }
