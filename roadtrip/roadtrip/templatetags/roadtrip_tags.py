@@ -16,9 +16,12 @@ def getTrails(context, poi_id):
 
 @register.assignment_tag(takes_context=True)
 def getPOIPhoto(context, poi_id):
+  print poi_id
   photos = POIPhoto.objects.all().filter(poi_id=poi_id)
+  print len(photos)
   if len(photos) == 0:
     return None
+  print photos[0].image.url
   return photos[0]
 
 @register.assignment_tag(takes_context=True)

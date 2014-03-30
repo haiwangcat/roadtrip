@@ -30,7 +30,7 @@ button { cursor:pointer; outline:0; }
 #show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
 #sidebar-back { position:absolute; top:0; left:0; text-align:right; padding-left:20px; }
 #sidebar-forward { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
-#show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
+//#show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 
 
 .poi-item, .food-item, .hotel-item { position:relative; line-height:1.7;}
@@ -97,6 +97,10 @@ button { cursor:pointer; outline:0; }
 #info-panel-body { background-color:#f9f9f6; padding:20px; }
 #info-panel-desc { background-color:white; padding:10px; box-shadow:0 2px 2px 1px rgba(0,0,0,0.03); }
 #close-info-panel { position:absolute; width:80px; left:15px; height:30px; top:10px; line-height:30px; text-align:center; background-color:#4caddc; color:white; border-radius:3px; }
+
+.map-nav { position:absolute; top:75px; left:370px; font-size:10px; }
+a.aside-nav { width:50px; height:46px; line-height:46px; overflow:hidden; display:block; text-align:center; cursor:pointer; background:#1ea5ad; color:white; }
+a.aside-nav:hover { color:#dddddd; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }

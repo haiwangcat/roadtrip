@@ -89,9 +89,6 @@
   <div class="sidebar-panel-poi">
     <div id="poi-control-panel">
       <a href="javascript:" id="show-all-pois">显示所有景点</a>
-      {% if map %}
-        <a href="javascript:" id="show-official-map">官方地图</a>
-      {% endif %}
     </div>
 
   <div id="poi-list-container">
@@ -198,6 +195,17 @@
     <br><hl>饕餮</hl>
   </button>
 </div>
+
+<div class="map-nav">
+  {% if map %}
+  <a class="map aside-nav hidden" id="show-official-map">
+    <i class="icon-nav-map"></i>
+    <span class="action-label"> 官方地图 </span>
+  </a>
+  {% endif %}
+</div>
+
+
 
 <div id='add-to-trip'>
 	<button id='add-to-trip-button'>
