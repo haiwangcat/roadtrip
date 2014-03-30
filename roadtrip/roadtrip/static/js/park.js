@@ -459,7 +459,7 @@ function initOfficialMap() {
     //mapOverlay.setMap(map);
 
     mapFrame = new google.maps.Rectangle({
-      strokeColor: 'green',
+      strokeColor: 'white',
       strokeOpacity: 1,
       strokeWeight: 1,
       fillOpacity: 0,
