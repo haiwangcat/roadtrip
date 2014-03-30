@@ -17,8 +17,7 @@
 <script type="text/javascript" src="{% static "js/park.js" %}"></script>
 <script type="text/javascript" src="{% static "js/infobox_packed.js" %}"></script>
 <script type="text/javascript" src="{% static "js/trip.js" %}"></script>
-<script type="text/javascript" src="{% static "js/yelp_hotel.js" %}"></script>
-<script type="text/javascript" src="{% static "js/yelp_food.js" %}"></script>
+
 
 
 <script type="text/javascript">
@@ -89,33 +88,18 @@
 <div class="sidebar-poi">
   <div class="sidebar-panel-poi">
     <div id="poi-control-panel">
-{% comment %}
-        <a href="javascript:" id="sidebar-back">后退</a>
-        <a href="javascript:" id="sidebar-forward">前进</a><br>
-{% endcomment %}
       <a href="javascript:" id="show-all-pois">显示所有景点</a>
       {% if map %}
         <a href="javascript:" id="show-official-map">官方地图</a>
       {% endif %}
     </div>
 
-{% comment %}
-      <div class="sidebar-item-list">
-          <div class="poi-item">
-            <button class="poi-button">
-              <p class="poi-name">Yosemite</p>
-              <p class="poi-name-en">yose</p>
-              <span class="coordinate"></span>
-            </button>
-            <button class="zoom-button">+</button>
-          </div>
-      </div>
-{% endcomment %}
-
-    <div id="poi-list-container">
-      <div class="poi-list">
-        {% getPOIs park as pois %}
-        {% for poi in pois %}
+  <div id="poi-list-container">
+    <div class="poi-list">
+    {% getPOIs park as pois %}
+    {% for poi in pois %}
+    {% if poi.category == '景点'%}
+        <div class = 'attraction-item'>
           <div class="poi-item">
             <span class="poi-id">{{ poi.id }}</span>
             <button class="poi-button">
@@ -138,54 +122,72 @@
               </div>
             {% endif %}
           </div>
-        {% endfor %}
+        </div>
+    {% endif %}
+    {% if poi.category == '饭馆' %}
+    <div class="food-item">
+      <div class='poi-item'>
+        <span class="poi-id">{{ poi.id }}</span>
+        <button class="poi-button">
+            <p class="poi-name">{{ poi.name_cn }}</p>
+            <p class="poi-name-en">{{ poi.name_en }}</p>
+            <span class="coordinate">{{ poi.gps_coordinate }}</span>
+        </button>
+        <button class="zoom-button" >
+            <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
+        </button>
+      </div>
+    </div>
+    {% endif %}
+    {% if poi.category == '住宿' %}
+    <div class="hotel-item">
+      <div class='poi-item'>
+        <span class="poi-id">{{ poi.id }}</span>
+        <button class="poi-button">
+            <p class="poi-name">{{ poi.name_cn }}</p>
+            <p class="poi-name-en">{{ poi.name_en }}</p>
+            <span class="coordinate">{{ poi.gps_coordinate }}</span>
+        </button>
+        <button class="zoom-button" >
+            <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
+        </button>
+      </div>
+    </div>
+    {% endif %}
+    {% if poi.category == '开车' %}
+    <div class="road-item">
+      <div class='poi-item'>
+        <span class="poi-id">{{ poi.id }}</span>
+        <button class="poi-button">
+            <p class="poi-name">{{ poi.name_cn }}</p>
+            <p class="poi-name-en">{{ poi.name_en }}</p>
+            <span class="coordinate">{{ poi.gps_coordinate }}</span>
+        </button>
+        <button class="zoom-button" >
+            <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
+        </button>
+      </div>
+    </div>
+    {% endif %}
+  {% endfor %}
         <div class="poi-empty-item"></div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="sidebar-food">
-  <div class="sidebar-panel-food">
-    <button id="show-all-food">显示所有餐馆</button>
-    <div class="food-list">
-        <div class="food-item">
-          <button class="food-button">
-            <p class="food-name">王妈大饼</p>
-            <p class="food-name-en"></p>
-            <span class="coordinate"></span>
-          </button>
-        </div>
-    </div>
-  </div>
-</div>
-
-<div class="sidebar-hotel">
-  <div class="sidebar-panel-hotel">
-    <button id="show-all-hotel">显示所有客栈</button>
-    <div class="hotel-list">
-        <div class="hotel-item">
-          <button class="hotel-button">
-            <p class="hotel-name">孙二娘客栈</p>
-            <p class="hotel-name-en"></p>
-            <span class="coordinate"></span>
-          </button>
-        </div>
-    </div>
-  </div>
-</div>
 
 
 
 
 <div id='side-nav'>
   <button class='side-nav-category'>
-    <img class='icon-pic' src="/static/img/pins48.svg"></img>
+    <img class='icon-pic' src="/static/img/vintage2.svg"></img>
     <br><hl>景点</hl>
   </button>
   <button class='side-nav-category'>
-    <img class='icon-pic' src="/static/img/vintage2.svg"></img>
-    <br><hl>拍照</hl>
+    <img class='icon-pic' src="/static/img/car75.svg"></img>
+    <br><hl>赶路</hl>
   </button>
   <button class='side-nav-category'>
     <img class='icon-pic' src="/static/img/accomodation.svg"></img>
