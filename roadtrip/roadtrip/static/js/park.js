@@ -10,6 +10,8 @@ var directionsDisplay;
 var introPanelOn = false;
 var priorZoom;
 var priorCenter;
+var inactiveMarkerZIndex = 1998;
+var activeMarkerZIndex = inactiveMarkerZIndex + 1;
 
 function initialize() {
   var mapOptions = {
@@ -45,8 +47,7 @@ function initEventListeners() {
   });
 
   $("#show-all-pois").click(function() {
-    //initMarkers();
-    showAllMarkers();
+    //showAllMarkers();
   });
 }
 
@@ -55,6 +56,24 @@ function initInfoPanelEventListeners() {
     turnOffIntroPanel();
   });
 }
+
+function inactivateMarker(m) {
+  m.setIcon({
+    url: "/static/icon/marker.png",
+    origin: new google.maps.Point(0, 320),
+    size: new google.maps.Size(34, 40)
+  });
+  m.setZIndex(inactiveMarkerZIndex);
+};
+
+function activateMarker(m) {
+  m.setIcon({
+    url: "/static/icon/marker.png",
+    origin: new google.maps.Point(34, 320),
+    size: new google.maps.Size(34, 40)
+  });
+  m.setZIndex(activeMarkerZIndex);
+};
 
 function calcRoute(start, end) {
   //var start = new google.maps.LatLng(37.716753,-119.646505);
@@ -113,7 +132,7 @@ function initMarkers() {
       },
     });
     markers[index] = marker;
-  console.log('markers',markers)
+/*
     var activateMarker = function(m) {
       m.setIcon({
         url: "/static/icon/marker.png",
@@ -122,7 +141,8 @@ function initMarkers() {
       });
       m.setZIndex(activeMarkerZIndex);
     };
-
+*/
+/*
     var inactivateMarker = function(m) {
       m.setIcon({
         url: "/static/icon/marker.png",
@@ -131,7 +151,7 @@ function initMarkers() {
       });
       m.setZIndex(inactiveMarkerZIndex);
     };
-
+*/
     var inactivateAllMarkers = function() {
       activeMarkerIndex = -1;
       for (var i = 0; i < markers.length; i++) {
@@ -391,26 +411,19 @@ function clearMap() {
 
 
 function showAllMarkers() {
-  if (allMarkersShown==false){
     markers.forEach(function(marker){
+      marker.setVisible(false);
       var position = markers.indexOf(marker);
       var status = markerStatus[position];
       if (status == 1){
         marker.setAnimation(google.maps.Animation.DROP);
         marker.setVisible(true);
+        inactivateMarker(marker);
       }
       if (status == 0){
         marker.setVisible(false);
       }
-      allMarkersShown = true;
     });
-  }
-  else {
-    markers.forEach(function(marker){
-      marker.setVisible(false);
-      allMarkersShown = false;
-    });
-  }
   closeAllInfoWindows(null);
   toParkView();
 }
@@ -582,7 +595,7 @@ $('.side-nav-category').each(function(index){
       $('.road-item').show();
     }
   setMarkerStatus();
-  console.log('status',markerStatus);
+  showAllMarkers();
   });
 });
 
