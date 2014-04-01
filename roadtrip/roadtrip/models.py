@@ -1,5 +1,6 @@
 from django.db import models
 from photologue.models import Photo
+from sortedm2m.fields import SortedManyToManyField
 
 class Park(models.Model):
   name_cn = models.CharField(max_length=100)
@@ -67,7 +68,7 @@ class ThirdPartyMap(models.Model):
 
 class Trip(models.Model):
   trip_name = models.CharField(max_length = 1000)
-  pois = models.ManyToManyField(POI)
+  pois = SortedManyToManyField(POI)
   
   def __unicode__(self):
     return self.trip_name
