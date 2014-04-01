@@ -69,6 +69,7 @@ class ThirdPartyMap(models.Model):
 class Trip(models.Model):
   trip_name = models.CharField(max_length = 1000)
   pois = SortedManyToManyField(POI)
+  #waypoint_id = models.IntegerField(default=0)
   
   def __unicode__(self):
     return self.trip_name

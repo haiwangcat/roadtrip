@@ -34,6 +34,6 @@ def addToTrip(request):
     
 def getTrip(request):
   if request.is_ajax():
-    trip_id = request.GET.get('trip_id','')
+    #trip_id = request.GET.get('trip_id','')
     trip = Trip.objects.all()[0]
     return render_to_response('trip-panel.html', {'trip': trip, 'trip_pois': trip.pois.all()})
