@@ -21,10 +21,15 @@ button { cursor:pointer; outline:0; }
 
 .sidebar-item-list2 { display:none; position:relative; float:left; overflow:hidden; width:300px; margin:0 5px 0 0; top:0; }
 
-#poi-control-panel { position:absolute; left:0; top:0; display:block; outline:0; height:30px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; z-index:10001; }
-#poi-control-panel a { color:white; }
-#poi-control-panel a:hover { text-decoration:underline; }
-#poi-list-container { position:absolute; top:0; bottom:0; top:0; bottom:0; padding-top:30px; }
+#park-image { position:absolute; left:0; top:0; display:block; outline:0; height:100px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; z-index:10001; }
+#park-image img { width:300px; height:100px; }
+#park-image a { color:white; }
+#park-image a:hover { text-decoration:underline; }
+
+#park-title { background-color:rgba(76,173,220,1); color:white; position:absolute; top:0px; left:0px; }
+#park-title .title { font-size:16px; padding:0px; padding-left:10px; padding-right:10px; text-transform:uppercase; }
+
+#poi-list-container { position:absolute; top:0; bottom:0; top:0; bottom:0; padding-top:100px; }
 .poi-list { width:300px; overflow-x:hidden; overflow-y:auto; height:100%; overflow-x:hidden; overflow-y:auto; }
 
 #show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; border:none; text-align:left; padding-left:20px; color:white; }
@@ -54,7 +59,7 @@ button { cursor:pointer; outline:0; }
 
 #info-panel { display:none; text-align:left; display:inline; width:100%; height:50px; position:fixed; bottom:0px; left:370px; background-color:#d3d3d3; }
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
-#map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:350px; }
+#map-canvas { position:absolute; top:40px; right:0; bottom:0px; left:350px; }
 
 #top-nav-area {background-color: #3a4a59; box-shadow:0 0 8px 2px rgba(0,0,0,0.4); top:0px; left 0; height:40px; position: fixed; width:100%; z-index: 20000;}
 #top-nav { height: 40px; line-height: 40px; text-align: center; width: 100%; float: left; margin: 0 0 3em 0; padding: 0; list-style: none; }
@@ -104,3 +109,9 @@ a.aside-nav:hover { color:#dddddd; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
+
+#disabled-area { position:fixed; top:0; right:0; bottom:0; left:0; background-color:rgba(0,0,0,0.5); z-index:1000; overflow:auto; width:100%; display:none; }
+#register-view { position:relative; width:300px; padding:25px 0; text-align:center; margin:75px auto; z-index:1001; background-color:rgba(255,255,255,0.85); border-radius:5px; box-shadow:0 0 50px #000; }
+#register-view h1 { font-weight:normal; font-size:16px; }
+#weibo-login, #tencent-login { width:250px; text-align:center; margin:12.5px auto; }
+

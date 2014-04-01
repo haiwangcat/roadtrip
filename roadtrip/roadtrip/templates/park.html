@@ -87,8 +87,11 @@
 
 <div class="sidebar-poi">
   <div class="sidebar-panel-poi">
-    <div id="poi-control-panel">
-      <a href="javascript:" id="show-all-pois">显示所有景点</a>
+    <div id="park-image">
+      <img src="http://cdn.nationalparks.org/sites/default/files/styles/park_page_image/public/yosemite_0.jpg?itok=Z63m8Syo">
+      <div id="park-title">
+        <p class="title">{{ park.name_cn }}  {{ poi.name_en }}</p>
+      </div>
     </div>
 
   <div id="poi-list-container">
@@ -178,19 +181,19 @@
 
 
 <div id='side-nav'>
-  <button class='side-nav-category'>
+  <button class='side-nav-category' id="side-nav-poi">
     <img class='icon-pic' src="/static/img/vintage2.svg"></img>
     <br><hl>景点</hl>
   </button>
-  <button class='side-nav-category'>
+  <button class='side-nav-category' id="side-nav-drive">
     <img class='icon-pic' src="/static/img/car75.svg"></img>
     <br><hl>赶路</hl>
   </button>
-  <button class='side-nav-category'>
+  <button class='side-nav-category' id="side-nav-hotel">
     <img class='icon-pic' src="/static/img/accomodation.svg"></img>
     <br><hl>客栈</hl>
   </button>
-  <button class='side-nav-category'>
+  <button class='side-nav-category' id="side-nav-restaurant">
     <img class='icon-pic' src="/static/img/bon1.svg"></img>
     <br><hl>饕餮</hl>
   </button>
@@ -220,13 +223,55 @@
 </div>
 
 
+{% comment %}
 <div id='info-panel'>
   <p id='item-name'>您目前旅程：</p>
 </div>
+{% endcomment %}
 
 <div id="map-window">
   <div id="map-canvas">
   </div>
+</div>
+
+<div id="disabled-area">
+  <div id="register-view" class="session-view rt-modal-content-view">
+  <div class="alert alert-error" style="display:none"></div>
+  <div class="logo" id="authLogo"></div>
+  <div class="signup-way">
+    <h1>创建账户</h1>
+    <div id="weibo-login">新浪微博登录</div>
+    <div id="tencent-login">腾讯账号登录</div>
+
+    <a href="#with-mail" id="with-mail" class="show-mail-signup button">电子邮箱注册</a>
+  </div>
+{%comment%}
+  <div class="email-signup">
+    <h1>创建账号</h1>
+    <form action="/users" data-remote="true" id="new_user" method="post">
+      <div class="control-group string required">
+        <input class="string required" id="user_username" name="user[username]" size="50" type="text" placeholder="CHOOSE A USERNAME">
+        <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
+      </div>
+      <div class="control-group string required">
+        <input class="string required" id="user_email" name="user[email]" size="50" type="text" placeholder="YOUR EMAIL">
+        <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
+      </div>
+      <div class="control-group password required">
+        <input class="password required" id="user_password" name="user[password]" size="50" type="password" placeholder="PASSWORD">
+        <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
+      </div>
+      <div class="control-group password password_confirmation required">
+        <input class="password_confirmation required password" id="user_password_confirmation" name="user[password_confirmation]" size="50" type="password" placeholder="CONFIRM PASSWORD">
+        <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
+      </div>
+      <div class="tos">
+        By creating an account I confirm that I have read and agree to the <a href="/tos" target="_blank">terms of service</a>.
+      </div>
+      <button class="button" name="user[create_account]" type="submit" id="user_create_account">Sign Me Up Already!</button>
+    </form>
+  </div></div>
+{%endcomment%}
 </div>
 
 {% endif %}

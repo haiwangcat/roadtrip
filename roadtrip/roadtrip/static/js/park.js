@@ -49,6 +49,15 @@ function initEventListeners() {
   $("#show-all-pois").click(function() {
     //showAllMarkers();
   });
+
+  $(".register").click(function(event) {
+    event.preventDefault();
+    $("#disabled-area").show();
+  });
+  $("#disabled-area").click(function() {
+    $("#disabled-area").hide();
+  });
+
 }
 
 function initInfoPanelEventListeners() {
@@ -570,32 +579,32 @@ $('.side-nav-category').each(function(index){
   $('.attraction-item').show();
                              
   $(this).click(function(){
-    if ($(this).children('hl').html() == '景点') {    
+    if ($(this).is("#side-nav-poi")) {    
       $('.attraction-item').show();
       $('.food-item').hide();
       $('.hotel-item').hide();
       $('.road-item').hide();
     }
-    else if ($(this).children('hl').html() == '饕餮') {
+    else if ($(this).is("#side-nav-drive")) {
       $('.attraction-item').hide();
       $('.food-item').show();
       $('.hotel-item').hide();
       $('.road-item').hide();
     }
-    else if ($(this).children('hl').html() == '客栈') {
+    else if ($(this).is("#side-nav-hotel")) {
       $('.attraction-item').hide();
       $('.food-item').hide();
       $('.hotel-item').show();
       $('.road-item').hide();
     }
-    else if ($(this).children('hl').html() == '赶路') {
+    else if ($(this).is("#side-nav-restaurant")) {
       $('.attraction-item').hide();
       $('.food-item').hide();
       $('.hotel-item').hide();
       $('.road-item').show();
     }
-  setMarkerStatus();
-  showAllMarkers();
+    setMarkerStatus();
+    showAllMarkers();
   });
 });
 
