@@ -11,7 +11,9 @@
 </div>
 <div class="info-panel-body">
   <div class="info-panel-desc">
-  <p>{{ trip.poi_list }}</p>
-  <p>{{ trip.latlng_list }}</p>
+  {% for poi in trip_pois %}
+    <p>{{ poi.name_cn }}</p>
+    <p>{{ poi.gps_coordinate }}</p>
+  {% endfor %}
   </div>
 </div>

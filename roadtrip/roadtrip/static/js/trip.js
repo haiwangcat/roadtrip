@@ -46,57 +46,41 @@ var waypoint = {
 };
 
 var showDirectionSwitch;
-var selectedItem = {
-  name: '',
-  lat: '',
-  lng: ''
-};
 var selectedItemList = new Array();
 
 $("#add-to-trip").click(function(){
-		var itemName = selectedItem.name;
-		var itemLat = selectedItem.lat;
-		var itemLng = selectedItem.lng;
-		var itemCount = selectedItemList.length;
-
-		var thisItem = {};
-		thisItem.name = itemName;
-		thisItem.lat = itemLat;
-		thisItem.lng = itemLng;
-		selectedItemList.push(thisItem);
-	
-		$('#item-name').append('->');
-		$('#item-name').append(itemName);
+  var selectedPOI = $(".poi-button.selected");
+  if (selectedPOI.length == 0)
+    return;
+  var poiID = selectedPOI.find("> .poi-id").html();
+  var data = {
+    //csrfmiddlewaretoken: '{{csrf_token}}'
+    poi_id: poiID,
+  };
+  console.log(poiID);
+  $.post('/add-to-trip/', data, function(response, status) {
+    console.log('response:' + response + '\n' + 'status:' + status);
+  });
 });
 
 
 $("#show-itinerary").click(function(){
-        var itemCount = selectedItemList.length;
-        console.log(itemCount);
-        console.log(selectedItemList[0]);
-        var list_name = new Array();
-        var list_latlng = new Array();
-        for (var i = 0; i <= itemCount-1; i++){
-          list_name.push(selectedItemList[i].name);
-          list_latlng.push("(" + selectedItemList[i].lat + "," + selectedItemList[i].lng + ")");
-        }
-        var name = list_name.toString();
-        var latlng = list_latlng.toString();
-        console.log(name);
-        console.log(latlng);
-        
-        var data = {
-          //csrfmiddlewaretoken: '{{csrf_token}}'
-          pois_name : name,
-          pois_latlng : latlng,
-        };
-        $.post('/save-trip/', data,
-                function(response, status){
-                  console.log('response:' + response + '\n' + 'status:' + status);
-                }
-        );
-        var tripName = 'mingchang';
-        turnOnTripPanel(tripName);
+  var itemCount = selectedItemList.length;
+  console.log(itemCount);
+  console.log(selectedItemList[0]);
+  var list_name = new Array();
+  var list_latlng = new Array();
+  for (var i = 0; i <= itemCount-1; i++){
+    list_name.push(selectedItemList[i].name);
+    list_latlng.push("(" + selectedItemList[i].lat + "," + selectedItemList[i].lng + ")");
+  }
+  var name = list_name.toString();
+  var latlng = list_latlng.toString();
+  console.log(name);
+  console.log(latlng);
+  
+  var tripName = 'mingchang';
+  turnOnTripPanel(tripName);
 });
 
 function initTripPanelEventListeners() {
@@ -110,7 +94,7 @@ function turnOnTripPanel(tripName) {
   var width = parseInt(mapCanvas.css("width"));
   var left = (width - parseInt($("#overlay-panel").css("width"))) / 2 + parseInt(mapCanvas.css("left"));
   $("#overlay-panel").css("left", left);
-  $("#overlay-content").load('/get-trip/?trip=' + tripName, function() {
+  $("#overlay-content").load('/get-trip/?trip=' + tripName + '&trip_id=0', function() {
     $("#overlay-panel").show();
     initTripPanelEventListeners();
     tripPanelOn = true;

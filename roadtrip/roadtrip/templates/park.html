@@ -102,8 +102,8 @@
     {% for poi in pois %}
     {% if poi.category == '景点' %}
       <div class = "attraction-item poi-item">
-        <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
+          <span class="poi-id">{{ poi.id }}</span>
           <p class="poi-name">{{ poi.name_cn }}</p>
           <p class="poi-name-en">{{ poi.name_en }}</p>
           <span class="coordinate">{{ poi.gps_coordinate }}</span>
@@ -126,11 +126,11 @@
     {% endif %}
     {% if poi.category == '饭馆' %}
       <div class="food-item poi-item">
-        <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
-            <p class="poi-name">{{ poi.name_cn }}</p>
-            <p class="poi-name-en">{{ poi.name_en }}</p>
-            <span class="coordinate">{{ poi.gps_coordinate }}</span>
+          <span class="poi-id">{{ poi.id }}</span>
+          <p class="poi-name">{{ poi.name_cn }}</p>
+          <p class="poi-name-en">{{ poi.name_en }}</p>
+          <span class="coordinate">{{ poi.gps_coordinate }}</span>
         </button>
         <button class="zoom-button" >
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
@@ -139,11 +139,11 @@
     {% endif %}
     {% if poi.category == '住宿' %}
       <div class="hotel-item poi-item">
-        <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
-            <p class="poi-name">{{ poi.name_cn }}</p>
-            <p class="poi-name-en">{{ poi.name_en }}</p>
-            <span class="coordinate">{{ poi.gps_coordinate }}</span>
+          <span class="poi-id">{{ poi.id }}</span>
+          <p class="poi-name">{{ poi.name_cn }}</p>
+          <p class="poi-name-en">{{ poi.name_en }}</p>
+          <span class="coordinate">{{ poi.gps_coordinate }}</span>
         </button>
         <button class="zoom-button" >
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
@@ -152,11 +152,11 @@
     {% endif %}
     {% if poi.category == '开车' %}
       <div class="road-item poi-item">
-        <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
-            <p class="poi-name">{{ poi.name_cn }}</p>
-            <p class="poi-name-en">{{ poi.name_en }}</p>
-            <span class="coordinate">{{ poi.gps_coordinate }}</span>
+          <span class="poi-id">{{ poi.id }}</span>
+          <p class="poi-name">{{ poi.name_cn }}</p>
+          <p class="poi-name-en">{{ poi.name_en }}</p>
+          <span class="coordinate">{{ poi.gps_coordinate }}</span>
         </button>
         <button class="zoom-button" >
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>

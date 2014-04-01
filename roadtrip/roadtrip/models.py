@@ -64,14 +64,14 @@ class ThirdPartyMap(models.Model):
 
   def __unicode__(self):
     return self.name_cn
-    
-    
-    
+
 class Trip(models.Model):
-  poi_list = models.CharField(max_length = 10000)
-  latlng_list = models.CharField(max_length = 10000, default = '')
   trip_name = models.CharField(max_length = 1000)
   
   def __unicode__(self):
     return self.trip_name
+
+class TripItem(models.Model):
+  trip_id = models.ForeignKey(Trip)
+  poi_id = models.ForeignKey(POI)
 

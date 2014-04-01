@@ -166,7 +166,7 @@ function setMarkerStatus(){
 
 function initMarkers() {
   $(".poi-button").each(function(index) {
-    var poiID = $(this).parent().find("> .poi-id").html();
+    var poiID = $(this).find("> .poi-id").html();
     var name = $(this).find("> .poi-name").html();
     var nameEn = $(this).find("> .poi-name-en").html();
     var inactiveMarkerZIndex = 1998;
@@ -322,12 +322,6 @@ function initMarkers() {
         map.panTo(marker.position);
         showInfoBoxOnClick();
         //allMarkersShown = false;
-
-        selectedItem.name = $(this).find("> .poi-name").html();
-        var selectedItemGPS = $(this).find("> .coordinate").html().split(",");
-        selectedItem.lat = selectedItemGPS[0];
-        selectedItem.lng = selectedItemGPS[1];
-        
         
         var info = $(this).parent().children(".poi-info");
         if (info && info.hasClass("expanded")) {
@@ -351,12 +345,6 @@ function initMarkers() {
             info.addClass("expanded");
           }
         }
-/*
-        selectedItemName = $(this).find("> .poi-name").html();
-        //selectedItemGPS = $(this).find("> .coordinate").html().split(",");
-
-        selectPOIItem();
-*/
       }); 
 
       $(this).parent().mouseenter(function () {
