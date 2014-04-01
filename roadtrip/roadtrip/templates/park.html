@@ -120,17 +120,21 @@
           <button class="zoom-button" >
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
           </button>
+          <div class="poi-info">
+            <div class="poi-info-button-wrapper">
+              <button class="add-to-trip">加入行程</button>
+              <button class="remove-from-trip">移出行程</button>
+            </div>
           {% getTrails poi as trails %}
           {% if trails|length > 0 %}
-            <div class="poi-info">
             {% for trail in trails %}
               <div class="trail-item">
                 <div class="trail-name">{{ trail.name_cn }}</div>
                 <div class="trail-route">{{ trail.routes }}</div>
               </div>
             {% endfor %}
-            </div>
           {% endif %}
+          </div>
         </div>
       {% endfor %}
         <div class="poi-empty-item"></div>
@@ -173,7 +177,7 @@
   </a>
   {% endif %}
   {% if map %}
-  <a class="map aside-nav hidden" id="add-to-trip">
+  <a class="map aside-nav hidden add-to-trip">
       <i class="icon-nav-map"></i>
       <span class="action-label"> 加入行程 </span>
   </a>

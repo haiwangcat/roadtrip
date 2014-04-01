@@ -48,7 +48,7 @@ var waypoint = {
 var showDirectionSwitch;
 var selectedItemList = new Array();
 
-$("#add-to-trip").click(function(){
+$(".add-to-trip").click(function(){
   var selectedPOI = $(".poi-button.selected");
   if (selectedPOI.length == 0)
     return;

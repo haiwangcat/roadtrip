@@ -50,6 +50,9 @@ button { cursor:pointer; outline:0; }
 
 .zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#f5f3f0; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
+.poi-info-button-wrapper { height:30px; }
+.poi-list .add-to-trip { float:left; height:30px; width:50%; padding:5px; background-color:#349946; color:white; }
+.poi-list .remove-from-trip { float:right; height:30px; width:50%; padding:5px; background-color:#f8991e; color:white; }
 
 .trail-item { cursor:pointer; padding:5px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
 .trail-item:hover { background-color:#b3cd53; color:white; }
