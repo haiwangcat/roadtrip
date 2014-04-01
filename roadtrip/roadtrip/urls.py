@@ -7,6 +7,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from roadtrip.views import *
+from roadtrip.importData import *
 
 admin.autodiscover()
 
@@ -15,6 +16,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
     #url(r'^photologue/', include('photologue.urls')),
+    url(r'^import/', importData),
+    url(r'^save-trip/', saveTrip),
+    url(r'^get-trip.*', getTrip),
     url(r'^', include('cms.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

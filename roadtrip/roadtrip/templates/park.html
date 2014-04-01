@@ -199,6 +199,12 @@
     <span class="action-label"> 官方地图 </span>
   </a>
   {% endif %}
+  {% if map %}
+  <a class="map aside-nav hidden" id="show-itinerary">
+      <i class="icon-nav-map"></i>
+      <span class="action-label"> 当前行程 </span>
+  </a>
+  {% endif %}
 </div>
 
 
@@ -219,6 +225,7 @@
 {% comment %}
 <div id='info-panel'>
   <p id='item-name'>您目前旅程：</p>
+  <p>{{ message }}</p>
 </div>
 {% endcomment %}
 

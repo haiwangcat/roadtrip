@@ -54,11 +54,20 @@ console.log(parameterMap);
 	  'jsonpCallback': 'cb',
 	  'success': function(data, text, XMLHttpRequest) {
 	    console.log(data);
-		$("body").append("total number of businesses:" + data.total);
+		$("#test").append("total number of businesses:" + data.total);
 	    for (var j = 0; j < data.businesses.length; ++j){
-		    var output = data.businesses[j].name;
-		    	$("body").append(",")
-	    	    $("body").append(output);
+           name = data.businesses[j].name;
+           id = data.business[j].id;
+           phone = p + data.business[j].phone;
+           review_count = data.business[j].review_count;
+           categories = data.business[j].categories;
+           rating = data.business[j].rating;
+           location.display_address = data.business[j].location.display_address;
+           location.image_url = data.business[j].location.image_url;
+           
+           
+           
+            $("#test").append(output);
 	    }
 	  }
 	});
@@ -70,7 +79,6 @@ console.log(parameterMap);
   
 <body>
 <div id="myDiv"><h2>Let AJAX change this text</h2></div>
-<button id="button">Press me press me</button>
-<div id='test'></div>
+<textarea id='test'></textarea>
 </body>
 </html>
