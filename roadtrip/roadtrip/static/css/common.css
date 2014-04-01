@@ -78,7 +78,6 @@ button { cursor:pointer; outline:0; }
 
 .icon-pic { height: 35px; width: 35px; }
 
-
 #add-to-trip * { z-index:10008; }
 #add-to-trip-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:70px; bottom:0px; width: 80px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
 #show-direction-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:150px; bottom:0px; width: 80px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
