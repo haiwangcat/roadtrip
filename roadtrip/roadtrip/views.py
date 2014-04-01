@@ -29,8 +29,7 @@ def addToTrip(request):
     if len(TripItem.objects.filter(poi_id=poi)) > 0:
       return HttpResponse(poi.name_cn + ' is already added to trip: '+ trip.trip_name)
 
-    trip_item = TripItem(poi_id=poi, trip_id=trip)
-    trip_item.save()
+    TripItem.objects.create(poi_id=poi, trip_id=trip)
 
     return HttpResponse(poi.name_cn + ' added to trip: '+ trip.trip_name)
     
@@ -41,7 +40,5 @@ def getTrip(request):
     trip_items = TripItem.objects.filter(trip_id=trip.id)
     trip_pois = []
     for item in trip_items:
-      print item.poi_id
       trip_pois.append(POI.objects.get(id=item.poi_id.id))
-    print trip_pois
     return render_to_response('trip-panel.html', {'trip': trip, 'trip_pois': trip_pois})
