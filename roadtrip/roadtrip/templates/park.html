@@ -98,35 +98,32 @@
     <div class="poi-list">
     {% getPOIs park as pois %}
     {% for poi in pois %}
-    {% if poi.category == '景点'%}
-        <div class = 'attraction-item'>
-          <div class="poi-item">
-            <span class="poi-id">{{ poi.id }}</span>
-            <button class="poi-button">
-              <p class="poi-name">{{ poi.name_cn }}</p>
-              <p class="poi-name-en">{{ poi.name_en }}</p>
-              <span class="coordinate">{{ poi.gps_coordinate }}</span>
-            </button>
-            <button class="zoom-button" >
-              <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
-            </button>
-            {% getTrails poi as trails %}
-            {% if trails|length > 0 %}
-              <div class="poi-info">
-              {% for trail in trails %}
-                <div class="trail-item">
-                  <div class="trail-name">{{ trail.name_cn }}</div>
-                  <div class="trail-route">{{ trail.routes }}</div>
-                </div>
-              {% endfor %}
-              </div>
-            {% endif %}
+    {% if poi.category == '景点' %}
+      <div class = "attraction-item poi-item">
+        <span class="poi-id">{{ poi.id }}</span>
+        <button class="poi-button">
+          <p class="poi-name">{{ poi.name_cn }}</p>
+          <p class="poi-name-en">{{ poi.name_en }}</p>
+          <span class="coordinate">{{ poi.gps_coordinate }}</span>
+        </button>
+        <button class="zoom-button" >
+          <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
+        </button>
+        {% getTrails poi as trails %}
+        {% if trails|length > 0 %}
+          <div class="poi-info">
+          {% for trail in trails %}
+            <div class="trail-item">
+              <div class="trail-name">{{ trail.name_cn }}</div>
+              <div class="trail-route">{{ trail.routes }}</div>
+            </div>
+          {% endfor %}
           </div>
-        </div>
+        {% endif %}
+      </div>
     {% endif %}
     {% if poi.category == '饭馆' %}
-    <div class="food-item">
-      <div class='poi-item'>
+      <div class="food-item poi-item">
         <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
             <p class="poi-name">{{ poi.name_cn }}</p>
@@ -137,11 +134,9 @@
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
         </button>
       </div>
-    </div>
     {% endif %}
     {% if poi.category == '住宿' %}
-    <div class="hotel-item">
-      <div class='poi-item'>
+      <div class="hotel-item poi-item">
         <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
             <p class="poi-name">{{ poi.name_cn }}</p>
@@ -152,11 +147,9 @@
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
         </button>
       </div>
-    </div>
     {% endif %}
     {% if poi.category == '开车' %}
-    <div class="road-item">
-      <div class='poi-item'>
+      <div class="road-item poi-item">
         <span class="poi-id">{{ poi.id }}</span>
         <button class="poi-button">
             <p class="poi-name">{{ poi.name_cn }}</p>
@@ -167,7 +160,6 @@
             <img src="{% static "icon/information.svg" %}" width=25px height=25px></img>
         </button>
       </div>
-    </div>
     {% endif %}
   {% endfor %}
         <div class="poi-empty-item"></div>
@@ -181,7 +173,7 @@
 
 
 <div id='side-nav'>
-  <button class='side-nav-category' id="side-nav-poi">
+  <button class='side-nav-category' id="side-nav-attraction">
     <img class='icon-pic' src="/static/img/vintage2.svg"></img>
     <br><hl>景点</hl>
   </button>

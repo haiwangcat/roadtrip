@@ -38,7 +38,7 @@ button { cursor:pointer; outline:0; }
 //#show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 
 
-.poi-item, .food-item, .hotel-item { position:relative; line-height:1.7;}
+.poi-item { position:relative; line-height:1.7;}
 .poi-id { display:none; }
 .poi-button, .food-button, .hotel-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:left; padding-left:20px; }
 .poi-button:hover, .poi-button.selected { background-color:#1ea5ad; color:white; }
