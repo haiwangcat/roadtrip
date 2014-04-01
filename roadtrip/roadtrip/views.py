@@ -23,22 +23,17 @@ def addToTrip(request):
       trip = Trip.objects.all()[0]
     else:
       trip = Trip(trip_name='mingchang')
-      trip.save() 
 
     poi = POI.objects.get(id=poi_id)
-    if len(TripItem.objects.filter(poi_id=poi)) > 0:
+    if len(trip.pois.all().filter(id=poi_id)) > 0:
       return HttpResponse(poi.name_cn + ' is already added to trip: '+ trip.trip_name)
 
-    TripItem.objects.create(poi_id=poi, trip_id=trip)
-
+    trip.pois.add(poi)
+    trip.save()
     return HttpResponse(poi.name_cn + ' added to trip: '+ trip.trip_name)
     
 def getTrip(request):
   if request.is_ajax():
     trip_id = request.GET.get('trip_id','')
     trip = Trip.objects.all()[0]
-    trip_items = TripItem.objects.filter(trip_id=trip.id)
-    trip_pois = []
-    for item in trip_items:
-      trip_pois.append(POI.objects.get(id=item.poi_id.id))
-    return render_to_response('trip-panel.html', {'trip': trip, 'trip_pois': trip_pois})
+    return render_to_response('trip-panel.html', {'trip': trip, 'trip_pois': trip.pois.all()})

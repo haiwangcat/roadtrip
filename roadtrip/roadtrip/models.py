@@ -67,11 +67,7 @@ class ThirdPartyMap(models.Model):
 
 class Trip(models.Model):
   trip_name = models.CharField(max_length = 1000)
+  pois = models.ManyToManyField(POI)
   
   def __unicode__(self):
     return self.trip_name
-
-class TripItem(models.Model):
-  trip_id = models.ForeignKey(Trip)
-  poi_id = models.ForeignKey(POI)
-
