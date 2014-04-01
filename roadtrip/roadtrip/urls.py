@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^get-poi-info.*', getPOIInfo),
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-    url(r'^photologue/', include('photologue.urls')),
+    #url(r'^photologue/', include('photologue.urls')),
     url(r'^', include('cms.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
