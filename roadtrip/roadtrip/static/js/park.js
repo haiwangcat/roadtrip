@@ -52,7 +52,7 @@ function initEventListeners() {
 }
 
 function initInfoPanelEventListeners() {
-  $("#close-info-panel").click(function() {
+  $(".close-info-panel").click(function() {
     turnOffIntroPanel();
   });
 }
@@ -507,6 +507,8 @@ function turnOnIntroPanel(poiID) {
     introPanelOn = true;
   });
 }
+
+
 
 function turnOffIntroPanel() {
   $("#overlay-panel").hide();

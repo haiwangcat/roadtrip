@@ -72,8 +72,8 @@ button { cursor:pointer; outline:0; }
 
 .icon-pic { height: 35px; width: 35px; }
 
-#add-to-trip-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:70px; bottom:0px; width: 100px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
-#show-direction-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:150px; bottom:0px; width: 100px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
+#add-to-trip-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:70px; bottom:0px; width: 80px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
+#show-direction-button{ box-sizing: border-box; font-style: normal; font-weight: bold; -webkit-font-smoothing: antialiased; outline: none; text-align: center; position:fixed; height: 30px; left:150px; bottom:0px; width: 80px; display: block; float: left; color: #fff; line-height: 27px; font-size: 14px; border-style: solid; border-width: 0 0 4px 0; margin-top: 8px; background-color:#accc39; }
 	
 .park-button { float: left; font-weight: normal; font-size: 14px;border-bottom: 1px solid #060606;height: 40px; width: 150px; border-width: 0;color: #fff;display: block;outline: 0;overflow:hidden; position: relative; text-align center; }
 
@@ -90,13 +90,13 @@ button { cursor:pointer; outline:0; }
 //#overlay-panel-wrapper { position:absolute; left:0; top:0; width:100%; height:0; }
 #overlay-panel { display:none; overflow:auto; position:absolute; width:960px; left:400px; right:0; z-index:10008; top:0px; padding: 80px 30px 0 0; }
 #overlay-content { display:block; position:relative; z-index:10009; min-height:300px; border-radius:5px; overflow:visible; box-shadow:8px 8px 8px 3px rgba(0,0,0,0.3); margin-bottom:50px; border-radius:5px; }
-#info-panel-top-bar { height:50px; position:relative; background-color:#3a4959; border-top-left-radius:5px; border-top-right-radius:5px; }
-#info-panel-title { background-color:rgba(76,173,220,0.8); color:white; position:absolute; top:70px; left:20px; }
-#info-panel-title .title { font-family:"Helvetica Neue","hiragino sans gb","Microsoft YaHei",\9ED1\4F53,\5b8b\4f53,sans-serif; font-weight:bold; font-size:24px; padding:10px; padding-left:20px; padding-right:20px; text-transform:uppercase; }
-#info-panel-image { height:384px; }
-#info-panel-body { background-color:#f9f9f6; padding:20px; }
-#info-panel-desc { background-color:white; padding:10px; box-shadow:0 2px 2px 1px rgba(0,0,0,0.03); }
-#close-info-panel { position:absolute; width:80px; left:15px; height:30px; top:10px; line-height:30px; text-align:center; background-color:#4caddc; color:white; border-radius:3px; }
+.info-panel-top-bar { height:50px; position:relative; background-color:#3a4959; border-top-left-radius:5px; border-top-right-radius:5px; }
+.info-panel-title { background-color:rgba(76,173,220,0.8); color:white; position:absolute; top:70px; left:20px; }
+.info-panel-title .title { font-family:"Helvetica Neue","hiragino sans gb","Microsoft YaHei",\9ED1\4F53,\5b8b\4f53,sans-serif; font-weight:bold; font-size:24px; padding:10px; padding-left:20px; padding-right:20px; text-transform:uppercase; }
+.info-panel-image { height:384px; }
+.info-panel-body { background-color:#f9f9f6; padding:20px; }
+.info-panel-desc { background-color:white; padding:10px; box-shadow:0 2px 2px 1px rgba(0,0,0,0.03); }
+.close-info-panel { position:absolute; width:80px; left:15px; height:30px; top:10px; line-height:30px; text-align:center; background-color:#4caddc; color:white; border-radius:3px; }
 
 .map-nav { position:absolute; top:75px; left:370px; font-size:10px; }
 a.aside-nav { width:50px; height:46px; line-height:46px; overflow:hidden; display:block; text-align:center; cursor:pointer; background:#1ea5ad; color:white; }

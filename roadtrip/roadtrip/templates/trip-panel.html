@@ -4,17 +4,14 @@
   <button class="close-info-panel"><span>消失</span></button>
 </div>
 <div class="info-panel-title">
-  <p class="title">{{ poi.name_cn }}  {{ poi.name_en }}</p>
+  <p class="title">目前行程：{{ trip.trip_name }}</p>
 </div>
 <div class="info-panel-image">
-  {% getPOIPhoto poi.id as photo %}
-  <img src="{{ photo.image.url }}">
+  <img src="/static/img/on_the_road.jpg" style="height:384px">
 </div>
 <div class="info-panel-body">
   <div class="info-panel-desc">
-  {% processDescription poi.description as desc %}
-  {% for p in desc %}
-    <p>{{ p }}</p>
-  {% endfor %}
+  <p>{{ trip.poi_list }}</p>
+  <p>{{ trip.latlng_list }}</p>
   </div>
 </div>
