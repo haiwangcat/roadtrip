@@ -54,8 +54,13 @@ function initEventListeners() {
     event.preventDefault();
     $("#disabled-area").show();
   });
+
   $("#disabled-area").click(function() {
     $("#disabled-area").hide();
+  });
+
+  $('#register-view').click(function(event){
+    event.stopPropagation();
   });
 
   $(".side-nav-category").each(function(index){
@@ -284,11 +289,14 @@ function initMarkers() {
       if (activeMarkerIndex != index) {
         showInfoBox();
       }
+      activateMarker(marker);
     });
 
     google.maps.event.addListener(marker, 'mouseout', function() {
-      if (activeMarkerIndex != index)
+      if (activeMarkerIndex != index) {
         infowindow.hide();
+        inactivateMarker(marker);
+      }
     });
 
     
@@ -347,6 +355,7 @@ function initMarkers() {
           //marker.setMap(map);
           showInfoBox();
         }
+        activateMarker(marker);
         //if (activeMarkerIndex != null && activeMarkerIndex != marker) {
           //calcRoute(activeMarkerIndex.position, marker.position);
         //}
@@ -356,6 +365,7 @@ function initMarkers() {
         if (activeMarkerIndex != index) {
           infowindow.hide();
           directionsDisplay.setMap(null);
+          inactivateMarker(marker);
         }
       }); 
     }catch(e){}
