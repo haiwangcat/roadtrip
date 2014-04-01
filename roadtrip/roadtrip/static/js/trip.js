@@ -53,7 +53,7 @@ var selectedItem = {
 };
 var selectedItemList = new Array();
 
-$("#add-to-trip-button").click(function(){
+$("#add-to-trip").click(function(){
 		var itemName = selectedItem.name;
 		var itemLat = selectedItem.lat;
 		var itemLng = selectedItem.lng;
@@ -123,7 +123,7 @@ function turnOffTripPanel() {
 }
 
 
-$('#show-direction-button').click(function(){
+$('#show-direction').click(function(){
 //	console.log('switch',showDirectionSwitch);
 	var list = {};
 	list = selectedItemList;
