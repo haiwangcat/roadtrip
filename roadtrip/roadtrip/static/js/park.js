@@ -90,6 +90,16 @@ function initEventListeners() {
       showAllMarkers();
     });
   });
+
+  $("#user-create-account").click(function(event) {
+    $("input.required").each(function() {
+      if ($(this).val().trim() == "") {
+        $(this).addClass("alert");
+        event.preventDefault();
+      }
+    });
+    //event.preventDefault();
+  });
 }
 
 function initInfoPanelEventListeners() {

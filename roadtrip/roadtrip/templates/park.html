@@ -238,33 +238,31 @@
 
     <a href="#with-mail" id="with-mail" class="show-mail-signup button">电子邮箱注册</a>
   </div>
-{%comment%}
   <div class="email-signup">
     <h1>创建账号</h1>
     <form action="/users" data-remote="true" id="new_user" method="post">
       <div class="control-group string required">
-        <input class="string required" id="user_username" name="user[username]" size="50" type="text" placeholder="CHOOSE A USERNAME">
+        <input class="string required" id="user_username" name="user[username]" size="50" type="text" placeholder="请选择用户名">
         <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
       </div>
       <div class="control-group string required">
-        <input class="string required" id="user_email" name="user[email]" size="50" type="text" placeholder="YOUR EMAIL">
+        <input class="string required" id="user_email" name="user[email]" size="50" type="text" placeholder="你的电子邮箱">
         <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
       </div>
       <div class="control-group password required">
-        <input class="password required" id="user_password" name="user[password]" size="50" type="password" placeholder="PASSWORD">
+        <input class="password required" id="user_password" name="user[password]" size="50" type="password" placeholder="密码">
         <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
       </div>
       <div class="control-group password password_confirmation required">
-        <input class="password_confirmation required password" id="user_password_confirmation" name="user[password_confirmation]" size="50" type="password" placeholder="CONFIRM PASSWORD">
+        <input class="required password" id="user-password-confirmation" name="user[password_confirmation]" size="50" type="password" placeholder="确认密码">
         <span class="error-indicator add-on hide"><i class="icon-nav-exclamation"></i></span>
       </div>
-      <div class="tos">
+      <div class="tos" style="display:none;">
         By creating an account I confirm that I have read and agree to the <a href="/tos" target="_blank">terms of service</a>.
       </div>
-      <button class="button" name="user[create_account]" type="submit" id="user_create_account">Sign Me Up Already!</button>
+      <button name="user[create_account]" type="submit" id="user-create-account">注册</button>
     </form>
   </div></div>
-{%endcomment%}
 </div>
 
 {% endif %}

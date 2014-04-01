@@ -112,7 +112,11 @@ a.aside-nav:hover { color:#dddddd; }
 .trail-route { display:none; }
 
 #disabled-area { position:fixed; top:0; right:0; bottom:0; left:0; background-color:rgba(0,0,0,0.5); z-index:10008; overflow:auto; width:100%; display:none; }
+
+/* Credential related */
 #register-view { position:relative; width:300px; padding:25px 0; text-align:center; margin:75px auto; z-index:10009; background-color:rgba(255,255,255,0.85); border-radius:5px; box-shadow:0 0 50px #000; }
 #register-view h1 { font-weight:normal; font-size:16px; }
+#register-view input { height:20px; margin:5px; }
+#register-view input.alert { border:solid 1px red; }
 #weibo-login, #tencent-login { width:250px; text-align:center; margin:12.5px auto; }
-
+#user-create-account { width:100px; margin:10px auto; background-color:#b0577b; color:white; padding:5px 10px;  }
