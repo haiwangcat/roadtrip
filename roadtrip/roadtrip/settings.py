@@ -64,6 +64,8 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.language.LanguageCookieMiddleware',
 )
 
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.JSONSerializer'
+
 ROOT_URLCONF = 'roadtrip.urls'
 
 WSGI_APPLICATION = 'roadtrip.wsgi.application'
@@ -125,6 +127,7 @@ TEMPLATE_DIRS = (
     # Life is wonderful!
     os.path.join(PROJECT_PATH, "templates"),
     os.path.join(PROJECT_PATH, "../photologue/templates"),
+    os.path.join(PROJECT_PATH, "../sortedm2m/templates"),
 )
 
 CMS_TEMPLATES = (

@@ -49,6 +49,47 @@ function initEventListeners() {
   $("#show-all-pois").click(function() {
     //showAllMarkers();
   });
+
+  $(".register").click(function(event) {
+    event.preventDefault();
+    $("#disabled-area").show();
+  });
+
+  $("#disabled-area").click(function() {
+    $("#disabled-area").hide();
+  });
+
+  $('#register-view').click(function(event){
+    event.stopPropagation();
+  });
+
+  $(".side-nav-category").each(function(index){
+    $(".poi-item").hide();
+    $(".attraction-item").show();
+
+    if (index == 0) {
+      setMarkerStatus();
+      showAllMarkers();
+    }
+                               
+    $(this).click(function() {
+      $(".poi-item").hide();
+      if ($(this).is("#side-nav-attraction")) {    
+        $('.attraction-item').show();
+      }
+      else if ($(this).is("#side-nav-drive")) {
+        $(".food-item").show();
+      }
+      else if ($(this).is("#side-nav-hotel")) {
+        $(".hotel-item").show();
+      }
+      else if ($(this).is("#side-nav-restaurant")) {
+        $(".road-item").show();
+      }
+      setMarkerStatus();
+      showAllMarkers();
+    });
+  });
 }
 
 function initInfoPanelEventListeners() {
@@ -111,6 +152,8 @@ function setMarkerStatus(){
   });
 }
 
+
+
 function initMarkers() {
   $(".poi-button").each(function(index) {
     var poiID = $(this).parent().find("> .poi-id").html();
@@ -118,6 +161,8 @@ function initMarkers() {
     var nameEn = $(this).find("> .poi-name-en").html();
     var inactiveMarkerZIndex = 1998;
     var activeMarkerZIndex = inactiveMarkerZIndex + 1;
+    var infowindow = null;
+    var infoBox = null;
 
     var selected = false;
 
@@ -156,32 +201,37 @@ function initMarkers() {
       activeMarkerIndex = -1;
       for (var i = 0; i < markers.length; i++) {
         inactivateMarker(markers[i]);
-        infowindows[i].hide();
+        if (infowindows[i])
+          infowindows[i].hide();
       }
     };
 
-    var infoBox = null;
-    $(".infobox-label").each(function() {
-      if ($(this).find(".poi-id").first().html() == poiID)
-        infoBox = $(this);
-    });
-    infoBox.removeClass("hidden");
-    infoBox.click(function() {
-      turnOnIntroPanel(poiID);
-    });
+    var showInfoWindow = function() {
+      if (infowindow == null) {
+        $(".infobox-label").each(function() {
+          if ($(this).find(".poi-id").first().html() == poiID)
+            infoBox = $(this);
+        });
+        infoBox.removeClass("hidden");
+        infoBox.click(function() {
+          turnOnIntroPanel(poiID);
+        });
 
-    var infowindow = new InfoBox({
-      content: infoBox[0],
-      disableAutoPan: true,
-      closeBoxURL: '',
-      isHidden: true,
-    });
-    infowindows[index] = infowindow;
-    infowindow.open(map, marker);
-    infowindow.setZIndex(2000);
+        infowindow = new InfoBox({
+          content: infoBox[0],
+          disableAutoPan: true,
+          closeBoxURL: '',
+          isHidden: true,
+        });
+        infowindows[index] = infowindow;
+        infowindow.open(map, marker);
+        infowindow.setZIndex(2000);
+      }
+      infowindow.show();
+    }
 
     var showInfoBox = function() {
-      infowindow.show()
+      showInfoWindow();
       infoBox.hide();
       infoBox.fadeIn(500); 
     };
@@ -189,7 +239,7 @@ function initMarkers() {
     var showInfoBoxOnClick = function() {
       closeAllInfoWindows(infowindow);
       //showInfoBox();
-      infowindow.show();
+      showInfoWindow();
       infowindow.setZIndex(1999);
       activeMarkerIndex = index;
       selected = true;
@@ -197,7 +247,7 @@ function initMarkers() {
 
     var node = $(this);
     var selectPOIItem = function() {
-      var info = node.parent().children(".poi-info");
+      var info = node.parent().find(".poi-info");
       if (info && info.hasClass("expanded")) {
         info.slideToggle("50", "swing");
         info.removeClass("expanded");
@@ -218,9 +268,9 @@ function initMarkers() {
           info.slideToggle("50", "swing");
           info.addClass("expanded");
         }
-        var position = $(".poi-button").index(node) * parseInt(node.css("height"))
-          + parseInt($("#poi-control-panel").css("height"));
-        $(".sidebar-poi").animate({
+        var position = $(".poi-button").filter(":visible").index(node) * parseInt(node.css("height"));
+
+        $(".poi-list").animate({
           scrollTop: position,
         }, 300);
       }
@@ -239,12 +289,16 @@ function initMarkers() {
       if (activeMarkerIndex != index) {
         showInfoBox();
       }
+      activateMarker(marker);
     });
 
     google.maps.event.addListener(marker, 'mouseout', function() {
-      if (activeMarkerIndex != index)
+      if (activeMarkerIndex != index) {
         infowindow.hide();
+        inactivateMarker(marker);
+      }
     });
+
     
     try {
       $(this).click(function () {
@@ -301,6 +355,7 @@ function initMarkers() {
           //marker.setMap(map);
           showInfoBox();
         }
+        activateMarker(marker);
         //if (activeMarkerIndex != null && activeMarkerIndex != marker) {
           //calcRoute(activeMarkerIndex.position, marker.position);
         //}
@@ -310,6 +365,7 @@ function initMarkers() {
         if (activeMarkerIndex != index) {
           infowindow.hide();
           directionsDisplay.setMap(null);
+          inactivateMarker(marker);
         }
       }); 
     }catch(e){}
@@ -411,19 +467,19 @@ function clearMap() {
 
 
 function showAllMarkers() {
-    markers.forEach(function(marker){
+  markers.forEach(function(marker) {
+    marker.setVisible(false);
+    var position = markers.indexOf(marker);
+    var status = markerStatus[position];
+    if (status == 1) {
+      marker.setAnimation(google.maps.Animation.DROP);
+      marker.setVisible(true);
+      inactivateMarker(marker);
+    }
+    else if (status == 0) {
       marker.setVisible(false);
-      var position = markers.indexOf(marker);
-      var status = markerStatus[position];
-      if (status == 1){
-        marker.setAnimation(google.maps.Animation.DROP);
-        marker.setVisible(true);
-        inactivateMarker(marker);
-      }
-      if (status == 0){
-        marker.setVisible(false);
-      }
-    });
+    }
+  });
   closeAllInfoWindows(null);
   toParkView();
 }
@@ -459,7 +515,7 @@ function initOfficialMap() {
     //mapOverlay.setMap(map);
 
     mapFrame = new google.maps.Rectangle({
-      strokeColor: 'green',
+      strokeColor: 'white',
       strokeOpacity: 1,
       strokeWeight: 1,
       fillOpacity: 0,
@@ -565,41 +621,6 @@ $(".zoom-button").each(function(index) {
   */
 });
 
-$('.side-nav-category').each(function(index){
-  $('.food-item').hide();
-  $('.hotel-item').hide();
-  $('.road-item').hide();
-  $('.attraction-item').show();
-                             
-  $(this).click(function(){
-    if ($(this).children('hl').html() == '景点') {    
-      $('.attraction-item').show();
-      $('.food-item').hide();
-      $('.hotel-item').hide();
-      $('.road-item').hide();
-    }
-    else if ($(this).children('hl').html() == '饕餮') {
-      $('.attraction-item').hide();
-      $('.food-item').show();
-      $('.hotel-item').hide();
-      $('.road-item').hide();
-    }
-    else if ($(this).children('hl').html() == '客栈') {
-      $('.attraction-item').hide();
-      $('.food-item').hide();
-      $('.hotel-item').show();
-      $('.road-item').hide();
-    }
-    else if ($(this).children('hl').html() == '赶路') {
-      $('.attraction-item').hide();
-      $('.food-item').hide();
-      $('.hotel-item').hide();
-      $('.road-item').show();
-    }
-  setMarkerStatus();
-  showAllMarkers();
-  });
-});
 
 
 

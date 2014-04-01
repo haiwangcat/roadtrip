@@ -12,7 +12,7 @@ body { margin-bottom:30px; position:relative; z-index:1; background-repeat:no-re
 button { cursor:pointer; outline:0; }
 
 
-.sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:70px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); overflow-x:hidden; overflow-y:auto; }
+.sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:70px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); z-index:100; }
 .sidebar-poi li,.sidebar-food li,.sidebar-hotel li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
 
 
@@ -21,19 +21,25 @@ button { cursor:pointer; outline:0; }
 
 .sidebar-item-list2 { display:none; position:relative; float:left; overflow:hidden; width:300px; margin:0 5px 0 0; top:0; }
 
-#poi-control-panel { position:absolute; left:0; top:0; display:block; outline:0; height:30px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; z-index:10001; }
-#poi-control-panel a { color:white; }
-#poi-control-panel a:hover { text-decoration:underline; }
-#poi-list-container { position:absolute; top:0; bottom:0; top:0; bottom:0; padding-top:30px; }
-.poi-list { width:300px; overflow-x:hidden; overflow-y:auto; height:100%; }
+#park-image { position:absolute; left:0; top:0; display:block; outline:0; height:100px; line-height:30px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:center; background-color:#b0577b; color:white; z-index:10001; }
+#park-image img { width:300px; height:100px; }
+#park-image a { color:white; }
+#park-image a:hover { text-decoration:underline; }
 
-#show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; width:100%; border:none; text-align:left; padding-left:20px; background-color:#b0577b; color:white; }
+#park-title { background-color:#b0577b; height:25px; line-height:25px; color:white; position:relative; top:0px; left:0px; }
+#park-title .title { position:absolute; left:10px; font-size:14px; text-transform:uppercase; }
+#park-title .title-en { float:right; font-size:10px; margin-right:10px; }
+
+#poi-list-container { position:absolute; top:0; bottom:0; top:0; bottom:0; padding-top:125px; }
+.poi-list { width:300px; overflow-x:hidden; overflow-y:auto; height:100%; overflow-x:hidden; overflow-y:auto; }
+
+#show-all-pois, #show-all-food, #show-all-hotel { display:block; outline:0; height:30px; border:none; text-align:left; padding-left:20px; color:white; }
 #sidebar-back { position:absolute; top:0; left:0; text-align:right; padding-left:20px; }
 #sidebar-forward { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 //#show-official-map { position:absolute; top:0; right:0; text-align:right; padding-right:20px; }
 
 
-.poi-item, .food-item, .hotel-item { position:relative; line-height:1.7;}
+.poi-item { position:relative; line-height:1.7;}
 .poi-id { display:none; }
 .poi-button, .food-button, .hotel-button { position:relative; display:block; outline:0; height:50px; width:100%; font-size:15px; border:none; background-color:#f5f3f0; text-align:left; padding-left:20px; }
 .poi-button:hover, .poi-button.selected { background-color:#1ea5ad; color:white; }
@@ -54,7 +60,7 @@ button { cursor:pointer; outline:0; }
 
 #info-panel { display:none; text-align:left; display:inline; width:100%; height:50px; position:fixed; bottom:0px; left:370px; background-color:#d3d3d3; }
 #map-window { position:fixed; top:0; left:0px; width:100%; height:100%; z-index:-1; }
-#map-canvas { position:absolute; top:40px; right:0; bottom:50px; left:350px; }
+#map-canvas { position:absolute; top:40px; right:0; bottom:0px; left:350px; }
 
 #top-nav-area {background-color: #3a4a59; box-shadow:0 0 8px 2px rgba(0,0,0,0.4); top:0px; left 0; height:40px; position: fixed; width:100%; z-index: 20000;}
 #top-nav { height: 40px; line-height: 40px; text-align: center; width: 100%; float: left; margin: 0 0 3em 0; padding: 0; list-style: none; }
@@ -88,7 +94,7 @@ button { cursor:pointer; outline:0; }
 .infobox-label-name p { margin:auto; }
 
 //#overlay-panel-wrapper { position:absolute; left:0; top:0; width:100%; height:0; }
-#overlay-panel { display:none; overflow:auto; position:absolute; width:960px; left:400px; right:0; z-index:10008; top:0px; padding: 80px 30px 0 0; }
+#overlay-panel { display:none; overflow:auto; position:absolute; width:960px; left:400px; right:0; z-index:10008; top:0px; margin:80px 30px 0 0; }
 #overlay-content { display:block; position:relative; z-index:10009; min-height:300px; border-radius:5px; overflow:visible; box-shadow:8px 8px 8px 3px rgba(0,0,0,0.3); margin-bottom:50px; border-radius:5px; }
 .info-panel-top-bar { height:50px; position:relative; background-color:#3a4959; border-top-left-radius:5px; border-top-right-radius:5px; }
 .info-panel-title { background-color:rgba(76,173,220,0.8); color:white; position:absolute; top:70px; left:20px; }
@@ -99,8 +105,14 @@ button { cursor:pointer; outline:0; }
 .close-info-panel { position:absolute; width:80px; left:15px; height:30px; top:10px; line-height:30px; text-align:center; background-color:#4caddc; color:white; border-radius:3px; }
 
 .map-nav { position:absolute; top:75px; left:370px; font-size:10px; }
-a.aside-nav { width:50px; height:46px; line-height:46px; overflow:hidden; display:block; text-align:center; cursor:pointer; background:#1ea5ad; color:white; }
+a.aside-nav { box-shadow:0 0 12px 0 rgba(0,0,0,0.4); width:50px; height:46px; line-height:46px; overflow:hidden; display:block; text-align:center; cursor:pointer; background:#1ea5ad; color:white; z-index:99; }
 a.aside-nav:hover { color:#dddddd; }
 
 .coordinate { display:none; }
 .trail-route { display:none; }
+
+#disabled-area { position:fixed; top:0; right:0; bottom:0; left:0; background-color:rgba(0,0,0,0.5); z-index:10008; overflow:auto; width:100%; display:none; }
+#register-view { position:relative; width:300px; padding:25px 0; text-align:center; margin:75px auto; z-index:10009; background-color:rgba(255,255,255,0.85); border-radius:5px; box-shadow:0 0 50px #000; }
+#register-view h1 { font-weight:normal; font-size:16px; }
+#weibo-login, #tencent-login { width:250px; text-align:center; margin:12.5px auto; }
+
