@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^add-to-trip/', addToTrip),
     url(r'^remove-from-trip/', removeFromTrip),
     url(r'^get-trip/', getTrip),
+    url(r'^register/', registerUser),
     url(r'^', include('cms.urls')),
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

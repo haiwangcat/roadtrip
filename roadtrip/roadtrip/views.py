@@ -1,11 +1,45 @@
 # -*- coding: utf-8 -*-
 
+from django import forms
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
-from roadtrip.models import *
+from django.contrib.auth.models import User
 #from django.template import RequestContext
 from django.core.context_processors import csrf
+from django.core.validators import validate_email
+from roadtrip.models import *
+
+def registerUser(request):
+  if request.is_ajax() and request.method == "POST":
+    username = request.POST['username']
+    password = request.POST['password']
+    password_confirm = request.POST['password_confirm']
+    email = request.POST['email']
+
+    if len(username) < 3:
+      return HttpResponse(u"用户名不可以少于3个字")
+    if len(username) > 16:
+      return HttpResponse(u"用户名不可以超过16个字")
+    if len(User.objects.filter(username=username)) > 0:
+      return HttpResponse(u"该用户已存在")
+
+    try:
+      validate_email(request.POST.get("email", ""))
+    except forms.ValidationError:
+      return HttpResponse(u"邮箱地址不合法")
+    if len(User.objects.filter(email=email)) > 0:
+      return HttpResponse(u"该邮箱已被注册")
+
+    if password != password_confirm:
+      return HttpResponse(u"密码不一致")
+    if len(password) < 8:
+      return HttpResponse(u"密码不得少于8个字符")
+    if len(password) > 50:
+      return HttpResponse(u"密码不得长于50个字符")
+
+    User.objects.create_user(username, email, password)
+    return HttpResponse("success")
 
 def getPOIInfo(request):
   if request.is_ajax():

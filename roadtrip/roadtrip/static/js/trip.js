@@ -99,13 +99,14 @@ function initTripPanelEventListeners() {
   var directionWaypoints = new Array ();
 
   $(".itinerary-waypoint-view").each(function(){
-    var currentLat = $(this).find("> .itinerary-waypoint-gps").html().split(",")[0];
-	var currentLng = $(this).find("> .itinerary-waypoint-gps").html().split(",")[1];
-	
-	waypoint = new Object();
-	waypoint.location = new google.maps.LatLng(currentLat, currentLng);
-	waypoint.stopover = true;
-	directionWaypoints.push(waypoint);
+    var latlng = $(this).find("> .itinerary-waypoint-gps").html().split(",");
+    var currentLat = latlng[0];
+    var currentLng = latlng[1];
+    
+    waypoint = new Object();
+    waypoint.location = new google.maps.LatLng(currentLat, currentLng);
+    waypoint.stopover = true;
+    directionWaypoints.push(waypoint);
   });  
   var start = directionWaypoints[0].location;
   var end = directionWaypoints[directionWaypoints.length-1].location;
