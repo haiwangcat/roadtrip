@@ -63,6 +63,21 @@ $(".add-to-trip").click(function(){
   });
 });
 
+$(".remove-from-trip").click(function(){
+  var selectedPOI = $(".poi-button.selected");
+  if (selectedPOI.length == 0)
+    return;
+  var poiID = selectedPOI.find("> .poi-id").html();
+  var data = {
+    //csrfmiddlewaretoken: '{{csrf_token}}'
+    poi_id: poiID,
+  };
+  console.log(poiID);
+  $.post('/remove-from-trip/', data, function(response, status) {
+    console.log('response:' + response + '\n' + 'status:' + status);
+  });
+});
+
 
 $("#show-itinerary").click(function(){
   var itemCount = selectedItemList.length;
