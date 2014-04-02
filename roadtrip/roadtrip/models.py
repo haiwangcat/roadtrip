@@ -28,8 +28,10 @@ class POI(models.Model):
   ratings = models.FloatField(blank=True, null=True)
   phone_number = models.CharField(max_length=100, blank=True, null=True)
   tags = models.CharField(max_length=1000, blank=True, null=True)
-  
-  
+
+  class Meta:
+    ordering = ["-score"]
+
   def __unicode__(self):
     return self.name_cn
 
