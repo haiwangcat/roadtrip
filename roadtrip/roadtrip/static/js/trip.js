@@ -130,24 +130,24 @@ function initTripPanelEventListeners() {
     	preserveViewport: true
   	  });
   	  //directionsDisplay.setMap(map);
-	  //directionsDisplay.setDirections(response);
-	  var route = response.routes[0];
-	  console.log(route);
-	  var tripInfo = calcTripInfo(route);
-	  console.log(tripInfo);
-	  
-	  $(".itinerary-leg-view").each(function(i){
-	    if (i >= tripInfo.length){
-	      return;
-	    }
-	    var hour = Math.round(tripInfo.durations[i]/3600);
-	    var min = Math.round((tripInfo.durations[i] - hour*3600)/60);
-	    var km = Math.round(tripInfo.distances[i]*0.3048/1000 * 10) / 10;
-	    $(this).find("> .duration").html(hour + "H" + min + "M");
-	    $(this).find("> .distance").html(km + "KM");
-	    console.log(i);
-	  });	
-	}
+      //directionsDisplay.setDirections(response);
+      var route = response.routes[0];
+      console.log(route);
+      var tripInfo = calcTripInfo(route);
+      console.log(tripInfo);
+      
+      $(".itinerary-leg-view").each(function(i){
+        if (i >= tripInfo.length){
+          return;
+        }
+        var hour = Math.round(tripInfo.durations[i]/3600);
+        var min = Math.round((tripInfo.durations[i] - hour*3600)/60);
+        var km = Math.round(tripInfo.distances[i]*0.3048/1000 * 10) / 10;
+        $(this).find("> .duration").html(hour + "H" + min + "M");
+        $(this).find("> .distance").html(km + "KM");
+        console.log(i);
+      });	
+    }
   });
 }
 
