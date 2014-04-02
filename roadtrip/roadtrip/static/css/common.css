@@ -11,6 +11,7 @@ a { text-decoration:none; }
 body { margin-bottom:30px; position:relative; z-index:1; background-repeat:no-repeat; margin-bottom:0; -webkit-font-smoothing:antialiased; }
 button { cursor:pointer; outline:0; }
 
+#sub-body { height:100%; }
 
 .sidebar-poi, .sidebar-food, .sidebar-hotel { float:left; display:inline; background:#f5f3f0; width:300px; padding:0px; height:100%; position:fixed; top:40px; bottom:0px; left:70px; box-shadow:2px 0px 10px 3px rgba(0,0,0,0.3); z-index:100; }
 .sidebar-poi li,.sidebar-food li,.sidebar-hotel li { font-size:16px; padding:10px; border:solid gray 0px; margin:20px; }
@@ -50,6 +51,9 @@ button { cursor:pointer; outline:0; }
 
 .zoom-button { position:absolute; top:0; right:0; width:50px; height:50px; cursor:pointer; background-color:#f5f3f0; outline:0; }
 .zoom-button:hover { background-color:#b3cd53; color:white; }
+.poi-info-button-wrapper { height:30px; }
+.poi-list .add-to-trip { float:left; height:30px; width:50%; padding:5px; background-color:#349946; color:white; }
+.poi-list .remove-from-trip { float:right; height:30px; width:50%; padding:5px; background-color:#f8991e; color:white; }
 
 .trail-item { cursor:pointer; padding:5px; text-align:left; padding-left:20px; height:20px; line-height:20px; }
 .trail-item:hover { background-color:#b3cd53; color:white; }
@@ -90,10 +94,11 @@ button { cursor:pointer; outline:0; }
 .infobox-label-name { position:relative; left:10px; top:7px; }
 .infobox-label-name p { margin:auto; }
 
-/* info panel + trip panel */
-//#overlay-panel-wrapper { position:absolute; left:0; top:0; width:100%; height:0; }
-#overlay-panel { display:none; overflow:auto; position:absolute; width:960px; left:400px; right:0; z-index:10008; top:0px; margin:80px 30px 0 0; }
-#overlay-content { display:block; position:relative; z-index:10009; min-height:300px; border-radius:5px; overflow:visible; box-shadow:8px 8px 8px 3px rgba(0,0,0,0.3); margin-bottom:50px; border-radius:5px; }
+
+//#overlay-panel-wrapper { position:absolute; right:0; top:0; bottom:0; overflow:auto; }
+#overlay-panel { display:none; position:absolute; width:960px; left:400px; right:0; z-index:10008; top:0px; margin:80px 30px 0 0; overflow:auto; }
+#overlay-content { width:960px; position:relative; z-index:10009; border-radius:5px; overflow:visible; box-shadow:8px 8px 8px 3px rgba(0,0,0,0.3); margin-bottom:50px; border-radius:5px; }
+
 .info-panel-top-bar { height:50px; position:relative; background-color:#3a4959; border-top-left-radius:5px; border-top-right-radius:5px; }
 .info-panel-title { background-color:rgba(76,173,220,0.8); color:white; position:absolute; top:70px; left:20px; }
 .info-panel-title .title { font-family:"Helvetica Neue","hiragino sans gb","Microsoft YaHei",\9ED1\4F53,\5b8b\4f53,sans-serif; font-weight:bold; font-size:24px; padding:10px; padding-left:20px; padding-right:20px; text-transform:uppercase; }
@@ -102,7 +107,7 @@ button { cursor:pointer; outline:0; }
 .info-panel-desc { background-color:white; padding:10px; box-shadow:0 2px 2px 1px rgba(0,0,0,0.03); }
 .close-info-panel { position:absolute; width:80px; left:15px; height:30px; top:10px; line-height:30px; text-align:center; background-color:#4caddc; color:white; border-radius:3px; }
 
-.map-nav { position:absolute; top:75px; left:370px; font-size:10px; }
+.map-nav { position:absolute; top:75px; left:370px; bottom:0; font-size:10px; width:0; }
 a.aside-nav { box-shadow:0 0 12px 0 rgba(0,0,0,0.4); width:50px; height:46px; line-height:46px; overflow:hidden; display:block; text-align:center; cursor:pointer; background:#1ea5ad; color:white; z-index:99; margin:10px 0; }
 a.aside-nav:hover { color:#dddddd; }
 

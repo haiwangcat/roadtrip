@@ -16,21 +16,35 @@ def getPOIInfo(request):
 def addToTrip(request):
   if request.is_ajax():
     #return render_to_response('park.html', {'message': message}, context_instance = RequestContext(request))
-    poi_id = request.POST['poi_id']
-
     trip = None
     if len(Trip.objects.all()) == 1:
       trip = Trip.objects.all()[0]
     else:
       trip = Trip(trip_name='mingchang')
 
+    poi_id = request.POST['poi_id']
     poi = POI.objects.get(id=poi_id)
     if len(trip.pois.all().filter(id=poi_id)) > 0:
       return HttpResponse(poi.name_cn + ' is already added to trip: '+ trip.trip_name)
 
+    print dir(trip.pois)
     trip.pois.add(poi)
     trip.save()
     return HttpResponse(poi.name_cn + ' added to trip: '+ trip.trip_name)
+
+def removeFromTrip(request):
+  if request.is_ajax():
+    trip = None
+    if len(Trip.objects.all()) == 1:
+      trip = Trip.objects.all()[0]
+    else:
+      trip = Trip(trip_name='mingchang')
+
+    poi_id = request.POST['poi_id']
+    poi = POI.objects.get(id=poi_id)
+    trip.pois.remove(poi)
+    trip.save()
+    return HttpResponse(poi.name_cn + ' removed from trip: '+ trip.trip_name)
     
 def getTrip(request):
   if request.is_ajax():

@@ -108,21 +108,26 @@ function initInfoPanelEventListeners() {
   });
 }
 
-function inactivateMarker(m) {
+function setMarker(m, color) {
   m.setIcon({
-    url: "/static/icon/marker.png",
-    origin: new google.maps.Point(0, 320),
-    size: new google.maps.Size(34, 40)
+    path: "M18.764,1.714c-9.697,0-17.584,7.89-17.584,17.583c0,9.696,14.927,20.239,17.584,33.522 c2.529-13.661,17.582-23.827,17.583-33.522C36.347,9.604,28.459,1.714,18.764,1.714z M18.764,32.634 c-7.603,0-13.789-6.186-13.789-13.788c0-7.603,6.186-13.789,13.789-13.789c7.601,0,13.788,6.186,13.788,13.789 C32.552,26.448,26.365,32.634,18.764,32.634z",
+    scale: 1/2,
+    fillColor: color,
+    fillOpacity: 1,
+    strokeColor: color,
+    strokeWeight: 0,
+    anchor: new google.maps.Point(20, 50)
   });
+  m.setZIndex(inactiveMarkerZIndex);
+}
+
+function inactivateMarker(m) {
+  setMarker(m, '#1ea5ad');
   m.setZIndex(inactiveMarkerZIndex);
 };
 
 function activateMarker(m) {
-  m.setIcon({
-    url: "/static/icon/marker.png",
-    origin: new google.maps.Point(34, 320),
-    size: new google.maps.Size(34, 40)
-  });
+  setMarker(m, '#b61f25');
   m.setZIndex(activeMarkerZIndex);
 };
 
@@ -169,8 +174,6 @@ function initMarkers() {
     var poiID = $(this).find("> .poi-id").html();
     var name = $(this).find("> .poi-name").html();
     var nameEn = $(this).find("> .poi-name-en").html();
-    var inactiveMarkerZIndex = 1998;
-    var activeMarkerZIndex = inactiveMarkerZIndex + 1;
     var infowindow = null;
     var infoBox = null;
 
@@ -180,33 +183,9 @@ function initMarkers() {
       position: getLatLng($(this).find("> .coordinate").html()),
       map: map,
       visible: false,
-      icon: {
-        url: "/static/icon/marker.png",
-        origin: new google.maps.Point(34, 320),
-        size: new google.maps.Size(34, 40)
-      },
     });
     markers[index] = marker;
-/*
-    var activateMarker = function(m) {
-      m.setIcon({
-        url: "/static/icon/marker.png",
-        origin: new google.maps.Point(34, 320),
-        size: new google.maps.Size(34, 40)
-      });
-      m.setZIndex(activeMarkerZIndex);
-    };
-*/
-/*
-    var inactivateMarker = function(m) {
-      m.setIcon({
-        url: "/static/icon/marker.png",
-        origin: new google.maps.Point(0, 320),
-        size: new google.maps.Size(34, 40)
-      });
-      m.setZIndex(inactiveMarkerZIndex);
-    };
-*/
+
     var inactivateAllMarkers = function() {
       activeMarkerIndex = -1;
       for (var i = 0; i < markers.length; i++) {

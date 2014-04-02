@@ -47,7 +47,7 @@ var waypoint = {
 var showDirectionSwitch;
 var selectedItemList = new Array();
 
-$("#add-to-trip").click(function(){
+$(".add-to-trip").click(function(){
   var selectedPOI = $(".poi-button.selected");
   if (selectedPOI.length == 0)
     return;
@@ -58,6 +58,21 @@ $("#add-to-trip").click(function(){
   };
   console.log(poiID);
   $.post('/add-to-trip/', data, function(response, status) {
+    console.log('response:' + response + '\n' + 'status:' + status);
+  });
+});
+
+$(".remove-from-trip").click(function(){
+  var selectedPOI = $(".poi-button.selected");
+  if (selectedPOI.length == 0)
+    return;
+  var poiID = selectedPOI.find("> .poi-id").html();
+  var data = {
+    //csrfmiddlewaretoken: '{{csrf_token}}'
+    poi_id: poiID,
+  };
+  console.log(poiID);
+  $.post('/remove-from-trip/', data, function(response, status) {
     console.log('response:' + response + '\n' + 'status:' + status);
   });
 });
