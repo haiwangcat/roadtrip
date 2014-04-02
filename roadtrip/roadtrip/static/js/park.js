@@ -95,9 +95,22 @@ function initEventListeners() {
     $("input.required").each(function() {
       if ($(this).val().trim() == "") {
         $(this).addClass("alert");
-        event.preventDefault();
       }
     });
+
+    var data = {
+      username: $("#user-username").val(),
+      password: $("#user-password").val(),
+      password: $("#user-password").val(),
+      password_confirm: $("#user-password-confirmation").val(),
+      email: $("#user-email").val(),
+    };
+    console.log("!");
+    $.post('/register/', data, function(response, status) {
+      $(".response-info").html(response);
+      console.log('response:' + response + '\n' + 'status:' + status);
+    });
+    event.preventDefault();
     //event.preventDefault();
   });
 }
