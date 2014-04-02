@@ -39,7 +39,6 @@ $(document).ajaxSend(function(event, xhr, settings) {
 // begin 
 var tripPanelOn = false;
 
-var directionWaypoints = new Array ();
 var waypoint = {
 	location: '',
 	stopover: true
@@ -66,19 +65,14 @@ $("#add-to-trip").click(function(){
 
 $("#show-itinerary").click(function(){
   var itemCount = selectedItemList.length;
-  console.log(itemCount);
-  console.log(selectedItemList[0]);
+
   var list_name = new Array();
   var list_latlng = new Array();
   for (var i = 0; i <= itemCount-1; i++){
     list_name.push(selectedItemList[i].name);
     list_latlng.push("(" + selectedItemList[i].lat + "," + selectedItemList[i].lng + ")");
   }
-  var name = list_name.toString();
-  var latlng = list_latlng.toString();
-  console.log(name);
-  console.log(latlng);
-  
+
   var tripName = 'mingchang';
   turnOnTripPanel(tripName);
 });
@@ -87,7 +81,63 @@ function initTripPanelEventListeners() {
   $(".close-info-panel").click(function() {
     turnOffTripPanel();
   });
+  
+  var directionWaypoints = new Array ();
+
+  $(".itinerary-waypoint-view").each(function(){
+    var currentLat = $(this).find("> .itinerary-waypoint-gps").html().split(",")[0];
+	var currentLng = $(this).find("> .itinerary-waypoint-gps").html().split(",")[1];
+	
+	waypoint = new Object();
+	waypoint.location = new google.maps.LatLng(currentLat, currentLng);
+	waypoint.stopover = true;
+	directionWaypoints.push(waypoint);
+  });  
+  var start = directionWaypoints[0].location;
+  var end = directionWaypoints[directionWaypoints.length-1].location;
+  directionWaypoints.splice(0,1);
+  directionWaypoints.splice(-1,1);
+
+  $(".itinerary-waypoint-gps").hide();
+  
+  var request = {
+    origin:start,
+    destination:end,
+  	waypoints: directionWaypoints,
+    travelMode: google.maps.TravelMode.DRIVING,
+    optimizeWaypoints: false
+  };
+   
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      var directionsDisplay = {};
+      directionsDisplay = new google.maps.DirectionsRenderer({
+        suppressMarkers: false,
+    	preserveViewport: true
+  	  });
+  	  //directionsDisplay.setMap(map);
+	  //directionsDisplay.setDirections(response);
+	  var route = response.routes[0];
+	  console.log(route);
+	  var tripInfo = calcTripInfo(route);
+	  console.log(tripInfo);
+	  
+	  $(".itinerary-leg-view").each(function(i){
+	    if (i >= tripInfo.length){
+	      return;
+	    }
+	    var hour = Math.round(tripInfo.durations[i]/3600);
+	    var min = Math.round((tripInfo.durations[i] - hour*3600)/60);
+	    var km = Math.round(tripInfo.distances[i]*0.3048/1000 * 10) / 10;
+	    $(this).find("> .duration").html(hour + "H" + min + "M");
+	    $(this).find("> .distance").html(km + "KM");
+	    console.log(i);
+	  });	
+	}
+  });
 }
+
+
 
 function turnOnTripPanel(tripName) {
   var mapCanvas = $("#map-canvas");
@@ -106,70 +156,28 @@ function turnOffTripPanel() {
     tripPanelOn = false;
 }
 
+function calcTripInfo(route){
+  var distances = new Array();
+  var distanceTotal = 0;
 
-$('#show-direction').click(function(){
-//	console.log('switch',showDirectionSwitch);
-	var list = {};
-	list = selectedItemList;
-	if( showDirectionSwitch == 0 || showDirectionSwitch == undefined){
-		showDirectionSwitch = 1;
-		var itemCount = list.length;
-		var lat_start = list[0].lat;
-		var lat_end = list[itemCount - 1].lat;
-		var lng_start = list[0].lng;
-		var lng_end = list[itemCount - 1].lng;
-
-  		var start = new google.maps.LatLng(lat_start, lng_start);
-  		var end = new google.maps.LatLng(lat_end, lng_end);
- 
-  		for (var i = 1; i <= itemCount - 2; i++){
-  			var currentLat = list[i].lat;
-  			var currentLng = list[i].lng;
- 
-  			var waypoint = {};
-  			waypoint.location = new google.maps.LatLng(currentLat, currentLng);
-  			waypoint.stopover = true;
-  			console.log('waypoint',waypoint);
-  			directionWaypoints.push(waypoint);
-  		}
-  		
-  		var request = {
-    		origin:start,
-    		destination:end,
-  			waypoints: directionWaypoints,
-    		travelMode: google.maps.TravelMode.DRIVING,
-    		optimizeWaypoints: true
-  		};
-   
-  		directionsService.route(request, function(response, status) {
-    		if (status == google.maps.DirectionsStatus.OK) {
-    			var	directionsDisplay = {};
-    	  		directionsDisplay = new google.maps.DirectionsRenderer({
-    				suppressMarkers: false,
-    				preserveViewport: true
-  				});
-
-  				directionsDisplay.setMap(map);
-				directionsDisplay.setDirections(response);
-			}
-  		});
-	}
-	else{
-		showDirectionSwitch = 0;
-		var directionsDisplay= {};
-		directionsDisplay = new google.maps.DirectionsRenderer({
-			suppressMarkers: false,
-			preserveViewport: true
-		});
-		directionsDisplay.setMap(null);
-	}
-//	console.log(showDirectionSwitch);
-});
-
-function calcDistance(route){
-	var distanceTotal = 0;
-	for (var i = 0; i < route.legs.length; i++){
-		distanceTotal += route.legs[i].distance.value;
-	}
-	return  distanceTotal;
+  var durations = new Array();
+  var durationTotal = 0;
+  
+  for (var i = 0; i < route.legs.length; i++){
+    distances.push(route.legs[i].distance.value);
+    distanceTotal += route.legs[i].distance.value;
+    
+    durations.push(route.legs[i].duration.value);
+    durationTotal += route.legs[i].duration.value;
+  }
+  
+  var thisTripInfo = {
+    length: route.legs.length,
+    distances : distances,
+    total_distance: distanceTotal,
+    durations : durations,
+    total_duration: durationTotal
+  };
+  return thisTripInfo;
 }
+
