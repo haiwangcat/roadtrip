@@ -237,8 +237,34 @@
         </div>
         <button name="user[create_account]" type="submit" id="user-create-account">注册</button>
       </form>
-      <div class="response-info"><div>
+      <div class="response-info"></div>
     </div>
+  </div>
+
+
+  <div id="login-view" class="session-view rt-modal-content-view">
+    <div class="alert alert-error" style="display:none" data-rv-text="session.errors | base_errors"></div>
+    <div class="logo" id="authLogo"></div>
+    <h1>登录</h1>
+    <div class="social">
+      <div id="loginFacebookConnectView" class="facebook-connect-view">Facebook账号登录</div>
+    </div>
+    <div class="or">
+      <i></i>
+      <span></span>
+      <i></i>
+    </div>
+    <form action="/user_sessions" data-remote="true" id="new_user_session" method="post">
+      <input class="required" id="login" data-rv-value="session:login" name="login" size="50" type="text" placeholder="用户名或邮箱">
+      <input class="required" id="password" data-rv-value="session:password" name="password" size="50" type="password" placeholder="密码">
+      <div class="alt-links">
+        哎呀! <a href="/password_resets/new" target="_blank">脑子不好使,忘密码了...</a>…
+      </div>
+      <button class="button" name="commit" type="submit">走起</button>
+      <div class="alt-links register">
+        <a href="/register?return_to=/" class="js-route register">创建账号</a>
+      </div>
+    </form>
   </div>
 </div>
 
