@@ -18,45 +18,16 @@
 <script type="text/javascript" src="{% static "js/park.js" %}"></script>
 <script type="text/javascript" src="{% static "js/infobox_packed.js" %}"></script>
 <script type="text/javascript" src="{% static "js/trip.js" %}"></script>
-
-
-
-<script type="text/javascript">
-
-   
-</script>
 {% endaddtoblock %}
 
 
 <div id="overlay-panel-wrapper">
   <div id="overlay-panel">
-    <div>
     <div id="overlay-content">
     </div>
-    </div>
   </div>
 </div>
 
-<div id='top-nav-area'>
-  <div id='top-nav'>
-    <ul>
-      {% getParks as parks %}
-      {% for park in parks %}
-      <li class="park-button">
-        <a class='park-name' href="./?park={{ park.id }}">{{ park.name_cn }}</a> 
-      </li>
-      {% endfor %}
-    </ul>
-    <div id="credentials">
-      <ul class="logged-out">
-        <li><a class="register" href="/register">注册</a></li>
-        <li><a class="login" href="/login">登录</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-  
 {% getPark request as park %}
 {% if park %}
 
