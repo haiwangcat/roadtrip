@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load cms_tags sekizai_tags menu_tags roadtrip_tags staticfiles %}
+
+{% block "content" %}
+
+{% addtoblock "js" %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4y5vgVMb3bcqjYsaYJzJphjJdvnJBr6U&sensor=true&language=zh"></script>
+<script type="text/javascript" src="{% static "js/destinations.js" %}"></script>
+{% endaddtoblock %}
+
+<div id="map-window">
+  <div id="map-canvas-full">
+  </div>
+</div>
+
+{% endblock %}

@@ -4,21 +4,28 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
   <head>
-      {% render_block "css" %}
-      <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}" media="all" />
+    {% render_block "css" %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/common.css" %}" media="all" />
   </head>
   <body>
-
-      <div id="header">
-        <ul id="header-menu">
-        {#% show_menu 0 0 100 100 %#}
+    <div id='top-nav-area'>
+      <div id='top-nav'>
+        <ul>
+          <a href="/destinations/">目的地</a>
         </ul>
+        <div id="credentials">
+          <ul class="logged-out">
+            <li><a class="register" href="/register">注册</a></li>
+            <li><a class="login" href="/login">登录</a></li>
+          </ul>
+        </div>
       </div>
+    </div>
 
-      {#% cms_toolbar %#}
-      {% block "content" %}{% endblock %}
+    {#% cms_toolbar %#}
+    {% block "content" %}{% endblock %}
 
-      <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
-      {% render_block "js" %}
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    {% render_block "js" %}
   </body>
 </html>

@@ -53,13 +53,22 @@ function initEventListeners() {
   $(".register").click(function(event) {
     event.preventDefault();
     $("#disabled-area").show();
+    $("#register-view").show();
+    $("#login-view").hide();
+  });
+
+  $(".login").click(function(event) {
+    event.preventDefault();
+    $("#disabled-area").show();
+    $("#register-view").hide();
+    $("#login-view").show();
   });
 
   $("#disabled-area").click(function() {
     $("#disabled-area").hide();
   });
 
-  $('#register-view').click(function(event){
+  $("#register-view, #login-view").click(function(event){
     event.stopPropagation();
   });
 
