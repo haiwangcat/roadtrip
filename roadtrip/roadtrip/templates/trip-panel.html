@@ -10,16 +10,19 @@
   <img src="/static/img/on_the_road.jpg" width=960>
 </div>
 <div class="info-panel-body">
+  <ul id="itinerary-list">
   {% for poi in trip_pois %}
-    <div class="itinerary-waypoint-view">
+    <li class="itinerary-waypoint-view" style="margin-bottom: 10px;">
       <img src="/static/icon/arrow457.svg" style="height:35px">
       <span class="itinerary-waypoint-name">{{ poi.name_cn }}</span>
       <span class="itinerary-waypoint-name">{{ poi.name_en }}</span>
-      <p class="itinerary-waypoint-gps">{{ poi.gps_coordinate }}</p>
-    </div>
-    <div class="itinerary-leg-view">
-      <span class="duration"></span>
-      <span class="distance"></span>
-    </div>
+      <span class="itinerary-waypoint-gps">{{ poi.gps_coordinate }}</span>
+    
+      <div class="itinerary-leg-view">
+        <span class="duration"></span>
+        <span class="distance"></span>
+      </div>
+    </li>
   {% endfor %}
+  </ul>
 </div>

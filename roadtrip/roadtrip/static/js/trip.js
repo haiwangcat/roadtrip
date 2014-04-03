@@ -91,11 +91,31 @@ $("#show-itinerary").click(function(){
   turnOnTripPanel(tripName);
 });
 
+// what's happening on trip panel
 function initTripPanelEventListeners() {
+// close panel button
   $(".close-info-panel").click(function() {
     turnOffTripPanel();
   });
   
+  calcRoute();
+  
+  $("#itinerary-list").sortable({
+    axis: "y",
+    revert: false,
+    scroll: true,
+    cursor: "pointer",
+    update: function(event, ui){
+              var data = ui.item.context.childNodes[7].innerHTML;
+              console.log(data); 
+              calcRoute();
+            }
+  });
+  $("#itinerary-list").disableSelection();
+  
+}
+
+function calcRoute(){
   var directionWaypoints = new Array ();
 
   $(".itinerary-waypoint-view").each(function(){
@@ -139,6 +159,8 @@ function initTripPanelEventListeners() {
       
       $(".itinerary-leg-view").each(function(i){
         if (i >= tripInfo.length){
+          $(this).find("> .duration").html("");
+          $(this).find("> .distance").html("");
           return;
         }
         var hour = Math.round(tripInfo.durations[i]/3600);
@@ -153,7 +175,7 @@ function initTripPanelEventListeners() {
 }
 
 
-
+// turn on and off trip panel
 function turnOnTripPanel(tripName) {
   var mapCanvas = $("#map-canvas");
   var width = parseInt(mapCanvas.css("width"));
@@ -171,6 +193,7 @@ function turnOffTripPanel() {
     tripPanelOn = false;
 }
 
+// return information for each trip
 function calcTripInfo(route){
   var distances = new Array();
   var distanceTotal = 0;
@@ -195,4 +218,5 @@ function calcTripInfo(route){
   };
   return thisTripInfo;
 }
+
 
