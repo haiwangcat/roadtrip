@@ -132,6 +132,7 @@ TEMPLATE_DIRS = (
 
 CMS_TEMPLATES = (
     ('park.html', 'Park'),
+    ('destinations.html', 'Destinations'),
     ('trail.html', 'Trail'),
 )
 
